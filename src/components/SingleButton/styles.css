@@ -1,0 +1,10 @@
+.ac-singlebtn {
+  width: 295px;
+  height: 40px;
+}
+
+.ac-singlebtn .MuiButton-label {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 18px;
+}
