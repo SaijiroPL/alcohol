@@ -3,7 +3,13 @@ import React from 'react';
 import './styles.css';
 import { Button } from '@material-ui/core';
 
-export default function() {
+interface props {
+  onClick?: () => void
+}
+
+export default function({
+  onClick
+}: props) {
   return (
     <Button 
       className='ac-singlebtn' 
@@ -15,6 +21,10 @@ export default function() {
         bottom: 30,
         left: '50%',
         marginLeft: '-142px'
+      }}
+      onClick={() => {
+        console.log(onClick)
+        if (onClick) onClick()
       }}>
         次　へ
     </Button>

@@ -4,11 +4,12 @@
   font-family: source-han-sans-japanese, sans-serif;
   font-style: normal;
   font-size: 36px;
+  font-weight: bold;
   border-bottom: 1px solid #376B6D;
   padding-left: 11px;
   padding-right: 11px;
   width: 65px;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .ac-spinner-arrow-container {

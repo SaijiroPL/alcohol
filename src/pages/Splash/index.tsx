@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+
 import logo from 'svgs/top_icon.svg';
 import './styles.css';
 import { Link } from 'react-router-dom';
 
 export default function Splash() {
   const [isLoaded, updateLoaded] = useState(false)
+
+  const history = useHistory();
+
   setTimeout(() => {
     updateLoaded(true)
   }, 2000)
+  
+  function onNext() {
+    history.push("/question/1");
+  }
   return (
     <div className='ac-page-top-container'>
       <div className='ac-page-top-above'>
@@ -16,11 +25,9 @@ export default function Splash() {
       </div>
       <div className='ac-page-top-below'>
         {isLoaded && (
-          <Link to='/question'>
-            <div className='ac-top-start'>
-              飲酒度チェックを<br/>開始
-            </div>
-          </Link>
+          <div className='ac-top-start' onClick={onNext}>
+            飲酒度チェックを<br/>開始
+          </div>
         )}
       </div>
     </div>
