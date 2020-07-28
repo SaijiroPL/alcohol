@@ -6,6 +6,7 @@ import Splash from 'pages/Splash';
 import Page1 from 'pages/Question/Page1';
 import Page2 from 'pages/Question/Page2';
 import Page3 from 'pages/Question/Page3';
+import Page4 from 'pages/Question/Page4';
 import Page5 from 'pages/Question/Page5';
 import Page6 from 'pages/Question/Page6';
 import Page7 from 'pages/Question/Page7';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/question/1" component={Page1} />
           <Route path="/question/2" component={Page2} />
           <Route path="/question/3" component={Page3} />
+          <Route path="/question/4" component={Page4} />
           <Route path="/question/5" component={Page5} />
           <Route path="/question/6" component={Page6} />
           <Route path="/question/7" component={Page7} />

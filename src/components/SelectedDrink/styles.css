@@ -1,0 +1,33 @@
+.ac-selecteddrink-container {
+  display: flex;
+  color: #707070;
+  align-items: center;
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  width: 350px;
+  margin: auto;
+  margin-top: 25px;
+}
+
+.ac-selecteddrink-image {
+  
+}
+
+.ac-selecteddrink-content {
+  margin-left: 25px;
+}
+
+.ac-selecteddrink-arrow {
+  margin-left: 12.5px;
+  margin-right: 9.5px;
+}
+
+.ac-selecteddrink-alcohol-wrapper {
+  color: #376B6D;
+}
+
+.ac-selecteddrink-alcohol {
+  font-size: 24px;
+  font-weight: bold;
+}

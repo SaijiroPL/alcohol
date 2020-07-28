@@ -6,6 +6,7 @@
 }
 
 .ac-spinner-container {
+  color: #376B6D;
   display: flex;
   flex-direction: row;
   font-family: source-han-sans-japanese, sans-serif;

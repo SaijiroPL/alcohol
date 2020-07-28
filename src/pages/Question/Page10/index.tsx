@@ -14,16 +14,19 @@ export default function() {
     '1年1内にある',
   ]
   function onNext() {
-    // history.push("/question/2");
+    history.push("/question/11");
+  }
+  function onBack() {
+    history.push("/question/9");
   }
   return (
     <div className='ac-question-container'>
-      <QuestionTitle sequence={11} />
+      <QuestionTitle sequence={10} />
       <div className='ac-question-content'>
         <div className='ac-question-text'>飲酒により、あなた自身や他の人がケガをしたことがありますか？</div>
       </div>
       <MultiChoice options={selections} elementStyle={{ margin: '10px', width: '300px' }} columns={1}/>
-      <MultiButton />
+      <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )
 }

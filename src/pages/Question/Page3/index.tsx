@@ -27,6 +27,12 @@ import './styles.css';
 
 export default function() {
   const history = useHistory()
+  function onNext() {
+    history.push("/question/4");
+  }
+  function onBack() {
+    history.push("/question/2");
+  }
   return (
     <div className='ac-question-container'>
       <QuestionTitle sequence={3} />
@@ -60,7 +66,7 @@ export default function() {
             <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
           </Button>
       </div>
-      <MultiButton nonSticky={true} />
+      <MultiButton nonSticky={true} onNext={onNext} onBack={onBack} />
     </div>
   )
 }

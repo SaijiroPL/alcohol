@@ -21,6 +21,12 @@ export default function() {
     '1週に6回',
     '毎日',
   ]
+  function onNext() {
+    history.push("/question/3");
+  }
+  function onBack() {
+    history.push("/question/1");
+  }
   return (
     <div className='ac-question-container'>
       <QuestionTitle sequence={2} />
@@ -28,7 +34,7 @@ export default function() {
         <div className='ac-question-text'>あなたの年齢、性別を入力してください</div>
       </div>
       <MultiChoice options={selections} elementStyle={{ margin: '10px' }} columns={2}/>
-      <MultiButton />
+      <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )
 }

@@ -16,7 +16,10 @@ export default function() {
     'ほぼ毎日',
   ]
   function onNext() {
-    // history.push("/question/2");
+    history.push("/question/6");
+  }
+  function onBack() {
+    history.push("/question/4");
   }
   return (
     <div className='ac-question-container'>
@@ -25,7 +28,7 @@ export default function() {
         <div className='ac-question-text'>飲み始めたら飲むのを止められなくなったことが、過去1年でどれくらいの頻度ありますか?</div>
       </div>
       <MultiChoice options={selections} elementStyle={{ margin: '10px' }} columns={1}/>
-      <MultiButton />
+      <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )
 }

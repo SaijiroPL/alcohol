@@ -14,7 +14,10 @@ export default function() {
     '1年1内にある',
   ]
   function onNext() {
-    // history.push("/question/2");
+    history.push("/question/12");
+  }
+  function onBack() {
+    history.push("/question/10");
   }
   return (
     <div className='ac-question-container'>
@@ -23,7 +26,7 @@ export default function() {
         <div className='ac-question-text'>親類、友人、医師などが、あなたの飲酒について心配をしたり、飲酒を控えるようにと薦めてきたことはありますか？</div>
       </div>
       <MultiChoice options={selections} elementStyle={{ margin: '10px', width: '300px' }} columns={1}/>
-      <MultiButton />
+      <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )
 }

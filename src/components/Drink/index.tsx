@@ -24,7 +24,7 @@ export default function Drink({
 }: props) {
   return (
     <div className='ac-drink-container'>
-      <img src={icon} alt='logo' style={{ marginTop: '10px' }}/>
+      <img src={icon} alt='drink' style={{ marginTop: '10px' }}/>
       <div className='ac-drink-name-container'>
         <div className='ac-drink-type'>{type}</div>
         <div className='ac-drink-subtype'>{subType}</div>

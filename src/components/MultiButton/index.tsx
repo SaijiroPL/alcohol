@@ -6,12 +6,14 @@ import { Button } from '@material-ui/core';
 
 interface props {
   nonSticky?: boolean
-  onClick?: () => void
+  onNext?: () => void
+  onBack?: () => void
 }
 
 export default function({
   nonSticky,
-  onClick
+  onNext,
+  onBack
 }: props) {
   return (
     <div className={cn({'ac-multibtn-wrapper-fixed': !nonSticky}, {'ac-multibtn-wrapper': nonSticky})}>
@@ -27,8 +29,7 @@ export default function({
           borderRight: 'solid 1px white',
         }}
         onClick={() => {
-          console.log(onClick)
-          if (onClick) onClick()
+          if (onBack) onBack()
         }}>
           戻　る
       </Button>
@@ -44,8 +45,7 @@ export default function({
           borderLeft: 'solid 1px white',
         }}
         onClick={() => {
-          console.log(onClick)
-          if (onClick) onClick()
+          if (onNext) onNext()
         }}>
           次　へ
       </Button>
