@@ -1,0 +1,17 @@
+.ac-question-container {
+  background-color: white;
+  color: #376B6D;
+  height: 100vh;
+}
+
+.ac-question-content {
+  margin-top: 16px;
+}
+
+.ac-question-text {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  width: 285px;
+  margin: auto;
+}

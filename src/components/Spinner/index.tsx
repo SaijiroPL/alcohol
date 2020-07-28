@@ -23,7 +23,7 @@ export default function({
     updateValue(prev => prev - 1);
   }
   return (
-    <div style={{alignItems: 'center', display: 'flex', margin: 'auto', justifyContent: 'center'}}>
+    <div className='ac-spinner-wrapper'>
       <div className='ac-spinner-container'>
         <span className='ac-spinner-number'>{spinValue}</span>
         <div className='ac-spinner-arrow-container'>

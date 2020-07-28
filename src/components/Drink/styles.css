@@ -1,0 +1,46 @@
+.ac-drink-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  margin-top: 45px;
+}
+
+.ac-drink-name-container {
+  margin-left: 26px;
+  width: 100px;
+  text-align: center;
+}
+
+.ac-drink-unit-container {
+  margin-left: 35px;
+  width: 180px;
+}
+
+.ac-drink-type {
+  font-size: 20px;
+}
+
+.ac-drink-subtype {
+  font-size: 14px;
+}
+
+.ac-drink-percent {
+  font-size: 11px;
+}
+
+.ac-drink-percent-number {
+  font-size: 15px;
+}
+
+.ac-drink-volume {
+  font-size: 22px;
+  margin-right: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.ac-drink-volume-span {
+  width: 60px;
+}

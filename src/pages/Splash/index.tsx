@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import logo from 'svgs/top_icon.svg';
 import './styles.css';
-import { Link } from 'react-router-dom';
 
 export default function Splash() {
   const [isLoaded, updateLoaded] = useState(false)
@@ -13,7 +12,7 @@ export default function Splash() {
   setTimeout(() => {
     updateLoaded(true)
   }, 2000)
-  
+
   function onNext() {
     history.push("/question/1");
   }

@@ -1,0 +1,34 @@
+.ac-question-container {
+  background-color: white;
+  color: #376B6D;
+  height: 100vh;
+}
+
+.ac-question-content {
+  margin-top: 16px;
+}
+
+.ac-question-text {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  width: 285px;
+  margin: auto;
+}
+
+.ac-drink-extrabtn {
+  width: 285px;
+}
+
+.ac-drink-extrabtn .MuiButton-label {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 18px;
+}
+
+.ac-drink-extrabtn-wrapper {
+  display: flex; 
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

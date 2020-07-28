@@ -1,3 +1,10 @@
+.ac-spinner-wrapper {
+  align-items: center; 
+  display: flex; 
+  justify-content: center; 
+  margin-right: 10px;
+}
+
 .ac-spinner-container {
   display: flex;
   flex-direction: row;
@@ -6,10 +13,8 @@
   font-size: 36px;
   font-weight: bold;
   border-bottom: 1px solid #376B6D;
-  padding-left: 11px;
-  padding-right: 11px;
-  width: 65px;
-  /* margin: auto; */
+  min-width: 65px;
+  justify-content: center;
 }
 
 .ac-spinner-arrow-container {

@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import './styles.css';
 
 interface props {
-  options: string[]
+  columns: number
   elementStyle?: any
+  options: string[]
 }
 
 export default function({
+  columns,
   options,
   elementStyle
 }: props) {
@@ -16,7 +18,7 @@ export default function({
   function onItemClick(index: number) {
     updateSelected(index)
   }
-  return (
+  return columns === 1 ? (
     <div className='ac-multichoice-container'>
       {options.map((option, index) => (
         <Button 
@@ -32,6 +34,43 @@ export default function({
           {option}
         </Button>
       ))}
+    </div>
+  ) : (
+    <div style={{ display: 'flex' }}>
+    <div className='ac-multichoice-container ac-multichoice-column'>
+      {options.map((option, index) => (
+        (index < Math.ceil(options.length / 2) &&
+        <Button 
+          style={{
+            ...elementStyle, 
+            backgroundColor: index !== selected ? 'white' : '#9BCFD1',
+            color: index !== selected ? '#AAAAAA' : 'white',
+            borderRadius: 15
+          }} 
+          className='ac-select-button' 
+          onClick={() => onItemClick(index)}
+          key={index}>
+          {option}
+        </Button>)
+      ))}
+    </div>
+    <div className='ac-multichoice-container ac-multichoice-column'>
+      {options.map((option, index) => (
+        (index >= Math.ceil(options.length / 2) &&
+        <Button 
+          style={{
+            ...elementStyle, 
+            backgroundColor: index !== selected ? 'white' : '#9BCFD1',
+            color: index !== selected ? '#AAAAAA' : 'white',
+            borderRadius: 15
+          }} 
+          className='ac-select-button' 
+          onClick={() => onItemClick(index)}
+          key={index}>
+          {option}
+        </Button>)
+      ))}
+    </div>
     </div>
   )
 }

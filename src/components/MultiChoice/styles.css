@@ -8,6 +8,10 @@
   justify-content: center;
 }
 
+.ac-multichoice-column {
+  flex: 1
+}
+
 .ac-select-button {
   width: 150px;
   height: 50px;
@@ -17,6 +21,12 @@
   font-family: source-han-sans-japanese, sans-serif;
   font-style: normal;
   font-size: 24px;
+}
+
+.ac-multichoice-column .ac-select-button .MuiButton-label {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 16px;
 }
 
 .ac-select-button .MuiTouchRipple-root {

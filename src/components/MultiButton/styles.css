@@ -1,0 +1,23 @@
+.ac-multibtn-wrapper-fixed {
+  display: flex;
+  left: calc(50% - 142px);
+  position: absolute;
+  bottom: 30px;
+}
+
+.ac-multibtn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.ac-multibtn {
+  width: 147px;
+  height: 40px;
+}
+
+.ac-singlebtn .MuiButton-label {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  font-size: 18px;
+}
