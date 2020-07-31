@@ -1,5 +1,4 @@
 .ac-container {
-  background-color: #376B6D;
   align-items: center;
 }
 
@@ -10,7 +9,7 @@
   height: 100vh;
   justify-content: center;
   margin: auto;
-  max-width: 540px;
+  background-color: #376B6D;
 }
 
 .ac-page-top-above {

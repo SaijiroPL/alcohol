@@ -49,8 +49,8 @@ export default function() {
         <div className='ac-question-text'>あなたは飲酒時に平均 <span style={{ fontWeight: 'bold', fontSize: '24px' }}>96</span>g の<br/>純アルコールを摂取しています。 </div>
       </div>
       <div className='ac-drinks-container'>
-        <SelectedDrink icon={beerLight} type='ビール' percent={5} volume={1500} unit='ml' alcohol={60} />
-        <SelectedDrink icon={extra} type='その他のお酒' percent={9} volume={500} unit='ml' alcohol={36} />
+        <SelectedDrink icon={beerLight} type='ビール' percent={5} volume={1500} unit='ml' alcohol={60} alcoholColor='green' />
+        <SelectedDrink icon={extra} type='その他のお酒' percent={9} volume={500} unit='ml' alcohol={36} alcoholColor='green' />
       </div>
       <div className='ac-question-content'>
         <div className='ac-question-text' style={{ width: '300px' }}>

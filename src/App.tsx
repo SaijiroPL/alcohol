@@ -14,6 +14,13 @@ import Page8 from 'pages/Question/Page8';
 import Page9 from 'pages/Question/Page9';
 import Page10 from 'pages/Question/Page10';
 import Page11 from 'pages/Question/Page11';
+import Page12 from 'pages/Question/Page12';
+
+import RPage1 from 'pages/Report/Page1';
+import RPage2 from 'pages/Report/Page2';
+import RPage3 from 'pages/Report/Page3';
+import RPage4 from 'pages/Report/Page4';
+import RPage5 from 'pages/Report/Page5';
 
 function App() {
   return (
@@ -32,6 +39,12 @@ function App() {
           <Route path="/question/9" component={Page9} />
           <Route path="/question/10" component={Page10} />
           <Route path="/question/11" component={Page11} />
+          <Route path="/question/12" component={Page12} />
+          <Route path="/goal/1" component={RPage1} />
+          <Route path="/goal/2" component={RPage2} />
+          <Route path="/goal/3" component={RPage3} />
+          <Route path="/goal/4" component={RPage4} />
+          <Route path="/goal/5" component={RPage5} />
         </Switch>
       </div>
     </BrowserRouter>

@@ -52,7 +52,7 @@ export default function() {
       <Drink icon={umeshurokku} type='梅酒ロック' percent={15} volume1={180} unit='杯' />
       <Drink icon={uisukidaburu} type='ウイスキーダブル' percent={43} volume1={60} unit='杯' />
       <Drink icon={haiboru} type='ハイボール' percent={7} volume1={350} volume2={500} unit='杯' />
-      <CustomDrink icon={extra} />
+      <CustomDrink icon={extra} title='その他のお酒' value1={9} value2={500} />
       <div className='ac-drink-extrabtn-wrapper'>
         <Button className='ac-drink-extrabtn' style={{
             backgroundColor: '#AAAAAA', 

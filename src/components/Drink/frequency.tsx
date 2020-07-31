@@ -1,16 +1,18 @@
 import React from 'react';
 
+import CycleSpinner from 'components/CycleSpinner'
 import Spinner from 'components/Spinner'
+
 import './styles.css';
 
 interface props {
   icon: string
   title: string
-  value1: number
+  value1: '週' | '月'
   value2: number
 }
 
-export default function Drink({
+export default function Frequency({
   icon,
   value1,
   value2,
@@ -23,8 +25,8 @@ export default function Drink({
       <div className='ac-drink-type'>{title}</div>
       </div>
     
-      <Spinner value={value1} suffix='%を' />
-      <Spinner value={value2} suffix='ml' />
+      <CycleSpinner value={value1} suffix='に' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: '#993333' }} />
+      <Spinner value={value2} suffix='日' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: '#993333' }} />
     </div>
   )
 }

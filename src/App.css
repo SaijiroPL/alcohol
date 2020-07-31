@@ -1,3 +1,34 @@
 .ac-container {
   min-height: 100vh;
 }
+
+.ac-question-container {
+  max-width: 540px;
+  margin: auto;
+}
+
+.report-page-container {
+  background-color: white;
+  color: #707070;
+  min-height: 100vh;
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  justify-content: center;
+}
+
+.font-hira {
+  font-family: fira-sans, sans-serif;
+  font-style: normal;
+}
+
+.container-center-text {
+  text-align: center;
+}
+
+.report-title {
+  font-size: 18px;
+  letter-spacing: 0.2rem;
+  line-height: 1.5rem;
+  padding-top: 40px;
+  text-align: center;
+}

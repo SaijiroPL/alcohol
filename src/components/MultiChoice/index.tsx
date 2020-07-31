@@ -25,7 +25,7 @@ export default function({
           style={{
             ...elementStyle, 
             backgroundColor: index !== selected ? 'white' : '#9BCFD1',
-            color: index !== selected ? '#AAAAAA' : 'white',
+            color: index !== selected ? '#707070' : 'white',
             borderRadius: 15
           }} 
           className='ac-select-button' 
@@ -44,7 +44,7 @@ export default function({
           style={{
             ...elementStyle, 
             backgroundColor: index !== selected ? 'white' : '#9BCFD1',
-            color: index !== selected ? '#AAAAAA' : 'white',
+            color: index !== selected ? '#707070' : 'white',
             borderRadius: 15
           }} 
           className='ac-select-button' 

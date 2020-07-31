@@ -5,13 +5,19 @@ import './styles.css';
 import { Button } from '@material-ui/core';
 
 interface props {
+  color?: 'green' | 'red'
   nonSticky?: boolean
+  okayText?: string
+  cancelText?: string
   onNext?: () => void
   onBack?: () => void
 }
 
 export default function({
+  color = 'green',
   nonSticky,
+  okayText = '次　へ',
+  cancelText = '戻　る',
   onNext,
   onBack
 }: props) {
@@ -20,7 +26,7 @@ export default function({
       <Button 
         className='ac-multibtn' 
         style={{
-          backgroundColor: '#376B6D', 
+          backgroundColor: color === 'green' ? '#376B6D' : '#993333', 
           color: 'white', 
           borderTopLeftRadius: 20,
           borderBottomLeftRadius: 20,
@@ -31,12 +37,12 @@ export default function({
         onClick={() => {
           if (onBack) onBack()
         }}>
-          戻　る
+          {cancelText}
       </Button>
       <Button 
         className='ac-multibtn' 
         style={{
-          backgroundColor: '#376B6D', 
+          backgroundColor: color === 'green' ? '#376B6D' : '#993333', 
           color: 'white', 
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
@@ -47,7 +53,7 @@ export default function({
         onClick={() => {
           if (onNext) onNext()
         }}>
-          次　へ
+          {okayText}
       </Button>
     </div>
   )

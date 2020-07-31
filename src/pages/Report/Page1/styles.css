@@ -1,0 +1,20 @@
+.face-icon-container {
+  margin-top: 20px;
+}
+
+.face-icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.report1-rank-container {
+  text-align: center;
+  margin-top: 15px;
+  color: #993333;
+  font-size: 24px;
+}
+
+.report1-static-label {
+  color: #993333;
+  border-bottom: solid 2px #993333;
+}

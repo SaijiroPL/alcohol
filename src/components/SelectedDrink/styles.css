@@ -24,10 +24,9 @@
 }
 
 .ac-selecteddrink-alcohol-wrapper {
-  color: #376B6D;
+  font-weight: bold;
 }
 
 .ac-selecteddrink-alcohol {
   font-size: 24px;
-  font-weight: bold;
 }

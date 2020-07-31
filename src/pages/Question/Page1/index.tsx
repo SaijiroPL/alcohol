@@ -20,7 +20,7 @@ export default function() {
       </div>
       <MultiChoice options={['男性', '女性']} elementStyle={{ margin: '20px' }} columns={1}/>
       <Spinner value={20} suffix='歳' />
-      <SingleButton onClick={onNext} />
+      <SingleButton onClick={onNext} title='次　へ' color='green' />
     </div>
   )
 }

@@ -1,0 +1,31 @@
+.ac-accordian-wrapper {
+  font-family: source-han-sans-japanese, sans-serif;
+  font-style: normal;
+  width: 300px;
+  margin: auto;
+}
+
+.ac-accordian-row {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.ac-accordian-wrapper-title {
+  font-size: 24px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.ac-accordian-title-span {
+  border-bottom: solid #376B6D 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.ac-accordian-arrow {
+  margin-left: 5px;
+}
+
+.ac-accordian-description {
+  margin-top: 10px;
+}

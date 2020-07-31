@@ -8,3 +8,16 @@
   font-style: normal;
   font-size: 18px;
 }
+
+.ac-singlebtn-wrapper-fixed {
+  display: flex;
+  left: calc(50% - 142px);
+  position: absolute;
+  bottom: 30px;
+}
+
+.ac-singlebtn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}

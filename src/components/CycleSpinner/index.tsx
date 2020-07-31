@@ -6,7 +6,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import './styles.css';
 
 interface props {
-  value: number
+  value: '週' | '月'
   suffix: string
   suffixStyle?: any
   onValueChange?: () => void
@@ -17,12 +17,12 @@ export default function({
   suffix,
   suffixStyle
 }: props) {
-  const [spinValue, updateValue] = useState(value);
+  const [spinValue, updateValue] = useState<'週' | '月'>(value);
   function increaseValue() {
-    updateValue(prev => prev + 1);
+    updateValue(prev => prev === '月' ? '週' : '月');
   }
   function decreaseValue() {
-    updateValue(prev => prev - 1);
+    updateValue(prev => prev === '月' ? '週' : '月');
   }
   return (
     <div className='ac-spinner-wrapper'>
