@@ -5,6 +5,8 @@ import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import Spinner from 'components/Spinner'
 import SingleButton from 'components/SingleButton'
+
+import * as Colors from 'const/colors'
 import './styles.css';
 
 export default function() {
@@ -20,7 +22,7 @@ export default function() {
       </div>
       <MultiChoice options={['男性', '女性']} elementStyle={{ margin: '20px' }} columns={1}/>
       <Spinner value={20} suffix='歳' />
-      <SingleButton onClick={onNext} title='次　へ' color='green' />
+      <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} />
     </div>
   )
 }

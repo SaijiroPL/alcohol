@@ -11,6 +11,8 @@
   background-color: white;
   color: #707070;
   min-height: 100vh;
+  max-width: 540px;
+  margin: auto;
   font-family: source-han-sans-japanese, sans-serif;
   font-style: normal;
   justify-content: center;
@@ -19,6 +21,10 @@
 .font-hira {
   font-family: fira-sans, sans-serif;
   font-style: normal;
+}
+
+.font-kans {
+  font-family: kan48typos-std, sans-serif;
 }
 
 .container-center-text {
@@ -31,4 +37,10 @@
   line-height: 1.5rem;
   padding-top: 40px;
   text-align: center;
+}
+
+.ac-decision-text .MuiInputBase-input {
+  color: #993333;
+  padding: 6px 0 0 0;
+  font-size: 20px;
 }

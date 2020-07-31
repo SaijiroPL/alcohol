@@ -6,8 +6,9 @@ import { Button } from '@material-ui/core';
 
 interface props {
   title: string,
-  color: 'green' | 'red'
+  color: string,
   nonSticky?: boolean
+  textColor?: string
   onClick?: () => void
 }
 
@@ -15,6 +16,7 @@ export default function({
   color,
   nonSticky,
   title,
+  textColor = '#FFF',
   onClick
 }: props) {
   return (
@@ -22,8 +24,8 @@ export default function({
       <Button 
         className='ac-singlebtn' 
         style={{
-          backgroundColor: color === 'green' ? '#376B6D' : '#993333', 
-          color: 'white', 
+          backgroundColor: color, 
+          color: textColor, 
           borderRadius: 20,
         }}
         onClick={() => {

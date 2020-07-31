@@ -1,4 +1,3 @@
-import arrowRight from 'svgs/arrow-right.svg';
 import beerLight from 'svgs/beer_light.svg';
 import beerStrong from 'svgs/beer_strong.svg';
 import chuhai from 'svgs/chuhai.svg'
@@ -13,6 +12,7 @@ import umeshurokku from 'svgs/umeshurokku.svg'
 import uisukidaburu from 'svgs/uisukidaburu.svg'
 import haiboru from 'svgs/haiboru.svg'
 import extra from 'svgs/extra.svg'
+
 import calendar from 'svgs/calendar.svg'
 import life from 'svgs/life.svg';
 import ambulance from 'svgs/ambulance.svg';
@@ -21,9 +21,17 @@ import esophagus from 'svgs/esophagus.svg';
 import pancreatitis from 'svgs/pancreatitis.svg';
 import brain from 'svgs/brain.svg';
 
+import faceIcon from 'svgs/face-sad.svg'
+import mic from 'svgs/mic.svg'
+
+import arrowRight from 'svgs/arrow-right.svg';
+import arrowDown from 'svgs/arrow-down.svg';
+import arrowUp from 'svgs/arrow-up.svg';
 
 export {
   arrowRight,
+  arrowDown,
+  arrowUp,
   beerLight,
   beerStrong,
   chuhai,
@@ -44,5 +52,7 @@ export {
   liver,
   esophagus,
   pancreatitis,
-  brain
+  brain,
+  faceIcon,
+  mic,
 }

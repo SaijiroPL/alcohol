@@ -21,6 +21,8 @@ import RPage2 from 'pages/Report/Page2';
 import RPage3 from 'pages/Report/Page3';
 import RPage4 from 'pages/Report/Page4';
 import RPage5 from 'pages/Report/Page5';
+import RPage6 from 'pages/Report/Page6';
+import RPage7 from 'pages/Report/Page7';
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/goal/3" component={RPage3} />
           <Route path="/goal/4" component={RPage4} />
           <Route path="/goal/5" component={RPage5} />
+          <Route path="/goal/6" component={RPage6} />
+          <Route path="/goal/7" component={RPage7} />
         </Switch>
       </div>
     </BrowserRouter>

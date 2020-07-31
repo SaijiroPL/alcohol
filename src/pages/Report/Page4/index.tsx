@@ -11,6 +11,7 @@ import Frequency from 'components/Drink/frequency'
 import SingleButton from 'components/SingleButton'
 
 import * as Icons from 'const/icons'
+import * as Colors from 'const/colors'
 
 export default function() {
   const history = useHistory()
@@ -85,7 +86,7 @@ export default function() {
             <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
           </Button>
       </div>
-      <SingleButton title='お酒による病気のリスクは？' color='red' nonSticky={true} />
+      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} />
     </div>
   )
 }

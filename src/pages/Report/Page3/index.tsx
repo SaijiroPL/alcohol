@@ -11,6 +11,7 @@ import esophagus from 'svgs/esophagus.svg';
 import pancreatitis from 'svgs/pancreatitis.svg';
 import brain from 'svgs/brain.svg';
 
+import * as Colors from 'const/colors'
 import './styles.css';
 
 export default function() {
@@ -44,7 +45,7 @@ export default function() {
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '30px', marginBottom: '20px' }}>
         お酒は人生に関わる病気のリスクを高めます<br/>お酒を減らし、将来の健康を手に入れましょう
       </div>
-      <SingleButton title='減酒目標を立てる' color='red' nonSticky={true} />
+      <SingleButton title='減酒目標を立てる' color={Colors.RED} nonSticky={true} />
     </div>
   )
 }

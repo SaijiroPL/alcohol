@@ -8,6 +8,7 @@ import Rank from 'components/Chart/rank'
 import beerLight from 'svgs/beer_light.svg';
 import extra from 'svgs/extra.svg'
 import calendar from 'svgs/calendar.svg'
+import * as Colors from 'const/colors'
 import './styles.css';
 
 export default function() {
@@ -59,7 +60,7 @@ export default function() {
         まだまだお酒の量が多いようです <br/>
         今の量を飲み続けるとどうなるでしょうか？
       </div>
-      <SingleButton title='お酒による病気のリスクは？' color='red' nonSticky={true} />
+      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} />
     </div>
   )
 }

@@ -29,7 +29,6 @@ export default function({
   rank,
   style
 }: props) {
-  console.log(Math.floor(rank / 25))
   return (
     <div style={{
       display: 'inline-flex'

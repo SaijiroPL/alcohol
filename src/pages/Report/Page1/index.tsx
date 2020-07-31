@@ -1,7 +1,8 @@
 import React from 'react'
 
 import SingleButton from 'components/SingleButton'
-import faceIcon from 'svgs/face-sad.svg'
+import { faceIcon } from 'const/icons'
+import * as Colors from 'const/colors'
 import './styles.css';
 
 export default function() {
@@ -43,7 +44,7 @@ export default function() {
           ✓ 周囲の心配 <br/>
         </span>
       </div>
-      <SingleButton title='あなたの飲酒量は？' color='red' />
+      <SingleButton title='あなたの飲酒量は？' color={Colors.RED} />
     </div>
   )
 }
