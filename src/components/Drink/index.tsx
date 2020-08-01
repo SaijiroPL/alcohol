@@ -35,12 +35,12 @@ export default function Drink({
           <div className='ac-drink-volume'>
             <span className='ac-drink-volume-span'>{volume1}{(typeof(volume1) === 'number') && ('ml')}</span>
           </div>
-          <Spinner value={0} suffix={unit} />
+          <Spinner value={0} suffix={unit} min={0} max={20} step={0.5} />
         </div>
         {volume2 && (
           <div style={{ display: 'flex' }}>
             <div className='ac-drink-volume'>{volume2}ml</div>
-            <Spinner value={0} suffix={unit} />
+            <Spinner value={0} suffix={unit} min={0} max={20} step={0.5} />
           </div>
         )}
       </div>

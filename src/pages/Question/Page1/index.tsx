@@ -21,7 +21,7 @@ export default function() {
         <div className='ac-question-text'>あなたの年齢、性別を入力してください</div>
       </div>
       <MultiChoice options={['男性', '女性']} elementStyle={{ margin: '20px' }} columns={1}/>
-      <Spinner value={20} suffix='歳' />
+      <Spinner value={20} suffix='歳' min={20} max={100} />
       <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} />
     </div>
   )

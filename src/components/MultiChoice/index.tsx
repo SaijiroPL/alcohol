@@ -26,7 +26,8 @@ export default function({
             ...elementStyle, 
             backgroundColor: index !== selected ? 'white' : '#9BCFD1',
             color: index !== selected ? '#707070' : 'white',
-            borderRadius: 15
+            borderRadius: 15,
+            fontWeight: index !== selected ? 'normal' : 'bold'
           }} 
           className='ac-select-button' 
           onClick={() => onItemClick(index)}
@@ -45,6 +46,7 @@ export default function({
             ...elementStyle, 
             backgroundColor: index !== selected ? 'white' : '#9BCFD1',
             color: index !== selected ? '#707070' : 'white',
+            fontWeight: index !== selected ? 'normal' : 'bold',
             borderRadius: 15
           }} 
           className='ac-select-button' 
@@ -62,6 +64,7 @@ export default function({
             ...elementStyle, 
             backgroundColor: index !== selected ? 'white' : '#9BCFD1',
             color: index !== selected ? '#AAAAAA' : 'white',
+            fontWeight: index !== selected ? 'normal' : 'bold',
             borderRadius: 15
           }} 
           className='ac-select-button' 
