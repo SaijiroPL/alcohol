@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
+import { arrowUp, arrowDown } from 'const/icons'
 
-import arrowDown from 'svgs/arrow-down.svg';
-import arrowUp from 'svgs/arrow-up.svg';
-
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -32,8 +31,8 @@ export default function({
       <div className='ac-accordian-header'>
         <Button 
           style={{
-            backgroundColor: selected ? '#9BCFD1' : 'white',
-            color: selected ?'white' : '#707070',
+            backgroundColor: selected ? Colors.WHITE : Colors.PALEGREEN,
+            color: selected ? Colors.WHITE : Colors.GRAY,
             borderRadius: '15px',
             fontSize: '22px',
             paddingLeft: '15px',
@@ -44,7 +43,7 @@ export default function({
         </Button>
         <Button
           style={{
-            backgroundColor: '#376B6D',
+            backgroundColor: Colors.GREEN,
             borderRadius: '15px',
             color: 'white',
             fontSize: '14px',

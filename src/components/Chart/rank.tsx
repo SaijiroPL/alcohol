@@ -1,5 +1,6 @@
 import React from 'react'
 
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -13,8 +14,8 @@ interface props {
 
 const backColors = [
   '#000',
-  '#993333',
-  '#376B6D',
+  Colors.RED,
+  Colors.GREEN,
   '#DEED15'
 ]
 

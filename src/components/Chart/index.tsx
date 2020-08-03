@@ -1,8 +1,7 @@
 import React from 'react'
 
-import chart from 'svgs/chart.svg'
-import man from 'svgs/man.svg'
-import manYellow from 'svgs/man-yellow.svg'
+import { chart, man, manYellow } from 'const/icons'
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -49,13 +48,13 @@ export default function({
         <span style={{
           position: 'absolute', right: (rank * 3 - (volume >= 10 ? 24 : 16)) + 'px', bottom: '-24px', 
           display: 'inline-block', marginLeft: '-20px', 
-          color: '#993333', fontSize: '22px', fontWeight: 'bold'
+          color: Colors.RED, fontSize: '22px', fontWeight: 'bold'
         }}>{volume}g</span>
         {volume2 && rank2 && (
           <span style={{
             position: 'absolute', right: (rank2 * 3 - (volume2 >= 10 ? 24 : 16)) + 'px', bottom: '-24px', 
             display: 'inline-block', marginLeft: '-20px', 
-            color: '#993333', fontSize: '22px', fontWeight: 'bold'
+            color: Colors.RED, fontSize: '22px', fontWeight: 'bold'
           }}>{volume2}g</span>
         )}
         {rank2 && (

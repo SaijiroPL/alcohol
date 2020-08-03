@@ -8,20 +8,7 @@ import SelectedDrink from 'components/SelectedDrink'
 import MultiButton from 'components/MultiButton'
 import MultiChoice from 'components/MultiChoice'
 
-import beerLight from 'svgs/beer_light.svg';
-import beerStrong from 'svgs/beer_strong.svg';
-import chuhai from 'svgs/chuhai.svg'
-import chuhaiStrong from 'svgs/chuhai_strong.svg'
-import jpWine from 'svgs/japanese_wine.svg'
-import awamori from 'svgs/awamori.svg'
-import shochuStrong from 'svgs/shochu_strong.svg'
-import shochu from 'svgs/shochu.svg'
-import shochuLight from 'svgs/shochu_light.svg'
-import wine from 'svgs/wine.svg'
-import umeshurokku from 'svgs/umeshurokku.svg'
-import uisukidaburu from 'svgs/uisukidaburu.svg'
-import haiboru from 'svgs/haiboru.svg'
-import extra from 'svgs/extra.svg'
+import * as Icons from 'const/icons'
 
 import './styles.css';
 
@@ -49,8 +36,8 @@ export default function() {
         <div className='ac-question-text'>あなたは飲酒時に平均 <span style={{ fontWeight: 'bold', fontSize: '24px' }}>96</span>g の<br/>純アルコールを摂取しています。 </div>
       </div>
       <div className='ac-drinks-container'>
-        <SelectedDrink icon={beerLight} type='ビール' percent={5} volume={1500} unit='ml' alcohol={60} alcoholColor='green' />
-        <SelectedDrink icon={extra} type='その他のお酒' percent={9} volume={500} unit='ml' alcohol={36} alcoholColor='green' />
+        <SelectedDrink icon={Icons.beerLight} type='ビール' percent={5} volume={1500} unit='ml' alcohol={60} alcoholColor='green' />
+        <SelectedDrink icon={Icons.extra} type='その他のお酒' percent={9} volume={500} unit='ml' alcohol={36} alcoholColor='green' />
       </div>
       <div className='ac-question-content'>
         <div className='ac-question-text' style={{ width: '300px' }}>

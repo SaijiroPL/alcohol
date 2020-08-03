@@ -1,5 +1,6 @@
 import React from 'react'
 
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -29,7 +30,7 @@ export default function({
       {titlePos === 'top' && (
         <div style={{ 
           fontSize: '16px',
-          color: '#993333',
+          color: Colors.RED,
           lineHeight: '18px' }}>
             {title}
         </div>
@@ -38,7 +39,7 @@ export default function({
       {titlePos === 'bottom' && (
         <div style={{ 
           fontSize: '16px',
-          color: '#993333',
+          color: Colors.RED,
           lineHeight: '18px',
           position: 'absolute',
           top: '100px',
@@ -47,7 +48,7 @@ export default function({
         </div>
       )} 
       <div className='font-hira' style={{
-        color: '#993333',
+        color: Colors.RED,
         fontSize: '30px', 
         position: 'absolute', top: titlePos === 'top' ? '25px' : '10px',
         marginLeft: '15px'

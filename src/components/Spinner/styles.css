@@ -18,11 +18,11 @@
   justify-content: center;
 }
 
-.ac-question-container .ac-spinner-container {
+.ac-question-container .ac-spinner-number {
   color: #376B6D;
 }
 
-.report-page-container .ac-spinner-container {
+.report-page-container .ac-spinner-number {
   color: #993333;
 }
 

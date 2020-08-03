@@ -4,6 +4,7 @@ const WHITE = '#FFF'
 const BLACK = '#000'
 const PALEGREEN = '#9BCFD1'
 const YELLOW = '#DEED15'
+const GRAY = '#707070'
 
 export {
   GREEN,
@@ -11,5 +12,6 @@ export {
   WHITE,
   BLACK,
   PALEGREEN,
-  YELLOW
+  YELLOW,
+  GRAY
 }

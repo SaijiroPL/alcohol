@@ -3,6 +3,7 @@ import React from 'react';
 import CycleSpinner from 'components/CycleSpinner'
 import Spinner from 'components/Spinner'
 
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -25,8 +26,8 @@ export default function Frequency({
       <div className='ac-drink-type'>{title}</div>
       </div>
     
-      <CycleSpinner value={value1} suffix='に' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: '#993333' }} />
-      <Spinner value={value2} suffix='日' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: '#993333' }} />
+      <CycleSpinner value={value1} suffix='に' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} />
+      <Spinner value={value2} suffix='日' suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} />
     </div>
   )
 }

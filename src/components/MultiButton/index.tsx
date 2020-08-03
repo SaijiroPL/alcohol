@@ -1,8 +1,9 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 import cn from 'classnames';
 
+import * as Colors from 'const/colors'
 import './styles.css';
-import { Button } from '@material-ui/core';
 
 interface props {
   color?: 'green' | 'red'
@@ -26,7 +27,7 @@ export default function({
       <Button 
         className='ac-multibtn' 
         style={{
-          backgroundColor: color === 'green' ? '#376B6D' : '#993333', 
+          backgroundColor: color === 'green' ? Colors.GREEN : Colors.RED, 
           color: 'white', 
           borderTopLeftRadius: 20,
           borderBottomLeftRadius: 20,
@@ -42,7 +43,7 @@ export default function({
       <Button 
         className='ac-multibtn' 
         style={{
-          backgroundColor: color === 'green' ? '#376B6D' : '#993333', 
+          backgroundColor: color === 'green' ? Colors.GREEN : Colors.RED, 
           color: 'white', 
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,

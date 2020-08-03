@@ -4,14 +4,8 @@ import SingleButton from 'components/SingleButton'
 import Disease from 'components/Disease'
 import Rank from 'components/Chart/rank'
 
-import life from 'svgs/life.svg';
-import ambulance from 'svgs/ambulance.svg';
-import liver from 'svgs/liver.svg';
-import esophagus from 'svgs/esophagus.svg';
-import pancreatitis from 'svgs/pancreatitis.svg';
-import brain from 'svgs/brain.svg';
-
 import * as Colors from 'const/colors'
+import { life, ambulance, liver, esophagus, pancreatitis, brain } from 'const/icons'
 import './styles.css';
 
 export default function() {

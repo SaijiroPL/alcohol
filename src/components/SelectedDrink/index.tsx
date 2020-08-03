@@ -1,7 +1,9 @@
 import React from 'react';
-import arrowRight from 'svgs/arrow-right.svg';
+import { arrowRight } from 'const/icons';
 
 import Spinner from 'components/Spinner'
+
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -28,7 +30,7 @@ export default function Drink({
       <img src={icon} alt='drink' className='ac-selecteddrink-image'/>
       {<span className='ac-selecteddrink-content'>{type} {percent}{percent && '%'}  {volume}{unit}</span>}
       <img src={arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-      <div className='ac-selecteddrink-alcohol-wrapper' style={{ color: alcoholColor === 'green' ? '#376B6D' : '#993333'}}>
+      <div className='ac-selecteddrink-alcohol-wrapper' style={{ color: alcoholColor === 'green' ? Colors.GREEN : Colors.RED}}>
         {(typeof(alcohol) === 'number') && (
           <span><span className='ac-selecteddrink-alcohol'>{alcohol}</span>g</span>
         )}

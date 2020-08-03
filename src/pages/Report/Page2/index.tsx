@@ -5,9 +5,7 @@ import SelectedDrink from 'components/SelectedDrink'
 import Chart from 'components/Chart'
 import Rank from 'components/Chart/rank'
 
-import beerLight from 'svgs/beer_light.svg';
-import extra from 'svgs/extra.svg'
-import calendar from 'svgs/calendar.svg'
+import { beerLight, extra, calendar } from 'const/icons'
 import * as Colors from 'const/colors'
 import './styles.css';
 

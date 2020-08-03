@@ -28,6 +28,12 @@ import arrowRight from 'svgs/arrow-right.svg';
 import arrowDown from 'svgs/arrow-down.svg';
 import arrowUp from 'svgs/arrow-up.svg';
 
+import chart from 'svgs/chart.svg';
+import man from 'svgs/man.svg';
+import manYellow from 'svgs/man-yellow.svg';
+
+import logo from 'svgs/logo.svg'
+
 export {
   arrowRight,
   arrowDown,
@@ -55,4 +61,8 @@ export {
   brain,
   faceIcon,
   mic,
+  chart,
+  man,
+  manYellow,
+  logo
 }

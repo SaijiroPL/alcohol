@@ -31,23 +31,33 @@ export default function({
     updateValue(prev => Math.max(prev - step, min));
   }
   return (
-    <div className='ac-spinner-wrapper'>
-      <div className='ac-spinner-container'>
-        <span className='ac-spinner-number'>{spinValue}</span>
-        <div className='ac-spinner-arrow-container'>
-          <IconButton 
-            className='ac-spinner-arrow' 
-            size='small' 
-            onClick={increaseValue}>
-            <ArrowDropUpIcon />
-          </IconButton>
-          <IconButton 
-            className='ac-spinner-arrow' 
-            size='small'
-            onClick={decreaseValue}>
-            <ArrowDropDownIcon />
-          </IconButton>
-        </div>
+    <div style={{
+      display: 'flex',
+      width: '80px',
+    }}>
+      <span 
+        className='ac-spinner-number'
+        style={{
+          fontSize: '36px'
+        }}>
+          {spinValue}
+      </span>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <IconButton 
+          className='ac-spinner-arrow'
+          size='small' 
+          onClick={increaseValue}>
+          <ArrowDropUpIcon />
+        </IconButton>
+        <IconButton 
+          className='ac-spinner-arrow'
+          size='small'
+          onClick={decreaseValue}>
+          <ArrowDropDownIcon />
+        </IconButton>
       </div>
       <span style={suffixStyle}>{suffix}</span>
     </div>

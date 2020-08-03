@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 
+import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
@@ -24,7 +25,7 @@ export default function({
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? 'white' : '#9BCFD1',
+            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
             color: index !== selected ? '#707070' : 'white',
             borderRadius: 15,
             fontWeight: index !== selected ? 'normal' : 'bold'
@@ -44,7 +45,7 @@ export default function({
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? 'white' : '#9BCFD1',
+            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
             color: index !== selected ? '#707070' : 'white',
             fontWeight: index !== selected ? 'normal' : 'bold',
             borderRadius: 15
@@ -62,7 +63,7 @@ export default function({
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? 'white' : '#9BCFD1',
+            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
             color: index !== selected ? '#AAAAAA' : 'white',
             fontWeight: index !== selected ? 'normal' : 'bold',
             borderRadius: 15

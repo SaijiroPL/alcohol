@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-import logo from 'svgs/top_icon.svg';
+import { logo } from 'const/icons';
 import './styles.css';
 
 export default function Splash() {
