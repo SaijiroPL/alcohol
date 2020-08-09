@@ -31,7 +31,7 @@ export default function({
       <div className='ac-accordian-header'>
         <Button 
           style={{
-            backgroundColor: selected ? Colors.WHITE : Colors.PALEGREEN,
+            backgroundColor: selected ? Colors.PALEGREEN : Colors.WHITE,
             color: selected ? Colors.WHITE : Colors.GRAY,
             borderRadius: '15px',
             fontSize: '22px',

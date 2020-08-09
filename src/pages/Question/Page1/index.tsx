@@ -1,28 +1,17 @@
-import React from 'react'
-import { useHistory } from "react-router-dom";
+import { RootState } from 'store'
+import { setAge, setAnswer1 } from 'store/question'
+import { connect } from 'react-redux'
 
-import QuestionTitle from 'components/QuestionTitle'
-import MultiChoice from 'components/MultiChoice'
-import Spinner from 'components/Spinner'
-import SingleButton from 'components/SingleButton'
+import Page from './page'
 
-import * as Colors from 'const/colors'
-import './styles.css';
+const mapStateToProps = (state: RootState) => ({
+  answer: state.question.question1,
+  age: state.question.age
+})
 
-export default function() {
-  const history = useHistory();
-  function onNext() {
-    history.push("/question/2");
-  }
-  return (
-    <div className='ac-question-container'>
-      <QuestionTitle sequence={1} />
-      <div className='ac-question-content'>
-        <div className='ac-question-text'>あなたの年齢、性別を入力してください</div>
-      </div>
-      <MultiChoice options={['男性', '女性']} elementStyle={{ margin: '20px' }} columns={1}/>
-      <Spinner value={20} suffix='歳' min={20} max={100} />
-      <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} />
-    </div>
-  )
+const mapDispatchToProps = { 
+  setAge,
+  setAnswer: setAnswer1
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page)

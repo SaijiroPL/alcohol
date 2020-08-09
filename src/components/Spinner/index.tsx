@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -12,7 +12,7 @@ interface props {
   suffix: string
   suffixStyle?: any
   step?: number
-  onValueChange?: () => void
+  onValueChange?: (value: number) => void
 }
 
 export default function({
@@ -21,9 +21,15 @@ export default function({
   max = 100,
   step = 1,
   suffix,
-  suffixStyle
+  suffixStyle,
+  onValueChange
 }: props) {
   const [spinValue, updateValue] = useState(value);
+
+  useEffect(() => {
+    if (onValueChange) onValueChange(spinValue)
+  }, [spinValue])
+
   function increaseValue() {
     updateValue(prev => Math.min(prev + step, max));
   }
@@ -33,18 +39,21 @@ export default function({
   return (
     <div style={{
       display: 'flex',
-      width: '80px',
+      justifyContent: 'center'
     }}>
-      <span 
+      <div 
         className='ac-spinner-number'
         style={{
-          fontSize: '36px'
+          fontSize: '36px',
+          minWidth: '70px',
+          textAlign: 'center'
         }}>
-          {spinValue}
-      </span>
+          {step < 1 ? spinValue.toFixed(1) : spinValue}
+      </div>
       <div style={{
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center'
       }}>
         <IconButton 
           className='ac-spinner-arrow'
@@ -59,7 +68,13 @@ export default function({
           <ArrowDropDownIcon />
         </IconButton>
       </div>
-      <span style={suffixStyle}>{suffix}</span>
+      <div style={{
+        ...suffixStyle,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginLeft: '6px'
+      }}>{suffix}</div>
     </div>
   )
 }

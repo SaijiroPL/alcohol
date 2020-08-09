@@ -1,32 +1,15 @@
-import React from 'react'
-import { useHistory } from "react-router-dom";
+import { RootState } from 'store'
+import { setAnswer10 } from 'store/question'
+import { connect } from 'react-redux'
 
-import QuestionTitle from 'components/QuestionTitle'
-import MultiChoice from 'components/MultiChoice'
-import MultiButton from 'components/MultiButton'
-import './styles.css';
+import Page from './page'
 
-export default function() {
-  const history = useHistory();
-  const selections = [
-    'なし',
-    'あるが、1年以上前',
-    '1年1内にある',
-  ]
-  function onNext() {
-    history.push("/question/11");
-  }
-  function onBack() {
-    history.push("/question/9");
-  }
-  return (
-    <div className='ac-question-container'>
-      <QuestionTitle sequence={10} />
-      <div className='ac-question-content'>
-        <div className='ac-question-text'>飲酒により、あなた自身や他の人がケガをしたことがありますか？</div>
-      </div>
-      <MultiChoice options={selections} elementStyle={{ margin: '10px', width: '300px' }} columns={1}/>
-      <MultiButton onNext={onNext} onBack={onBack} />
-    </div>
-  )
+const mapStateToProps = (state: RootState) => ({
+  answer: state.question.question10
+})
+
+const mapDispatchToProps = { 
+  setAnswer: setAnswer10
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page)

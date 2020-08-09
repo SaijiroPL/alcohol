@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -9,16 +9,23 @@ import CustomDrink from 'components/Drink/custom'
 import MultiButton from 'components/MultiButton'
 
 import * as Icons from 'const/icons'
+import { OtherDrink } from 'types/types'
 
 import './styles.css';
 
 export default function() {
   const history = useHistory()
+  const [otherDrinks, setOtherDrinks] = useState<OtherDrink[]>([])
+
   function onNext() {
     history.push("/question/4");
   }
   function onBack() {
     history.push("/question/2");
+  }
+  function onAddExtra() {
+    const newObj: OtherDrink = {alcohol: 9, volume: 500};
+    setOtherDrinks(prev => [...prev, newObj])
   }
   return (
     <div className='ac-question-container'>
@@ -39,9 +46,11 @@ export default function() {
       <Drink icon={Icons.umeshurokku} type='梅酒ロック' percent={15} volume1={180} unit='杯' />
       <Drink icon={Icons.uisukidaburu} type='ウイスキーダブル' percent={43} volume1={60} unit='杯' />
       <Drink icon={Icons.haiboru} type='ハイボール' percent={7} volume1={350} volume2={500} unit='杯' />
-      <CustomDrink icon={Icons.extra} title='その他のお酒' value1={9} value2={500} />
+      {otherDrinks.map((item, index) => (
+        <CustomDrink icon={Icons.extra} title='その他のお酒' value1={9} value2={500} />
+      ))}
       <div className='ac-drink-extrabtn-wrapper'>
-        <Button className='ac-drink-extrabtn' style={{
+        <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
             backgroundColor: '#AAAAAA', 
             color: 'white', 
             borderTopLeftRadius: 20,

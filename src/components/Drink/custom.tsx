@@ -23,8 +23,8 @@ export default function Drink({
       <div className='ac-drink-type'>{title}</div>
       </div>
     
-      <Spinner value={value1} suffix='%を' />
-      <Spinner value={value2} suffix='ml' />
+      <Spinner value={value1} suffix='%を' min={1} max={50} />
+      <Spinner value={value2} suffix='ml' min={50} max={1000} step={50} />
     </div>
   )
 }

@@ -5,19 +5,24 @@ import * as Colors from 'const/colors'
 import './styles.css';
 
 interface props {
+  answer?: number
   columns: number
   elementStyle?: any
   options: string[]
+  setAnswer?: (index: number) => void
 }
 
 export default function({
+  answer,
   columns,
   options,
-  elementStyle
+  elementStyle,
+  setAnswer
 }: props) {
-  const [selected, updateSelected] = useState<undefined | number>(undefined)
+  const [selected, updateSelected] = useState<undefined | number>(answer)
   function onItemClick(index: number) {
     updateSelected(index)
+    if (setAnswer) setAnswer(index)
   }
   return columns === 1 ? (
     <div className='ac-multichoice-container'>
