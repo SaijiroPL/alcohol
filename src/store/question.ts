@@ -1,3 +1,5 @@
+import { DrinkVolume } from 'types/drinks'
+
 export function typedAction<T extends string>(type: T): { type: T }
 export function typedAction<T extends string, P extends any>(
   type: T,
@@ -19,6 +21,7 @@ type GlobalState = {
   question9: number
   question10: number
   question11: number
+  drinks: DrinkVolume[]
 }
 
 const initStates: GlobalState = {
@@ -33,6 +36,7 @@ const initStates: GlobalState = {
   question9: -1,
   question10: -1,
   question11: -1,
+  drinks: []
 }
 
 export const setAge = (age: number) => typedAction('question/age', age)
@@ -64,7 +68,7 @@ export function questionReducer(
   action: QuestionAction
 ): GlobalState {
   switch (action.type) {
-    case `question/age`:
+    case 'question/age':
       return { ...state, age: action.payload }
     case 'question/answer1':
       return { ...state, question1: action.payload }
@@ -73,7 +77,7 @@ export function questionReducer(
     case 'question/answer4':
       return { ...state, question4: action.payload }
     case 'question/answer5':
-    return { ...state, question5: action.payload }
+      return { ...state, question5: action.payload }
     case 'question/answer6':
       return { ...state, question6: action.payload }
     case 'question/answer7':

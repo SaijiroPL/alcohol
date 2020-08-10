@@ -25,7 +25,12 @@ export default function({
         <span className='ac-accordian-title-span'>複数選択可</span>
       </div>
       {info.map((item, index) => (
-        <AccordianItem content={item} index={index} selected={selected === index} onItemClick={onItemClick} />
+        <AccordianItem 
+          key={index} 
+          content={item} 
+          index={index} 
+          selected={selected === index} 
+          onItemClick={onItemClick} />
       ))}
     </div>
   )

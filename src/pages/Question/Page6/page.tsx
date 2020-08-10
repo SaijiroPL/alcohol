@@ -5,7 +5,7 @@ import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import MultiButton from 'components/MultiButton'
 
-import { QuestionProps } from 'types/types'
+import { QuestionProps } from 'types/pages'
 
 import './styles.css';
 

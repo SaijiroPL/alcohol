@@ -19,11 +19,13 @@ export default function Drink({
   return (
     <div className='ac-drink-container'>
       <img src={icon} alt='logo' style={{ marginTop: '10px' }}/>
-      <div className='ac-drink-name-container'>
-      <div className='ac-drink-type'>{title}</div>
+      <div className='ac-custom-drink-name-container'>
+        <div className='ac-drink-type'>{title}</div>
       </div>
-    
-      <Spinner value={value1} suffix='%を' min={1} max={50} />
+      <div>
+        <Spinner value={value1} suffix='%を' min={1} max={50} />
+      </div>
+      
       <Spinner value={value2} suffix='ml' min={50} max={1000} step={50} />
     </div>
   )

@@ -8,7 +8,7 @@ import SelectedDrink from 'components/SelectedDrink'
 import MultiButton from 'components/MultiButton'
 import MultiChoice from 'components/MultiChoice'
 
-import { QuestionProps } from 'types/types'
+import { QuestionProps } from 'types/pages'
 
 import * as Icons from 'const/icons'
 

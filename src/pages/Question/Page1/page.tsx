@@ -7,7 +7,7 @@ import Spinner from 'components/Spinner'
 import SingleButton from 'components/SingleButton'
 
 import * as Colors from 'const/colors'
-import { QuestionProps } from 'types/types'
+import { QuestionProps } from 'types/pages'
 import './styles.css';
 
 interface props extends QuestionProps {

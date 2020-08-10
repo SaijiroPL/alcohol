@@ -69,7 +69,7 @@ export default function({
           style={{
             ...elementStyle, 
             backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
-            color: index !== selected ? '#AAAAAA' : 'white',
+            color: index !== selected ? '#707070' : 'white',
             fontWeight: index !== selected ? 'normal' : 'bold',
             borderRadius: 15
           }} 

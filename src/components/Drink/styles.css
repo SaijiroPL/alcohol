@@ -14,6 +14,12 @@
   text-align: center;
 }
 
+.ac-custom-drink-name-container {
+  margin-left: 6px;
+  width: 100px;
+  text-align: center;
+}
+
 .ac-drink-unit-container {
   margin-left: 35px;
   width: 180px;
