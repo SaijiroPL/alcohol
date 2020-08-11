@@ -1,0 +1,33 @@
+export const RANKS = [
+  [
+    { level12: 51, level34: 23, level56: 9, level79: 1, level10: 0, sum: 84 },
+    { level12: 47, level34: 21, level56: 7, level79: 5, level10: 3, sum: 83 },
+    { level12: 71, level34: 27, level56: 12, level79: 6, level10: 2, sum: 118 },
+    { level12: 79, level34: 40, level56: 17, level79: 5, level10: 3, sum: 144 },
+    { level12: 111, level34: 46, level56: 20, level79: 8, level10: 5, sum: 190 },
+    { level12: 104, level34: 40, level56: 18, level79: 8, level10: 2, sum: 172 },
+    { level12: 82, level34: 48, level56: 24, level79: 7, level10: 0, sum: 161 },
+    { level12: 95, level34: 33, level56: 17, level79: 3, level10: 1, sum: 149 },
+    { level12: 117, level34: 53, level56: 16, level79: 4, level10: 1, sum: 191 },
+    { level12: 156, level34: 53, level56: 21, level79: 3, level10: 2, sum: 235 },
+    { level12: 173, level34: 46, level56: 23, level79: 2, level10: 2, sum: 246 },
+    { level12: 129, level34: 34, level56: 10, level79: 3, level10: 0, sum: 176 },
+    { level12: 97, level34: 14, level56: 4, level79: 2, level10: 0, sum: 117 },
+    { level12: 54, level34: 0, level56: 1, level79: 0, level10: 0, sum: 55 },
+  ], [
+    { level12: 72, level34: 21, level56: 6, level79: 1, level10: 0, sum: 100 },
+    { level12: 58, level34: 23, level56: 13, level79: 1, level10: 2, sum: 97 },
+    { level12: 108, level34: 24, level56: 2, level79: 3, level10: 1, sum: 138 },
+    { level12: 155, level34: 11, level56: 10, level79: 2, level10: 0, sum: 178 },
+    { level12: 190, level34: 35, level56: 5, level79: 3, level10: 1, sum: 234 },
+    { level12: 198, level34: 35, level56: 5, level79: 2, level10: 2, sum: 242 },
+    { level12: 185, level34: 27, level56: 9, level79: 0, level10: 0, sum: 221 },
+    { level12: 145, level34: 27, level56: 5, level79: 0, level10: 0, sum: 177 },
+    { level12: 184, level34: 16, level56: 4, level79: 0, level10: 0, sum: 204 },
+    { level12: 267, level34: 17, level56: 2, level79: 0, level10: 0, sum: 286 },
+    { level12: 202, level34: 6, level56: 2, level79: 1, level10: 0, sum: 211 },
+    { level12: 195, level34: 4, level56: 1, level79: 0, level10: 0, sum: 200 },
+    { level12: 133, level34: 0, level56: 0, level79: 0, level10: 0, sum: 133 },
+    { level12: 83, level34: 3, level56: 0, level79: 0, level10: 0, sum: 86 },
+  ]
+]

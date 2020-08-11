@@ -2,7 +2,8 @@ export const PAGE_INFOES = [
   {
     page: 1,
     title: 'あなたの年齢、性別を入力してください',
-    selections: ['男性', '女性']
+    selections: ['男性', '女性'],
+    scores: []
   },
   {
     page: 2,
@@ -13,7 +14,8 @@ export const PAGE_INFOES = [
   {
     page: 3,
     title: '飲酒をする時は、平均してどのくらいの量を飲みますか？',
-    selections: []
+    selections: [],
+    scores: [0, 1, 2, 3, 4]
   },
   {
     page: 4,
@@ -65,6 +67,7 @@ export const PAGE_INFOES = [
   {
     page: 12,
     title: 'ご家族がかかったことがある病気、あなたが心配している病気を選んでください。飲酒量によって病気にかかる可能性がどれくらい変わるかが表示されます。',
-    selections: []
+    selections: [],
+    scores: []
   }
 ]

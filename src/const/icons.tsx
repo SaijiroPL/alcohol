@@ -33,6 +33,7 @@ import man from 'svgs/man.svg';
 import manYellow from 'svgs/man-yellow.svg';
 
 import logo from 'svgs/logo.svg'
+import tick from 'svgs/tick.svg'
 
 export {
   arrowRight,
@@ -64,5 +65,6 @@ export {
   chart,
   man,
   manYellow,
-  logo
+  logo,
+  tick
 }

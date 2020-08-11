@@ -19,12 +19,14 @@ import './styles.css';
 interface props extends QuestionProps {
   drinks: {[key: string]: DrinkVolume}
   otherDrinks: OtherDrink[]
+  setAlcohol: (alcohol: number) => void
 }
 
 export default function({
   answer,
   drinks,
   otherDrinks,
+  setAlcohol,
   setAnswer
 }: props) {
   const history = useHistory()
@@ -48,6 +50,7 @@ export default function({
     otherDrinks.forEach((item) => {
       sum += item.alcohol * item.volume * 0.8 / 100
     })
+    setAlcohol(sum)
     return sum
   }, [drinks, otherDrinks])
 

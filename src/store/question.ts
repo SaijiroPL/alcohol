@@ -14,6 +14,9 @@ type QuestionState = {
   age: number
   question1: number
   question2: number
+  alcohol: number
+  drinks: {[key: string]: DrinkVolume}
+  otherDrinks: OtherDrink[]
   question4: number
   question5: number
   question6: number
@@ -23,8 +26,6 @@ type QuestionState = {
   question10: number
   question11: number
   question12: number[]
-  drinks: {[key: string]: DrinkVolume}
-  otherDrinks: OtherDrink[]
 }
 
 let initDrinks: {[key: string]: DrinkVolume} = {}
@@ -37,20 +38,21 @@ DRINK_INFO.map((item) => {
 })
 
 const initStates: QuestionState = {
-  age: 20,
-  question1: -1,
-  question2: -1,
-  question4: -1,
-  question5: -1,
-  question6: -1,
-  question7: -1,
-  question8: -1,
-  question9: -1,
-  question10: -1,
-  question11: -1,
-  question12: [],
+  age: 25,
+  question1: 0,
+  question2: 6,
+  alcohol: 30,
   drinks: initDrinks,
-  otherDrinks: []
+  otherDrinks: [],
+  question4: 2,
+  question5: 0,
+  question6: 1,
+  question7: 2,
+  question8: 0,
+  question9: 1,
+  question10: 2,
+  question11: 1,
+  question12: []
 }
 
 export const setAge = (age: number) => typedAction('question/age', age)
@@ -58,6 +60,7 @@ export const setAnswer1 = (answer: number) => typedAction('question/answer1', an
 export const setAnswer2 = (answer: number) => typedAction('question/answer2', answer)
 export const setDrink = (payload: {value: number, type: 'standard' | 'custom', key: string, isFirst: boolean}) => typedAction('question/drink', payload)
 export const setOtherDrink = (payload: {index: number, drink: OtherDrink}) => typedAction('question/otherdrink', payload)
+export const setAlcohol = (alcohol: number) => typedAction('question/alcohol', alcohol)
 export const setAnswer4 = (answer: number) => typedAction('question/answer4', answer)
 export const setAnswer5 = (answer: number) => typedAction('question/answer5', answer)
 export const setAnswer6 = (answer: number) => typedAction('question/answer6', answer)
@@ -73,6 +76,7 @@ type QuestionAction = ReturnType<typeof setAge |
   typeof setAnswer2 |
   typeof setDrink |
   typeof setOtherDrink |
+  typeof setAlcohol |
   typeof setAnswer4 |
   typeof setAnswer5 |
   typeof setAnswer6 |
@@ -117,6 +121,8 @@ export function questionReducer(
       return updateDrink(state, action.payload)
     case 'question/otherdrink':
       return updateOtherDrink(state, action.payload)
+    case 'question/alcohol':
+      return { ...state, alcohol: action.payload }
     case 'question/answer4':
       return { ...state, question4: action.payload }
     case 'question/answer5':
