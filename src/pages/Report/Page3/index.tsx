@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useHistory } from "react-router-dom";
 
 import SingleButton from 'components/SingleButton'
 import Disease from 'components/Disease'
@@ -9,6 +10,13 @@ import { life, ambulance, liver, esophagus, pancreatitis, brain } from 'const/ic
 import './styles.css';
 
 export default function() {
+  const history = useHistory();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+  function onNext() {
+    history.push("/goal/4");
+  }
   return (
     <div className='report-page-container'>
       <div style={{ marginTop: '32px', textAlign: 'center' }}>
@@ -39,7 +47,7 @@ export default function() {
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '30px', marginBottom: '20px' }}>
         お酒は人生に関わる病気のリスクを高めます<br/>お酒を減らし、将来の健康を手に入れましょう
       </div>
-      <SingleButton title='減酒目標を立てる' color={Colors.RED} nonSticky={true} />
+      <SingleButton title='減酒目標を立てる' color={Colors.RED} nonSticky={true} onClick={onNext} />
     </div>
   )
 }

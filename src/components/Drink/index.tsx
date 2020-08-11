@@ -1,29 +1,47 @@
 import React from 'react';
 
 import Spinner from 'components/Spinner'
-import { StandardDrink } from 'types/drinks'
+import { StandardDrinkInfo, DrinkVolume } from 'types/drinks'
 import './styles.css';
 
-export default function Drink({ drink }: {drink: StandardDrink}) {
+interface props {
+  info: StandardDrinkInfo
+  value: DrinkVolume
+  updateVolume?: (key: string, value: number, isFirst: boolean) => void
+}
+
+export default function Drink({ 
+  info,
+  value,
+  updateVolume
+}: props) {
   return (
     <div className='ac-drink-container'>
-      <img src={drink.icon} alt='drink' style={{ marginTop: '10px' }}/>
+      <img src={info.icon} alt='drink' style={{ marginTop: '10px' }}/>
       <div className='ac-drink-name-container'>
-        <div className='ac-drink-type'>{drink.type}</div>
-        <div className='ac-drink-subtype'>{drink.subType}</div>
-        <div className='ac-drink-percent'><span className='ac-drink-percent-number'>{drink.percent}</span>%</div>
+        <div className='ac-drink-type'>{info.type}</div>
+        <div className='ac-drink-subtype'>{info.subType}</div>
+        <div className='ac-drink-percent'>
+          <span className='ac-drink-percent-number'>{info.percent}</span>%
+        </div>
       </div>
       <div className='ac-drink-unit-container'>
         <div style={{ display: 'flex' }}>
           <div className='ac-drink-volume'>
-            <span className='ac-drink-volume-span'>{drink.volume1}{(typeof(drink.volume1) === 'number') && ('ml')}</span>
+            <span className='ac-drink-volume-span'>
+              {info.volumeStr !== undefined ? info.volumeStr : info.volume1 + 'ml'}
+            </span>
           </div>
-          <Spinner value={0} suffix={drink.unit} min={0} max={20} step={0.5} />
+          <Spinner value={value.volume} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
+            if (updateVolume) updateVolume(info.id, value, true)
+          }} />
         </div>
-        {drink.volume2 && (
+        {info.volume2 && value.volume2 !== undefined && (
           <div style={{ display: 'flex' }}>
-            <div className='ac-drink-volume'>{drink.volume2}ml</div>
-            <Spinner value={0} suffix={drink.unit} min={0} max={20} step={0.5} />
+            <div className='ac-drink-volume'>{info.volume2}ml</div>
+            <Spinner value={value.volume2} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
+              if (updateVolume) updateVolume(info.id, value, false)
+            }} />
           </div>
         )}
       </div>

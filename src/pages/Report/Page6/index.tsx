@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 
 import SingleButton from 'components/SingleButton'
@@ -6,6 +7,10 @@ import { mic } from 'const/icons'
 import * as Colors from 'const/colors'
 
 export default function() {
+  const history = useHistory()
+  function onNext() {
+    history.push("/goal/7");
+  }
   return (
     <div className='report-page-container'>
       <div style={{ paddingTop: '40px' }}>
@@ -33,7 +38,7 @@ export default function() {
           ✓ 9月に産まれる娘のために <br/>
         </span>
       </div>
-      <SingleButton title='レポートを表示する' color={Colors.RED} />
+      <SingleButton title='レポートを表示する' color={Colors.RED} onClick={onNext} />
     </div>
   )
 }

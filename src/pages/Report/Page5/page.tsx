@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -12,7 +12,6 @@ import CustomDrink from 'components/Drink/custom'
 import Frequency from 'components/Drink/frequency'
 import SingleButton from 'components/SingleButton'
 
-import { StandardDrink, OtherDrink } from 'types/drinks'
 import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import * as Icons from 'const/icons'
@@ -22,11 +21,14 @@ export default function({
   drinks
 }: DrinkProps) {
   const history = useHistory()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
   function onNext() {
-    history.push("/goal/3");
+    history.push("/goal/6");
   }
   function onBack() {
-    history.push("/goal/5");
+    history.push("/goal/4");
   }
   return (
     <div className='report-page-container'>
@@ -123,7 +125,7 @@ export default function({
       <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
         <Frequency icon={Icons.calendar} title='飲酒頻度' value1={'週'} value2={4} />
         {DRINK_INFO.map((item, index) => (
-          <Drink drink={item} />  
+          <Drink key={index} info={item} value={drinks[item.id]} />
         ))}
         <CustomDrink icon={Icons.extra} title='その他のお酒' value1={9} value2={500} />
       </div>
@@ -140,7 +142,7 @@ export default function({
             <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
           </Button>
       </div>
-      <SingleButton title='O     K' color={Colors.RED} nonSticky={true} />
+      <SingleButton title='O     K' color={Colors.RED} nonSticky={true} onClick={onNext} />
     </div>
   )
 }

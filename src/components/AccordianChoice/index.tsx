@@ -8,15 +8,23 @@ interface props {
     title: string
     description: string
   }[]
+  selected: number[]
+  updateItem: (index: number) => void
 }
 
 export default function({
-  info
+  info,
+  selected,
+  updateItem
 }: props) {
-  const [selected, updateSelected] = useState<undefined | number>(undefined)
+  // const [selected, updateSelected] = useState<number[]>([])
 
   function onItemClick(index: number) {
-    updateSelected(index)
+    updateItem(index)
+    // if (!selected.includes(index))
+    //   updateSelected(prev => [...prev, index])
+    // else 
+    //   updateSelected(prev => [...(prev.filter(value => value !== index))])
   }
 
   return (
@@ -29,7 +37,7 @@ export default function({
           key={index} 
           content={item} 
           index={index} 
-          selected={selected === index} 
+          selected={selected.includes(index)} 
           onItemClick={onItemClick} />
       ))}
     </div>

@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import Page from './page'
 
 const mapStateToProps = (state: RootState) => ({
-  answer: state.question.question4
+  answer: state.question.question4,
+  drinks: state.question.drinks,
+  otherDrinks: state.question.otherDrinks
 })
 
 const mapDispatchToProps = { 

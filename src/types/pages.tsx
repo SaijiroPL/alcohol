@@ -1,4 +1,4 @@
-import { DrinkVolume } from 'types/drinks'
+import { DrinkVolume, OtherDrink } from 'types/drinks'
 
 export interface QuestionProps {
   answer: number
@@ -6,5 +6,8 @@ export interface QuestionProps {
 }
 
 export interface DrinkProps {
-  drinks: DrinkVolume[]
+  drinks: {[key: string]: DrinkVolume}
+  otherDrinks?: OtherDrink[]
+  setDrink?: (payload: any) => void
+  setOtherDrink?: (payload: any) => void
 }

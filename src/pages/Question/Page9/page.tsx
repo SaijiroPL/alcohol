@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import MultiButton from 'components/MultiButton'
+
 import { QuestionProps } from 'types/pages'
+import { PAGE_INFOES } from 'const/selections'
 
 import './styles.css';
 
@@ -13,13 +15,6 @@ export default function({
   setAnswer
 }: QuestionProps) {
   const history = useHistory();
-  const selections = [
-    'なし',
-    '月1回未満',
-    '毎月',
-    '毎週',
-    'ほぼ毎日',
-  ]
   function onNext() {
     history.push("/question/10");
   }
@@ -30,9 +25,9 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={9} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>飲酒翌朝に夕べの行動を思い出せなかったことが、過去1年でどれくらいありますか？</div>
+        <div className='ac-question-text'>{PAGE_INFOES[8].title}</div>
       </div>
-      <MultiChoice answer={answer} setAnswer={setAnswer} options={selections} elementStyle={{ margin: '10px' }} columns={1}/>
+      <MultiChoice answer={answer} setAnswer={setAnswer} options={PAGE_INFOES[8].selections} elementStyle={{ margin: '10px' }} columns={1}/>
       <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )

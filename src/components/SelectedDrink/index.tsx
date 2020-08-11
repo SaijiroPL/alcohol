@@ -10,7 +10,7 @@ interface props {
   icon: string
   type: string
   percent?: number
-  volume?: number
+  volume?: number | string
   unit?: string
   alcohol: number | string
   alcoholColor: 'green' | 'red'

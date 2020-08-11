@@ -6,7 +6,7 @@ import MultiChoice from 'components/MultiChoice'
 import MultiButton from 'components/MultiButton'
 
 import { QuestionProps } from 'types/pages'
-
+import { PAGE_INFOES } from 'const/selections'
 import './styles.css';
 
 export default function({
@@ -14,13 +14,6 @@ export default function({
   setAnswer
 }: QuestionProps) {
   const history = useHistory();
-  const selections = [
-    'なし',
-    '月1回未満',
-    '毎月',
-    '毎週',
-    'ほぼ毎日',
-  ]
   function onNext() {
     history.push("/question/7");
   }
@@ -31,9 +24,9 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={6} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>飲酒のせいで、通常あなたが行うことになっている事を行うことができなかったことが、過去1年でどれくらいの頻度ありますか？</div>
+        <div className='ac-question-text'>{PAGE_INFOES[5].title}</div>
       </div>
-      <MultiChoice answer={answer} setAnswer={setAnswer} options={selections} elementStyle={{ margin: '10px' }} columns={1}/>
+      <MultiChoice answer={answer} setAnswer={setAnswer} options={PAGE_INFOES[5].selections} elementStyle={{ margin: '10px' }} columns={1}/>
       <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from "react-router-dom";
 
 import SingleButton from 'components/SingleButton'
 import SelectedDrink from 'components/SelectedDrink'
@@ -10,6 +11,10 @@ import * as Colors from 'const/colors'
 import './styles.css';
 
 export default function() {
+  const history = useHistory();
+  function onNext() {
+    history.push("/goal/3");
+  }
   return (
     <div className='report-page-container'>
       <div className='report-title'>
@@ -58,7 +63,7 @@ export default function() {
         まだまだお酒の量が多いようです <br/>
         今の量を飲み続けるとどうなるでしょうか？
       </div>
-      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} />
+      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} onClick={onNext} />
     </div>
   )
 }

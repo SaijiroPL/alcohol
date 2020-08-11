@@ -11,15 +11,18 @@ import MultiButton from 'components/MultiButton'
 import { DrinkVolume, OtherDrink } from 'types/drinks'
 import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
+import { PAGE_INFOES } from 'const/selections'
 import * as Icons from 'const/icons'
 
 import './styles.css';
 
 export default function({
-  drinks
+  drinks,
+  otherDrinks,
+  setDrink,
+  setOtherDrink
 }: DrinkProps) {
   const history = useHistory()
-  const [otherDrinks, setOtherDrinks] = useState<OtherDrink[]>([])
 
   function onNext() {
     history.push("/question/4");
@@ -29,19 +32,25 @@ export default function({
   }
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
-    setOtherDrinks(prev => [...prev, newObj])
+    if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
   }
   return (
     <div className='ac-question-container'>
       <QuestionTitle sequence={3} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>飲酒をする時は、平均してどのくらいの量を飲みますか？</div>
+        <div className='ac-question-text'>{PAGE_INFOES[2].title}</div>
       </div>
       {DRINK_INFO.map((item, index) => (
-        <Drink drink={item} />  
+        <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+          if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
+        }} />  
       ))}
-      {otherDrinks.map((item, index) => (
-        <CustomDrink icon={Icons.extra} title='その他のお酒' value1={9} value2={500} />
+      {otherDrinks && otherDrinks.map((item, index) => (
+        <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
+          if (setOtherDrink) setOtherDrink({
+            index: index, 
+            drink: {alcohol: percent, volume: volume}})
+        }} />
       ))}
       <div className='ac-drink-extrabtn-wrapper'>
         <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{

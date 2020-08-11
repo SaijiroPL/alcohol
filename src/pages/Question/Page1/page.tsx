@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
  
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
@@ -8,6 +8,8 @@ import SingleButton from 'components/SingleButton'
 
 import * as Colors from 'const/colors'
 import { QuestionProps } from 'types/pages'
+import { PAGE_INFOES } from 'const/selections'
+
 import './styles.css';
 
 interface props extends QuestionProps {
@@ -30,7 +32,7 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={1} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>あなたの年齢、性別を入力してください</div>
+        <div className='ac-question-text'>{PAGE_INFOES[0].title}</div>
       </div>
       <MultiChoice 
         answer={answer}

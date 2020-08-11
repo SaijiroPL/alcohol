@@ -1,7 +1,7 @@
-import { StandardDrink } from 'types/drinks'
+import { StandardDrinkInfo } from 'types/drinks'
 import * as Icons from 'const/icons'
 
-export const DRINK_INFO: StandardDrink[] = [
+export const DRINK_INFO: StandardDrinkInfo[] = [
   {
     id: 'beerLight',
     icon: Icons.beerLight, 
@@ -25,7 +25,7 @@ export const DRINK_INFO: StandardDrink[] = [
   {
     id: 'chuhai',
     icon: Icons.chuhai, 
-    type: 'ビール', 
+    type: 'チューハイ', 
     percent: 5, 
     volume1: 350, 
     volume2: 500, 
@@ -34,7 +34,7 @@ export const DRINK_INFO: StandardDrink[] = [
   {
     id: 'chuhaiStrong',
     icon: Icons.chuhaiStrong, 
-    type: 'ビール', 
+    type: 'チューハイ', 
     subType: 'ストロング', 
     percent: 9, 
     volume1: 350, 
@@ -45,16 +45,18 @@ export const DRINK_INFO: StandardDrink[] = [
     id: 'jpWine',
     icon: Icons.jpWine, 
     type: '日本酒', 
-    percent: 15, 
-    volume1: '', 
+    percent: 15,
+    volume1: 200, 
+    volumeStr: '',
     unit: '合'
   },
   {
     id: 'awamori',
     icon: Icons.awamori, 
     type: '泡盛(生地)', 
-    percent: 25, 
-    volume1: 'グラス', 
+    percent: 25,
+    volume1: 200, 
+    volumeStr: 'グラス', 
     unit:'杯'
   },
   {
@@ -62,16 +64,18 @@ export const DRINK_INFO: StandardDrink[] = [
     icon: Icons.shochuStrong, 
     type: '焼酎水割り', 
     subType: '濃いめ', 
-    percent: 15, 
-    volume1: 'グラス', 
+    percent: 15,
+    volume1: 200, 
+    volumeStr: 'グラス', 
     unit: '杯'
   },
   {
     id: 'shochu',
     icon: Icons.shochu, 
     type: '焼酎水割り', 
-    percent: 12.5, 
-    volume1: 'グラス', 
+    percent: 12.5,
+    volume1: 200, 
+    volumeStr: 'グラス', 
     unit: '杯'
   },
   {
@@ -79,8 +83,9 @@ export const DRINK_INFO: StandardDrink[] = [
     icon: Icons.shochuLight, 
     type: '焼酎水割り', 
     subType: 'うすめ', 
-    percent: 10, 
-    volume1: 'グラス', 
+    percent: 10,
+    volume1: 200, 
+    volumeStr: 'グラス', 
     unit: '杯'
   },
   {

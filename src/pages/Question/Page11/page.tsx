@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import MultiButton from 'components/MultiButton'
+
 import { QuestionProps } from 'types/pages'
+import { PAGE_INFOES } from 'const/selections'
 
 import './styles.css';
 
@@ -13,11 +15,6 @@ export default function({
   setAnswer
 }: QuestionProps) {
   const history = useHistory();
-  const selections = [
-    'なし',
-    'あるが、1年以上前',
-    '1年1内にある',
-  ]
   function onNext() {
     history.push("/question/12");
   }
@@ -28,9 +25,9 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={11} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>親類、友人、医師などが、あなたの飲酒について心配をしたり、飲酒を控えるようにと薦めてきたことはありますか？</div>
+        <div className='ac-question-text'>{PAGE_INFOES[10].title}</div>
       </div>
-      <MultiChoice answer={answer} setAnswer={setAnswer} options={selections} elementStyle={{ margin: '10px', width: '300px' }} columns={1}/>
+      <MultiChoice answer={answer} setAnswer={setAnswer} options={PAGE_INFOES[10].selections} elementStyle={{ margin: '10px', width: '300px' }} columns={1}/>
       <MultiButton onNext={onNext} onBack={onBack} />
     </div>
   )
