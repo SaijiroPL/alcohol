@@ -10,17 +10,20 @@ import { PAGE_INFOES } from 'const/selections'
 interface props {
   answer: number[]
   setAnswer: (answer: number[]) => void
+  setGroup: (group: 'A' | 'B') => void
 }
 
 export default function({
   answer,
-  setAnswer
+  setAnswer,
+  setGroup
 }: props) {
   const history = useHistory();
   const [selected, updateSelected] = useState<number[]>(answer)
 
   function onNext() {
     history.push("/goal/1");
+    Math.random() < 0.5 ? setGroup('A') : setGroup('B')
     setAnswer(selected)
   }
   function onBack() {

@@ -27,6 +27,8 @@ import mic from 'svgs/mic.svg'
 import arrowRight from 'svgs/arrow-right.svg';
 import arrowDown from 'svgs/arrow-down.svg';
 import arrowUp from 'svgs/arrow-up.svg';
+import arrowDownWhite from 'svgs/arrow-down-white.svg';
+import arrowUpWhite from  'svgs/arrow-up-white.svg';
 
 import chart from 'svgs/chart.svg';
 import man from 'svgs/man.svg';
@@ -39,6 +41,8 @@ export {
   arrowRight,
   arrowDown,
   arrowUp,
+  arrowDownWhite,
+  arrowUpWhite,
   beerLight,
   beerStrong,
   chuhai,

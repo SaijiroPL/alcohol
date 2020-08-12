@@ -1,5 +1,5 @@
 import { RootState } from 'store'
-import { setRank, setDaily } from 'store/report'
+import { setRank, setDaily, setNewRank, setNewDaily } from 'store/report'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -13,7 +13,8 @@ const mapStateToProps = (state: RootState) => ({
   age: state.question.age,
   question2: state.question.question2,
   drinks: state.question.drinks,
-  otherDrinks: state.question.otherDrinks
+  otherDrinks: state.question.otherDrinks,
+  group: state.report.group
 })
 
 const mapDispatchToProps = { 

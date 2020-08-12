@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -8,7 +8,7 @@ import Drink from 'components/Drink'
 import CustomDrink from 'components/Drink/custom'
 import MultiButton from 'components/MultiButton'
 
-import { DrinkVolume, OtherDrink } from 'types/drinks'
+import { OtherDrink } from 'types/drinks'
 import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import { PAGE_INFOES } from 'const/selections'
@@ -43,7 +43,7 @@ export default function({
       {DRINK_INFO.map((item, index) => (
         <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
           if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
-        }} />  
+        }} />
       ))}
       {otherDrinks && otherDrinks.map((item, index) => (
         <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {

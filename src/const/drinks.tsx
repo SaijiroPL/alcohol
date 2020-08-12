@@ -46,7 +46,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     icon: Icons.jpWine, 
     type: '日本酒', 
     percent: 15,
-    volume1: 200, 
+    volume1: 180, 
     volumeStr: '',
     unit: '合'
   },
@@ -55,7 +55,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     icon: Icons.awamori, 
     type: '泡盛(生地)', 
     percent: 25,
-    volume1: 200, 
+    volume1: 180, 
     volumeStr: 'グラス', 
     unit:'杯'
   },
@@ -65,7 +65,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     type: '焼酎水割り', 
     subType: '濃いめ', 
     percent: 15,
-    volume1: 200, 
+    volume1: 180, 
     volumeStr: 'グラス', 
     unit: '杯'
   },
@@ -74,7 +74,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     icon: Icons.shochu, 
     type: '焼酎水割り', 
     percent: 12.5,
-    volume1: 200, 
+    volume1: 180, 
     volumeStr: 'グラス', 
     unit: '杯'
   },
@@ -84,7 +84,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     type: '焼酎水割り', 
     subType: 'うすめ', 
     percent: 10,
-    volume1: 200, 
+    volume1: 180, 
     volumeStr: 'グラス', 
     unit: '杯'
   },
@@ -93,7 +93,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     icon: Icons.wine, 
     type: 'ワイン', 
     percent: 12, 
-    volume1: 200, 
+    volume1: 120, 
     unit: '杯'
   },
   {

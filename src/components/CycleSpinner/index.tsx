@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -9,25 +9,25 @@ interface props {
   value: '週' | '月'
   suffix: string
   suffixStyle?: any
-  onValueChange?: () => void
+  onValueChange?: (value: '週' | '月') => void
 }
 
 export default function({
   value,
   suffix,
-  suffixStyle
+  suffixStyle,
+  onValueChange
 }: props) {
-  const [spinValue, updateValue] = useState<'週' | '月'>(value);
   function increaseValue() {
-    updateValue(prev => prev === '月' ? '週' : '月');
+    if(onValueChange) onValueChange(value === '月' ? '週' : '月');
   }
   function decreaseValue() {
-    updateValue(prev => prev === '月' ? '週' : '月');
+    if(onValueChange) onValueChange(value === '月' ? '週' : '月');
   }
   return (
     <div className='ac-spinner-wrapper'>
       <div className='ac-spinner-container'>
-        <span className='ac-spinner-number'>{spinValue}</span>
+        <span className='ac-spinner-number'>{value}</span>
         <div className='ac-spinner-arrow-container'>
           <IconButton 
             className='ac-spinner-arrow' 

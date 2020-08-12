@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -14,61 +14,122 @@ import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
+import { OtherDrink } from 'types/drinks'
+
+interface props extends DrinkProps {
+  frequency: number,
+  rank: number,
+  newRank: number,
+  daily: number,
+  newDaily: number,
+  group: 'A' | 'B',
+  setFrequency: (frequency: number) => void
+  setNewDaily: (daily: number) => void
+  setNewRank: (rank: number) => void
+  initDrinks: (drinks: any) => void
+  initOtherDrinks: (drinks: any) => void
+}
 
 export default function({
-  drinks
-}: DrinkProps) {
+  frequency,
+  daily,
+  newDaily,
+  rank,
+  drinks,
+  otherDrinks,
+  newRank,
+  group,
+  setDrink,
+  setOtherDrink,
+  setFrequency,
+  initDrinks,
+  initOtherDrinks
+}: props) {
   const history = useHistory()
+  const [tutorial, setTutorial] = useState(group === 'A' ? 0 : 2)
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [])
+    if (initDrinks && initOtherDrinks) {
+      initDrinks(drinks)
+      initOtherDrinks(otherDrinks)
+    }
+  }, [drinks, otherDrinks, initDrinks, initOtherDrinks])
+
   function onNext() {
-    history.push("/goal/5");
+    if (group === 'A')
+      history.push("/goal/5");
+    else
+      history.push("/goal/6");
   }
+
+  function onAddExtra() {
+    const newObj: OtherDrink = {alcohol: 9, volume: 500};
+    if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
+  }
+
   return (
     <div className='report-page-container'>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
-        <div style={{ height: '72px', marginTop: '15px' }}>
-          <Rank rank={30} style={{
-            radius: 36,
-            fontSizeUp: '36px',
-            fontSizeDown: '12px'
-          }}/>
-        </div>
-        <img src={Icons.arrowRight} alt='arrow' style={{ marginLeft: '15px', marginRight: '15px' }}/>
-        <div style={{ height: '102px' }}>
-          <Rank rank={94} style={{
-            radius: 51,
-            fontSizeUp: '50px',
-            fontSizeDown: '16px'
-          }}/>
-          <div style={{ marginTop: '10px' }}>
-            <span style={{ 
-              color: 'black', 
-              fontSize: '16px', 
-              fontWeight: 'bold', 
-              borderBottom: '2px solid black',
-              marginLeft: '-40px' }}>
-              死亡リスクの上昇する飲酒量
-            </span>
+      {group === 'A' && (
+        <>
+          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '35px' }}>
+            <div style={{ height: '72px', marginTop: '15px' }}>
+              <Rank rank={rank} style={{
+                radius: 36,
+                fontSizeUp: '36px',
+                fontSizeDown: '12px'
+              }}/>
+            </div>
+            <img src={Icons.arrowRight} alt='arrow' style={{ marginLeft: '15px', marginRight: '15px' }}/>
+            <div style={{ height: '102px' }}>
+              <Rank rank={newRank} style={{
+                radius: 51,
+                fontSizeUp: '50px',
+                fontSizeDown: '16px'
+              }}/>
+              <div style={{ marginTop: '10px' }}>
+                <span style={{ 
+                  color: 'black', 
+                  fontSize: '16px', 
+                  fontWeight: 'bold', 
+                  borderBottom: '2px solid black' }}>
+                    {newDaily >= 0 && newDaily <= 20 && '節度ある飲酒量!'}
+                    {newDaily >= 21 && newDaily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+                    {newDaily >= 41 && newDaily <= 60 && '死亡リスクの上昇する飲酒量'}
+                    {newDaily >= 61 && '非常に危険な飲酒量'}
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div style={{ marginTop: '120px' }}>
-        <Chart rank={30} rank2={94} volume={55} volume2={6}  />
-      </div>
+          <div style={{ marginTop: '120px' }}>
+            <Chart rank={rank} rank2={newRank} volume={daily} volume2={newDaily} />
+          </div>          
+        </>
+      )}
       <div className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>
         目標飲酒量を設定しましょう
       </div>
       <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
-        <Frequency icon={Icons.calendar} title='飲酒頻度' value1={'週'} value2={4} />
+        <Frequency 
+          icon={Icons.calendar} 
+          title='飲酒頻度' 
+          value1={frequency > 3 ? '週' : '月'} 
+          value2={frequency > 3 ? frequency - 3 : frequency}
+          updateValue={setFrequency} />
         {DRINK_INFO.map((item, index) => (
-          <Drink key={index} info={item} value={drinks[item.id]} />
+          <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+            if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
+          }} />
         ))}
-        <CustomDrink icon={Icons.extra} title='その他のお酒' value1={9} value2={500} /> 
+        {otherDrinks !== undefined && otherDrinks.map((item, index) => (
+          <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
+            if (setOtherDrink) setOtherDrink({
+              index: index, 
+              drink: {alcohol: percent, volume: volume}})
+          }} />
+        ))}
       </div>
       <div className='ac-drink-extrabtn-wrapper'>
-        <Button className='ac-drink-extrabtn' style={{
+        <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
             backgroundColor: '#AAAAAA', 
             color: 'white', 
             borderTopLeftRadius: 20,
@@ -81,6 +142,31 @@ export default function({
           </Button>
       </div>
       <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} onClick={onNext} />
+      {tutorial === 0 && (
+        <div style={{ 
+          position: 'absolute', width: '100%', height: '380px', top: 0, 
+          background: Colors.RED_TRANS,
+          textAlign: 'center',
+          color: 'white', fontWeight: 'bold' }}
+          onClick={() => setTutorial(1)}>
+          <div style={{ fontSize: '30px', marginTop: '80px' }}>減酒目標を <br/> 立てましょう</div>
+          <div style={{ fontSize: '22px', marginTop: '30px', marginBottom: '30px' }}>これからの飲酒頻度と <br/> 飲酒量を設定すると</div>
+          <img src={Icons.arrowDownWhite} alt='arrow'/>
+          <div style={{ fontSize: '14px', marginTop: '40px' }}>画面をタップ</div>
+        </div>
+      )}
+      {tutorial === 1 && (
+        <div style={{ 
+          position: 'absolute', width: '100%', height: 'calc(100% - 380px)', top: '380px', 
+          background: Colors.RED_TRANS,
+          textAlign: 'center',
+          color: 'white', fontWeight: 'bold' }}
+          onClick={() => setTutorial(2)}>
+            <img src={Icons.arrowUpWhite} alt='arrow' style={{ marginTop: '20px' }}/>
+            <div style={{ fontSize: '28px', marginTop: '30px' }}>順位と純アルコール量が<br/> 変化します</div>
+            <div style={{ fontSize: '14px', marginTop: '30px' }}>画面をタップ</div>
+        </div>
+      )}
     </div>
   )
 }

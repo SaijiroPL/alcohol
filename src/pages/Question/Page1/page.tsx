@@ -15,13 +15,17 @@ import './styles.css';
 interface props extends QuestionProps {
   age: number
   setAge: (age: number) => void
+  setReportAge: (age: number) => void
+  setGender: (age: number) => void
 }
 
 export default function({
   age,
   answer,
   setAge,
-  setAnswer
+  setAnswer,
+  setReportAge,
+  setGender
 }: props) {
   const history = useHistory();
   function onNext() {
@@ -39,9 +43,15 @@ export default function({
         options={['男性', '女性']} 
         elementStyle={{ margin: '20px' }} 
         columns={1}
-        setAnswer={setAnswer}/>
+        setAnswer={(index) => {
+          setAnswer(index)
+          setGender(index)
+        }}/>
       <div>
-        <Spinner value={age} suffix='歳' min={20} max={100} onValueChange={setAge} />
+        <Spinner value={age} suffix='歳' min={20} max={100} onValueChange={(value) => {
+          setAge(value)
+          setReportAge(value)
+        }} />
       </div>
       <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} />
     </div>

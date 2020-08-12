@@ -27,6 +27,7 @@ interface props {
   otherDrinks: OtherDrink[]
   setRank: (score: number) => void
   setDaily: (daily: number) => void
+  group: 'A' | 'B'
 }
 
 export default function({
@@ -38,6 +39,7 @@ export default function({
   age, gender,
   drinks,
   otherDrinks,
+  group,
   setRank,
   setDaily
 }: props) {
@@ -59,7 +61,7 @@ export default function({
     setDaily(Math.ceil(dailyAmt))
 
     const ageLevel = Math.floor((age - 20) / 5)
-    const drinkLevel = alcohol / 10
+    const drinkLevel = dailyAmt / 10
     let drinkIndex = 0
     if (drinkLevel <= 2) {
       drinkIndex = RANKS[gender][ageLevel].level12
@@ -72,11 +74,14 @@ export default function({
     } else {
       drinkIndex = RANKS[gender][ageLevel].level10
     }
-    setRank(Math.ceil(drinkIndex * RANKS[gender][ageLevel].sum / 100))
-  }, [])
+    setRank(Math.ceil(drinkIndex * 100 / RANKS[gender][ageLevel].sum))
+  })
 
   function onNext() {
-    history.push("/goal/3");
+    if (group === 'A')
+      history.push("/goal/3");
+    else
+      history.push("/goal/4");
   }
 
   function calcTotalAlcohol(item: StandardDrinkInfo) {
@@ -120,34 +125,38 @@ export default function({
       <div className='report-title'>
         <span>あなたの飲酒量は</span>
       </div>
-      <div 
-        className='container-center-text' 
-        style={{ 
-          marginTop: '10px', 
-          fontSize: '16px', 
-          color: '#993333'
-        }}>
-        {Math.floor((age - 20) / 5) * 5 + 20} - {Math.floor((age - 20) / 5) * 5 + 24}歳の日本人{gender === 0 ? '男性' : '女性'}で
-      </div>
-      <div style={{ marginTop: '10px', textAlign: 'center' }}>
-        <Rank rank={rank} style={{
-          radius: 62,
-          fontSizeUp: '65px',
-          fontSizeDown: '18px'
-        }}/>
-      </div>
-      <div className='container-center-text' style={{
-        fontSize: '18px',
-        marginTop: '15px',
-      }}>
-        <span className='report1-static-label'>
-          {alcohol >= 0 && alcohol <= 20 && '節度ある飲酒量'}
-          {alcohol >= 21 && alcohol <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-          {alcohol >= 41 && alcohol <= 60 && '死亡リスクの上昇する飲酒量'}
-          {alcohol >= 61 && '非常に危険な飲酒量'}
-        </span>
-      </div>
-      <Chart rank={rank} volume={daily} />
+      {group === 'A' && (
+        <>
+          <div 
+            className='container-center-text' 
+            style={{ 
+              marginTop: '10px', 
+              fontSize: '16px', 
+              color: '#993333'
+            }}>
+            {Math.floor((age - 20) / 5) * 5 + 20} - {Math.floor((age - 20) / 5) * 5 + 24}歳の日本人{gender === 0 ? '男性' : '女性'}で
+          </div>
+          <div style={{ marginTop: '10px', textAlign: 'center' }}>
+            <Rank rank={rank} style={{
+              radius: 62,
+              fontSizeUp: '65px',
+              fontSizeDown: '18px'
+            }}/>
+          </div>
+          <div className='container-center-text' style={{
+            fontSize: '18px',
+            marginTop: '15px',
+          }}>
+            <span className='report1-static-label'>
+              {daily >= 0 && daily <= 20 && '節度ある飲酒量!'}
+              {daily >= 21 && daily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+              {daily >= 41 && daily <= 60 && '死亡リスクの上昇する飲酒量'}
+              {daily >= 61 && '非常に危険な飲酒量'}
+            </span>
+          </div>
+          <Chart rank={rank} volume={daily} />
+        </>
+      )}
       <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
         <span>一日の純アルコール摂取量</span>
       </div>

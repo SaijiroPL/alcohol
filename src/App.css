@@ -16,6 +16,7 @@
   font-family: source-han-sans-japanese, sans-serif;
   font-style: normal;
   justify-content: center;
+  position: relative;
 }
 
 .font-hira {
