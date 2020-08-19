@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Button } from '@material-ui/core';
 
 import Rank from 'components/Chart/rank'
@@ -16,6 +16,7 @@ interface props {
   question: number[]
   score: number
   alcohol: number
+  newAlcohol: number
   question2: number
   rank: number
   daily: number
@@ -36,7 +37,7 @@ interface props {
 export default function({
   question,
   score,
-  alcohol,
+  alcohol, newAlcohol,
   daily, rank,
   newDaily, newRank,
   age, gender,
@@ -46,6 +47,7 @@ export default function({
   will, group
 }: props) {
   const [cycle, setCycle] = useState('')
+  const refRoot = useRef<HTMLDivElement>(null)
   useEffect(() => {
     let dailyAmt = 0;
     if (question[0] === 0) {
@@ -101,7 +103,7 @@ export default function({
     return Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
   }
   return (
-    <div className='report-page-container' style={{ padding: '30px' }}>
+    <div className='report-page-container' style={{ padding: '10px' }} ref={refRoot}>
       <div className='font-kans container-center-text' style={{
         color: '#993333',
         fontSize: '20px',
@@ -194,7 +196,7 @@ export default function({
                 {daily >= 61 && '非常に危険な飲酒量'}
               </span>
             </div>
-            <Chart rank={rank} volume={daily} />
+            <Chart rank={rank} volume={alcohol} />
             <div className='ac-drinks-container'>
               <SelectedDrink icon={Icons.calendar} type='飲酒頻度' alcohol={cycle} alcoholColor='red' />
               {DRINK_INFO.map((item) => (
@@ -223,7 +225,7 @@ export default function({
               {Math.floor((age - 20) / 5) * 5 + 20} - {Math.floor((age - 20) / 5) * 5 + 24}歳の日本人{gender === 0 ? '男性' : '女性'}で
             </div>
             <div style={{ marginTop: '10px', textAlign: 'center' }}>
-              <Rank rank={94} style={{
+              <Rank rank={newRank} style={{
                 radius: 62,
                 fontSizeUp: '65px',
                 fontSizeDown: '18px'
@@ -244,7 +246,7 @@ export default function({
                 を目指します
               </span>
             </div>
-            <Chart rank2={newRank} volume2={newDaily} />
+            <Chart rank2={newRank} volume2={newAlcohol} />
             <div className='ac-drinks-container'>
               <SelectedDrink icon={Icons.calendar} type='飲酒頻度' alcohol={cycle} alcoholColor='red' />
               {DRINK_INFO.map((item) => (
@@ -345,8 +347,8 @@ export default function({
           がんばってください！
         </div>
       </div>
-      <SingleButton title='保存しないで終了する' color={Colors.RED} nonSticky={true} />
-      <SingleButton title='レポートを保存する' color={Colors.WHITE} nonSticky={true} textColor={Colors.PALEGREEN} />
+      <SingleButton title='レポートを保存して終了する' color={Colors.RED} nonSticky={true} />
+      <SingleButton title='保存しないで終了する' color={Colors.WHITE} nonSticky={true} textColor={Colors.PALEGREEN} />
     </div>
   )
 }

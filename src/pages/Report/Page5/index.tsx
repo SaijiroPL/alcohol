@@ -1,11 +1,9 @@
 import { RootState } from 'store'
 import { 
-  setFrequency, 
-  setNewDaily, 
+  setFrequency,
   setNewRank, 
   setDrink, 
   setOtherDrink,
-  setNewDisease
 } from 'store/report'
 import { connect } from 'react-redux'
 
@@ -27,9 +25,7 @@ const mapDispatchToProps = {
   setDrink,
   setOtherDrink,
   setFrequency,
-  setNewDaily,
   setNewRank,
-  setNewDisease
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

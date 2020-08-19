@@ -52,7 +52,7 @@ export default function({
           <span><img src={tick} alt='tick' className='tick-icon' />お金を貯めるために<br/></span>
           <span><img src={tick} alt='tick' className='tick-icon' />9月に産まれる娘のために<br/></span>
       </div>
-      <SingleButton title='レポートを表示する' color={Colors.RED} onClick={onNext} />
+      <SingleButton title='レポートを表示する' color={Colors.RED} onClick={onNext} nonSticky={true} />
     </div>
   )
 }

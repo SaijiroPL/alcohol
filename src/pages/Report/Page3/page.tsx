@@ -39,6 +39,9 @@ export default function({
   function onNext() {
     history.push("/goal/4");
   }
+  function roundDisease(org: number) {
+    return Math.round(org * 10) / 10
+  }
   return (
     <div className='report-page-container'>
       <div style={{ marginTop: '32px', textAlign: 'center' }}>
@@ -55,16 +58,16 @@ export default function({
         お酒を飲まない人との比較
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Disease icon={life} content={disease[0]} unit='倍' title='死亡リスク' />
-        <Disease icon={ambulance} content={disease[1]} unit='倍' title='アルコール関連疾患リスク' />
+        <Disease icon={life} content={roundDisease(disease[0])} unit='倍' title='死亡リスク' />
+        <Disease icon={ambulance} content={roundDisease(disease[1])} unit='倍' title='アルコール関連疾患リスク' />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <Disease icon={liver} content={disease[2]} unit='倍' title='肝臓がんリスク' imgStyle={{ marginTop: '10px' }} />
-        <Disease icon={esophagus} content={disease[3]} unit='倍' title='食道がんリスク' />
+        <Disease icon={esophagus} content={roundDisease(disease[3])} unit='倍' title='食道がんリスク' />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Disease icon={pancreatitis} content={disease[4]} unit='倍' title='膵炎リスク' />
-        <Disease icon={brain} content={disease[5]} unit='倍' title='脳卒中リスク' />
+        <Disease icon={pancreatitis} content={roundDisease(disease[4])} unit='倍' title='膵炎リスク' />
+        <Disease icon={brain} content={roundDisease(disease[5])} unit='倍' title='脳卒中リスク' />
       </div>
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '30px', marginBottom: '20px' }}>
         お酒は人生に関わる病気のリスクを高めます<br/>お酒を減らし、将来の健康を手に入れましょう

@@ -20,6 +20,8 @@ interface props extends DrinkProps {
   frequency: number,
   rank: number,
   newRank: number,
+  alcohol: number,
+  newAlcohol: number,
   daily: number,
   newDaily: number,
   group: 'A' | 'B',
@@ -34,6 +36,8 @@ export default function({
   frequency,
   daily,
   newDaily,
+  alcohol,
+  newAlcohol,
   rank,
   drinks,
   otherDrinks,
@@ -92,23 +96,23 @@ export default function({
                   fontSize: '16px', 
                   fontWeight: 'bold', 
                   borderBottom: '2px solid black' }}>
-                    {newDaily >= 0 && newDaily <= 20 && '節度ある飲酒量!'}
-                    {newDaily >= 21 && newDaily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-                    {newDaily >= 41 && newDaily <= 60 && '死亡リスクの上昇する飲酒量'}
-                    {newDaily >= 61 && '非常に危険な飲酒量'}
+                    {newAlcohol >= 0 && newAlcohol <= 20 && '節度ある飲酒量!'}
+                    {newAlcohol >= 21 && newAlcohol <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+                    {newAlcohol >= 41 && newAlcohol <= 60 && '死亡リスクの上昇する飲酒量'}
+                    {newAlcohol >= 61 && '非常に危険な飲酒量'}
                 </span>
               </div>
             </div>
           </div>
           <div style={{ marginTop: '120px' }}>
-            <Chart rank={rank} rank2={newRank} volume={daily} volume2={newDaily} />
+            <Chart rank={rank} rank2={newRank} volume={alcohol} volume2={newAlcohol} />
           </div>          
         </>
       )}
       <div className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>
         目標飲酒量を設定しましょう
       </div>
-      <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+      <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
         <Frequency 
           icon={Icons.calendar} 
           title='飲酒頻度' 

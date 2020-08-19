@@ -4,12 +4,12 @@
   justify-content: center;
   font-family: source-han-sans-japanese, sans-serif;
   font-style: normal;
-  margin-top: 45px;
+  margin: 45px 0 0 10px;
   color: #707070;
 }
 
 .ac-drink-name-container {
-  margin-left: 26px;
+  margin-left: 6px;
   width: 100px;
   text-align: center;
 }
@@ -21,7 +21,7 @@
 }
 
 .ac-drink-unit-container {
-  margin-left: 35px;
+  margin-left: 5px;
   width: 180px;
 }
 
@@ -43,7 +43,7 @@
 
 .ac-drink-volume {
   font-size: 22px;
-  margin-right: 35px;
+  margin-right: 15px;
   display: flex;
   align-items: center;
 }

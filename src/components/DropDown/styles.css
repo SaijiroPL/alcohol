@@ -1,0 +1,34 @@
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* .dropdown-container .MuiInput-root {
+  width: 86px;
+} */
+
+.dropdown-container .MuiInputBase-root {
+  font-size: 30px;
+  text-align: center;
+}
+
+.ac-question-container .MuiInputBase-root {
+  color: #376B6D;
+}
+
+.report-page-container .MuiInputBase-root {
+  color: #993333;
+}
+
+.ac-question-container .dropdown-suffix {
+  color: #376B6D;
+}
+
+.report-page-container .dropdown-suffix {
+  color: #993333;
+}
+
+.dropdown-suffix {
+  line-height: 50px;
+  width: 30px;
+}

@@ -93,7 +93,7 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={4} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>あなたは飲酒時に平均 <span style={{ fontWeight: 'bold', fontSize: '24px' }}>{totalAlcohol}</span>g の<br/>純アルコールを摂取しています。 </div>
+        <div className='ac-question-text'>あなたは飲酒時に平均 <span style={{ fontWeight: 'bold', fontSize: '24px' }}>{totalAlcohol}</span>g の純アルコールを摂取しています。 </div>
       </div>
       <div className='ac-drinks-container'>
         {DRINK_INFO.map((item) => (
@@ -102,7 +102,7 @@ export default function({
       </div>
       <div className='ac-question-content'>
         <div className='ac-question-text' style={{ width: '300px' }}>
-          一度に純アルコール60g以上の飲酒を<br/>することがどれくらいの頻度であり<br/>ますか？
+          一度に純アルコール60g以上の飲酒をすることがどれくらいの頻度でありますか？
         </div>
       </div>
       <div className='ac-drink-extrabtn-wrapper'>

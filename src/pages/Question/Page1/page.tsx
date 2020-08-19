@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import Spinner from 'components/Spinner'
+import DropDown from 'components/DropDown'
 import SingleButton from 'components/SingleButton'
 
 import * as Colors from 'const/colors'
@@ -48,12 +49,12 @@ export default function({
           setGender(index)
         }}/>
       <div>
-        <Spinner value={age} suffix='歳' min={20} max={100} onValueChange={(value) => {
-          setAge(value)
-          setReportAge(value)
-        }} />
+      <DropDown value={age} suffix='歳' min={20} max={100} onValueChange={(value) => {
+        setAge(value)
+        setReportAge(value)
+      }} />
       </div>
-      <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} />
+      <SingleButton onClick={onNext} title='次　へ' color={Colors.GREEN} nonSticky />
     </div>
   )
 }

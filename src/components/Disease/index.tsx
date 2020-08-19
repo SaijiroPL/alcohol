@@ -50,11 +50,11 @@ export default function({
       <div className='font-hira' style={{
         color: Colors.RED,
         fontSize: '30px', 
-        position: 'absolute', top: titlePos === 'top' ? '45px' : '10px',
+        position: 'absolute', top: titlePos === 'top' ? '35px' : '10px',
         marginLeft: '15px'
       }}>
-        <span style={{ fontSize: '40px' }}>
-          {typeof(content) === 'number' && unit !== '%' ? content.toFixed(3): content}
+        <span style={{ fontSize: '60px' }}>
+          {typeof(content) === 'number' && unit !== '%' ? content.toFixed(1): content}
         </span>{unit}
       </div>
     </div>

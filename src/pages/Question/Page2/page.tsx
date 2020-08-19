@@ -29,7 +29,7 @@ export default function({
         <div className='ac-question-text'>{PAGE_INFOES[1].title}</div>
       </div>
       <MultiChoice answer={answer} options={PAGE_INFOES[1].selections} elementStyle={{ margin: '10px' }} columns={2} setAnswer={setAnswer} />
-      <MultiButton onNext={onNext} onBack={onBack} />
+      <MultiButton onNext={onNext} onBack={onBack} nonSticky />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { RootState } from 'store'
-import { setFrequency, setNewDaily, setNewRank, setDrink, setOtherDrink, initDrinks, initOtherDrinks } from 'store/report'
+import { setFrequency, setNewRank, setDrink, setOtherDrink, initDrinks, initOtherDrinks } from 'store/report'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -12,6 +12,8 @@ const mapStateToProps = (state: RootState) => ({
   newRank: state.report.newRank,
   daily: state.report.daily,
   newDaily: state.report.newDaily,
+  alcohol: state.question.alcohol,
+  newAlcohol: state.report.newAlcohol,
   group: state.report.group
 })
 
@@ -19,7 +21,6 @@ const mapDispatchToProps = {
   setDrink,
   setOtherDrink,
   setFrequency,
-  setNewDaily,
   setNewRank,
   initDrinks,
   initOtherDrinks

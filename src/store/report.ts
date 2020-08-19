@@ -1,6 +1,7 @@
 import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks'
 import { DRINK_INFO } from 'const/drinks'
 import { RANKS } from 'const/ranks'
+import { DISEASE_STAT } from 'const/disease'
 
 export function typedAction<T extends string>(type: T): { type: T }
 export function typedAction<T extends string, P extends any>(
@@ -22,6 +23,7 @@ type ReportState = {
   newRank: number
   newScore: number
   newDisease: number[]
+  newAlcohol: number
   frequency: number
   drinks: {[key: string]: DrinkVolume}
   otherDrinks: OtherDrink[]
@@ -49,6 +51,7 @@ const initStates: ReportState = {
   newRank: 94,
   newScore: 0,
   newDisease: [1.1, 1.62, 1.05, 1.43, 1.33, 1.43],
+  newAlcohol: 6,
   frequency: 6,
   drinks: initDrinkValues,
   otherDrinks: [],
@@ -131,7 +134,7 @@ function updateNewDecision(
   const newDaily = Math.ceil(dailyAmt)
 
   const ageLevel = Math.floor((state.age - 20) / 5)
-  const drinkLevel = alcohol / 10
+  const drinkLevel = Math.floor(alcohol / 10)
   let drinkIndex = 0
   if (drinkLevel <= 2) {
     drinkIndex = RANKS[state.gender][ageLevel].level12
@@ -146,7 +149,16 @@ function updateNewDecision(
   }
   const newRank = Math.ceil(drinkIndex * RANKS[state.gender][ageLevel].sum / 100)
 
-  return { ...state, newDaily: newDaily, newRank: newRank }
+  const disease = [
+    DISEASE_STAT[0][drinkLevel],
+    DISEASE_STAT[1][drinkLevel],
+    DISEASE_STAT[2][drinkLevel],
+    DISEASE_STAT[3][drinkLevel],
+    DISEASE_STAT[4][drinkLevel],
+    DISEASE_STAT[5][drinkLevel],
+  ]
+
+  return { ...state, newDaily: newDaily, newRank: newRank, newAlcohol: alcohol, newDisease: disease}
 }
 
 function updateDrink(state: ReportState, payload: any) {

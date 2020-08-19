@@ -1,5 +1,5 @@
 import { RootState } from 'store'
-import { setRank, setDaily, setNewRank, setNewDaily } from 'store/report'
+import { setRank, setDaily } from 'store/report'
 import { connect } from 'react-redux'
 
 import Page from './page'

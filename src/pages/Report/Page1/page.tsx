@@ -98,7 +98,7 @@ export default function({
           {(question[7] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />自身や周囲の怪我<br/></span>)}
           {(question[8] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />周囲の心配<br/></span>)}
       </div>
-      <SingleButton title='あなたの飲酒量は？' color={Colors.RED} onClick={onNext} />
+      <SingleButton title='あなたの飲酒量は？' color={Colors.RED} onClick={onNext} nonSticky={true} />
     </div>
   )
 }

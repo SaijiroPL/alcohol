@@ -54,16 +54,25 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     id: 'awamori',
     icon: Icons.awamori, 
     type: '泡盛(生地)', 
-    percent: 25,
+    percent: 35,
     volume1: 180, 
     volumeStr: 'グラス', 
     unit:'杯'
   },
   {
+    id: 'shochuOrigin',
+    icon: Icons.shochuStrong, 
+    type: '焼酎(生地)', 
+    percent: 25,
+    volume1: 180, 
+    volumeStr: 'グラス', 
+    unit: '杯'
+  },
+  {
     id: 'shochuStrong',
     icon: Icons.shochuStrong, 
     type: '焼酎水割り', 
-    subType: '濃いめ', 
+    subType: '濃いめ(6:4)', 
     percent: 15,
     volume1: 180, 
     volumeStr: 'グラス', 
@@ -72,7 +81,8 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
   {
     id: 'shochu',
     icon: Icons.shochu, 
-    type: '焼酎水割り', 
+    type: '焼酎水割り',
+    subType: '(5:5)',
     percent: 12.5,
     volume1: 180, 
     volumeStr: 'グラス', 
@@ -82,7 +92,7 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     id: 'shochuLight',
     icon: Icons.shochuLight, 
     type: '焼酎水割り', 
-    subType: 'うすめ', 
+    subType: '薄め(3:7)', 
     percent: 10,
     volume1: 180, 
     volumeStr: 'グラス', 
@@ -110,6 +120,14 @@ export const DRINK_INFO: StandardDrinkInfo[] = [
     type: 'ウイスキーダブル', 
     percent: 43, 
     volume1: 60, 
+    unit: '杯'
+  },
+  {
+    id: 'uisukidaburuDouble',
+    icon: Icons.uisukidaburu, 
+    type: 'ウイスキーシングル', 
+    percent: 43, 
+    volume1: 30, 
     unit: '杯'
   },
   {

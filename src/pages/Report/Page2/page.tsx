@@ -7,7 +7,7 @@ import Chart from 'components/Chart'
 import Rank from 'components/Chart/rank'
 
 import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks'
-import { beerLight, extra, calendar } from 'const/icons'
+import { calendar } from 'const/icons'
 import * as Colors from 'const/colors'
 import * as Icons from 'const/icons'
 import { DRINK_INFO } from 'const/drinks'
@@ -61,7 +61,7 @@ export default function({
     setDaily(Math.ceil(dailyAmt))
 
     const ageLevel = Math.floor((age - 20) / 5)
-    const drinkLevel = dailyAmt / 10
+    const drinkLevel = alcohol / 10
     let drinkIndex = 0
     if (drinkLevel <= 2) {
       drinkIndex = RANKS[gender][ageLevel].level12
@@ -123,7 +123,7 @@ export default function({
   return (
     <div className='report-page-container'>
       <div className='report-title'>
-        <span>あなたの飲酒量は</span>
+        <span>あなたの飲む日の飲酒量{alcohol}gは</span>
       </div>
       {group === 'A' && (
         <>
@@ -143,22 +143,10 @@ export default function({
               fontSizeDown: '18px'
             }}/>
           </div>
-          <div className='container-center-text' style={{
-            fontSize: '18px',
-            marginTop: '15px',
-          }}>
-            <span className='report1-static-label'>
-              {daily >= 0 && daily <= 20 && '節度ある飲酒量!'}
-              {daily >= 21 && daily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-              {daily >= 41 && daily <= 60 && '死亡リスクの上昇する飲酒量'}
-              {daily >= 61 && '非常に危険な飲酒量'}
-            </span>
-          </div>
-          <Chart rank={rank} volume={daily} />
         </>
       )}
       <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
-        <span>一日の純アルコール摂取量</span>
+        <span style={{ fontWeight: 'bold' }}>1日平均の純アルコール摂取量</span>
       </div>
       <div className='container-center-text' style={{
         color: '#993333',
@@ -170,6 +158,22 @@ export default function({
         {question2 > 4 && (`${question2 - 3}/7日`)}
           ×  {alcohol}g  =  <span style={{ fontSize: '28px' }}>{daily}g</span>
       </div>
+      {group === 'A' && (
+        <>
+          <div className='container-center-text' style={{
+            fontSize: '18px',
+            marginTop: '15px',
+          }}>
+            <span className='report1-static-label'>
+              {daily >= 0 && daily <= 20 && '節度ある飲酒量!'}
+              {daily >= 21 && daily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+              {daily >= 41 && daily <= 60 && '死亡リスクの上昇する飲酒量'}
+              {daily >= 61 && '非常に危険な飲酒量'}
+            </span>
+          </div>
+          <Chart rank={rank} volume={alcohol} />
+        </>
+      )}
       <div className='ac-drinks-container'>
         <SelectedDrink icon={calendar} type='飲酒頻度' alcohol={cycle} alcoholColor='red' />
         {DRINK_INFO.map((item) => (

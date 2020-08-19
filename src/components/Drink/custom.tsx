@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Spinner from 'components/Spinner'
+import DropDown from 'components/DropDown'
 import './styles.css';
 
 interface props {
@@ -23,7 +23,7 @@ export default function Drink({
 
   useEffect(() => {
     if (updateDrink) updateDrink(percent, volume)
-  }, [percent, volume])
+  }, [percent, volume, updateDrink])
 
   return (
     <div className='ac-drink-container'>
@@ -32,10 +32,10 @@ export default function Drink({
         <div className='ac-drink-type'>{title}</div>
       </div>
       <div>
-        <Spinner value={percent} suffix='%を' min={1} max={50} onValueChange={setPercent}/>
+        <DropDown value={percent} suffix='%を' min={1} max={50} onValueChange={setPercent}/>
       </div>
       
-      <Spinner value={volume} suffix='ml' min={50} max={1000} step={50} onValueChange={setVolume} />
+      <DropDown value={volume} suffix='ml' min={50} max={1000} step={50} onValueChange={setVolume} />
     </div>
   )
 }

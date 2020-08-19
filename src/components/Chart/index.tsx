@@ -35,7 +35,7 @@ export default function({
             <img src={man} alt='man' style={{
               position: 'absolute', right: (rank * 3 - 28) + 'px', bottom: (40 - rank * 0.13) + 'px'
             }} />
-            <span style={{
+            {/* <span style={{
               position: 'absolute', right: 0, bottom: '40px', 
               display: 'inline-block', marginRight: '-6px', 
               color: 'black', fontSize: '22px', fontWeight: 'bold'
@@ -46,7 +46,7 @@ export default function({
                 display: 'inline-block', marginLeft: '-20px', 
                 color: '#DEED15', fontSize: '22px', fontWeight: 'bold'
               }}>100位</span>
-            )}
+            )} */}
             <span style={{
               position: 'absolute', right: (rank * 3 - (volume >= 10 ? 24 : 16)) + 'px', bottom: '-24px', 
               display: 'inline-block', marginLeft: '-20px', 

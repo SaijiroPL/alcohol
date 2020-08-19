@@ -1,7 +1,5 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { Select, MenuItem } from '@material-ui/core';
 
 import './styles.css';
 
@@ -18,31 +16,14 @@ export default function({
   suffixStyle,
   onValueChange
 }: props) {
-  function increaseValue() {
-    if(onValueChange) onValueChange(value === '月' ? '週' : '月');
-  }
-  function decreaseValue() {
-    if(onValueChange) onValueChange(value === '月' ? '週' : '月');
-  }
   return (
-    <div className='ac-spinner-wrapper'>
-      <div className='ac-spinner-container'>
-        <span className='ac-spinner-number'>{value}</span>
-        <div className='ac-spinner-arrow-container'>
-          <IconButton 
-            className='ac-spinner-arrow' 
-            size='small' 
-            onClick={increaseValue}>
-            <ArrowDropUpIcon />
-          </IconButton>
-          <IconButton 
-            className='ac-spinner-arrow' 
-            size='small'
-            onClick={decreaseValue}>
-            <ArrowDropDownIcon />
-          </IconButton>
-        </div>
-      </div>
+    <div className='ac-cycle-wrapper'>
+      <Select defaultValue={value} autoWidth onChange={(event) => {
+        if (onValueChange) onValueChange(event.target.value as '週' | '月')
+      }}>
+        <MenuItem key='月' value='月'>月</MenuItem>
+        <MenuItem key='週' value='週'>週</MenuItem>
+      </Select>
       <span style={suffixStyle}>{suffix}</span>
     </div>
   )

@@ -27,9 +27,7 @@ interface props extends DrinkProps {
   disease: number[]
   newDisease: number[]
   setFrequency: (frequency: number) => void
-  setNewDaily: (daily: number) => void
   setNewRank: (rank: number) => void
-  setNewDisease: (disease: number[]) => void
 }
 
 export default function({
@@ -44,8 +42,7 @@ export default function({
   newDisease,
   setDrink,
   setOtherDrink,
-  setFrequency,
-  setNewDisease
+  setFrequency
 }: props) {
   const history = useHistory()
   const [isReset, showReset] = useState(false)
@@ -158,7 +155,7 @@ export default function({
           </div>
         </div>
       </div>
-      <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='再設定' onNext={onNext} onBack={() => showReset(true)} />
+      <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='目標を見直す' onNext={onNext} onBack={() => showReset(true)} />
       {isReset && (
         <>
           <div className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>

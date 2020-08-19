@@ -1,4 +1,4 @@
-.ac-spinner-wrapper {
+.ac-cycle-wrapper {
   align-items: center; 
   display: flex; 
   justify-content: center; 
@@ -16,6 +16,11 @@
   border-bottom: 1px solid;
   min-width: 65px;
   justify-content: center;
+}
+
+.ac-cycle-wrapper .MuiInputBase-root {
+  font-size: 30px;
+  text-align: center;
 }
 
 .ac-question-container .ac-spinner-container {

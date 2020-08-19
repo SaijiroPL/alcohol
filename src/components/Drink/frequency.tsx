@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import CycleSpinner from 'components/CycleSpinner'
 import Spinner from 'components/Spinner'
+import DropDown from 'components/DropDown'
 
 import * as Colors from 'const/colors'
 import './styles.css';
@@ -44,7 +45,7 @@ export default function Frequency({
         suffix='に' 
         suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} 
         onValueChange={updateCycle} />
-      <Spinner 
+      <DropDown 
         value={freq} 
         suffix='日' 
         suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} 
