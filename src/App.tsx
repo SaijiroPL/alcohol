@@ -23,6 +23,7 @@ import RPage4 from 'pages/Report/Page4';
 import RPage5 from 'pages/Report/Page5';
 import RPage6 from 'pages/Report/Page6';
 import RPage7 from 'pages/Report/Page7';
+import CSV from 'pages/Report/Csv';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/goal/5" component={RPage5} />
           <Route path="/goal/6" component={RPage6} />
           <Route path="/goal/7" component={RPage7} />
+          <Route path="/goal/csv" component={CSV} />
         </Switch>
       </div>
     </BrowserRouter>

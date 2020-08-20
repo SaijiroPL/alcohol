@@ -37,7 +37,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = { 
-
+  
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

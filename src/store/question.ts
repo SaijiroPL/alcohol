@@ -38,20 +38,20 @@ DRINK_INFO.map((item) => {
 })
 
 const initStates: QuestionState = {
-  age: 25,
+  age: 20,
   question1: 0,
-  question2: 6,
-  alcohol: 30,
+  question2: 0,
+  alcohol: 0,
   drinks: initDrinks,
   otherDrinks: [],
-  question4: 2,
+  question4: 0,
   question5: 0,
-  question6: 1,
-  question7: 2,
+  question6: 0,
+  question7: 0,
   question8: 0,
-  question9: 1,
-  question10: 2,
-  question11: 1,
+  question9: 0,
+  question10: 0,
+  question11: 0,
   question12: []
 }
 

@@ -11,6 +11,10 @@ import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
 import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks';
 import { DRINK_INFO } from 'const/drinks';
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
+import { dataRef } from 'firebase/instance'
 
 interface props {
   question: number[]
@@ -48,16 +52,26 @@ export default function({
 }: props) {
   const [cycle, setCycle] = useState('')
   const refRoot = useRef<HTMLDivElement>(null)
+
+  const store = useStore()
+  function saveToFirebase() {
+    const state: RootState = store.getState()
+    dataRef.push().set({
+      question: state.question,
+      report: state.report,
+      date: new Date().toString()
+    });
+  }
+
   useEffect(() => {
-    let dailyAmt = 0;
     if (question[0] === 0) {
-      dailyAmt = 0
+      setCycle('')
     } else if (question[0] > 0 && question[0] <= 3) {
       setCycle(`1月に${question[0]}日`)
     } else {
       setCycle(`1週に${question[0] - 3}日`)
     }
-  })
+  }, [])
 
   function formatDate() {
     const now = new Date()
@@ -347,7 +361,7 @@ export default function({
           がんばってください！
         </div>
       </div>
-      <SingleButton title='レポートを保存して終了する' color={Colors.RED} nonSticky={true} />
+      <SingleButton title='レポートを保存して終了する' color={Colors.RED} nonSticky={true} onClick={saveToFirebase} />
       <SingleButton title='保存しないで終了する' color={Colors.WHITE} nonSticky={true} textColor={Colors.PALEGREEN} />
     </div>
   )

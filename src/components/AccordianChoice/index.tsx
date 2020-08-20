@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import AccordianItem from 'components/AccordianChoice/item'
 import './styles.css';

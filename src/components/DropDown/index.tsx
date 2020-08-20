@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Select, MenuItem } from '@material-ui/core';
 
 import './styles.css';
@@ -19,7 +19,6 @@ export default function({
   max = 100,
   step = 1,
   suffix,
-  suffixStyle,
   onValueChange
 }: props) {
   var items = [];
