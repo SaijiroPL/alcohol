@@ -1,6 +1,9 @@
 import { RootState } from 'store'
 import { connect } from 'react-redux'
 
+import { reset as resetQuestion} from 'store/question'
+import { reset as resetReport} from 'store/report'
+
 import Page from './page'
 
 const mapStateToProps = (state: RootState) => ({
@@ -25,7 +28,7 @@ const mapStateToProps = (state: RootState) => ({
   question2: state.question.question2,
   drinks: state.question.drinks,
   otherDrinks: state.question.otherDrinks,
-  newAlcohol: state.report.newAlcohol,
+  newAlcohol: state.report.nextAlcohol,
   newRank: state.report.newRank,
   newDaily: state.report.newDaily,
   newDrinks: state.report.drinks,
@@ -33,11 +36,14 @@ const mapStateToProps = (state: RootState) => ({
   disease: state.report.disease,
   newDisease: state.report.newDisease,
   will: state.report.will,
-  group: state.report.group
+  group: state.report.group,
+  frequency: state.report.frequency,
+  nextFrequency: state.report.nextFrequency
 })
 
 const mapDispatchToProps = { 
-  
+  resetQuestion,
+  resetReport 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

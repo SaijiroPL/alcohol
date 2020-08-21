@@ -52,7 +52,7 @@ export default function({
     })
     setAlcohol(sum)
     return sum
-  }, [drinks, otherDrinks])
+  }, [])
 
   function onNext() {
     history.push("/question/5");
@@ -66,6 +66,7 @@ export default function({
     const alcohol = tVolume * item.percent * 0.8 / 100
     return (
       <SelectedDrink 
+        key={item.id}
         icon={item.icon} 
         type={item.type} 
         percent={item.percent} 
@@ -79,6 +80,7 @@ export default function({
   function renderOtherDrink(item: OtherDrink) {
     return (
       <SelectedDrink 
+        key={item.alcohol + item.volume}
         icon={Icons.extra} 
         type='その他のお酒' 
         percent={item.alcohol} 

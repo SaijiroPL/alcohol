@@ -25,15 +25,14 @@ export default function({
 }: props) {
   const history = useHistory();
   useEffect(() => {
-    window.scrollTo(0, 0);
     const drinkLevel = Math.floor(daily / 10)
     setDisease([
-      DISEASE_STAT[0][drinkLevel],
-      DISEASE_STAT[1][drinkLevel],
-      DISEASE_STAT[2][drinkLevel],
-      DISEASE_STAT[3][drinkLevel],
-      DISEASE_STAT[4][drinkLevel],
-      DISEASE_STAT[5][drinkLevel],
+      roundDisease(DISEASE_STAT[0][drinkLevel]),
+      roundDisease(DISEASE_STAT[1][drinkLevel]),
+      roundDisease(DISEASE_STAT[2][drinkLevel]),
+      roundDisease(DISEASE_STAT[3][drinkLevel]),
+      roundDisease(DISEASE_STAT[4][drinkLevel]),
+      roundDisease(DISEASE_STAT[5][drinkLevel]),
     ])
   }, [])
   function onNext() {

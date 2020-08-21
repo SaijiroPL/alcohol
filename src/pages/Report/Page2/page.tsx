@@ -61,7 +61,7 @@ export default function({
     setDaily(Math.ceil(dailyAmt))
 
     const ageLevel = Math.floor((age - 20) / 5)
-    const drinkLevel = alcohol / 10
+    const drinkLevel = Math.floor(alcohol / 10)
     let drinkIndex = 0
     if (drinkLevel <= 2) {
       drinkIndex = RANKS[gender][ageLevel].level12
@@ -154,8 +154,8 @@ export default function({
         fontWeight: 'bold',
         marginTop: '16px'
       }}>
-        {question2 > 0 && question2 <= 3 && (`${question2}/30日`)}
-        {question2 > 4 && (`${question2 - 3}/7日`)}
+        {question2 >= 0 && question2 <= 3 && (`${question2}/30日`)}
+        {question2 >= 4 && (`${question2 - 3}/7日`)}
           ×  {alcohol}g  =  <span style={{ fontSize: '28px' }}>{daily}g</span>
       </div>
       {group === 'A' && (

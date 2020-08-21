@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom"
  
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
-import Spinner from 'components/Spinner'
 import DropDown from 'components/DropDown'
 import SingleButton from 'components/SingleButton'
 

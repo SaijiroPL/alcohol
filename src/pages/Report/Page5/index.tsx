@@ -1,9 +1,11 @@
 import { RootState } from 'store'
 import { 
-  setFrequency,
   setNewRank, 
-  setDrink, 
-  setOtherDrink,
+  setNextDrink, 
+  setNextOtherDrink,
+  setNextFrequency,
+  initNextDrinks,
+  initNextOtherDrinks
 } from 'store/report'
 import { connect } from 'react-redux'
 
@@ -15,17 +17,19 @@ const mapStateToProps = (state: RootState) => ({
   otherDrinks: state.report.otherDrinks,
   rank: state.report.rank,
   newRank: state.report.newRank,
-  daily: state.report.daily,
-  newDaily: state.report.newDaily,
+  alcohol: state.question.alcohol,
+  newAlcohol: state.report.newAlcohol,
   disease: state.report.disease,
   newDisease: state.report.newDisease
 })
 
 const mapDispatchToProps = { 
-  setDrink,
-  setOtherDrink,
-  setFrequency,
+  setDrink: setNextDrink,
+  setOtherDrink: setNextOtherDrink,
+  setFrequency: setNextFrequency,
   setNewRank,
+  initDrinks: initNextDrinks,
+  initOtherDrinks: initNextOtherDrinks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

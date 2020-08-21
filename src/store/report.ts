@@ -27,6 +27,10 @@ type ReportState = {
   frequency: number
   drinks: {[key: string]: DrinkVolume}
   otherDrinks: OtherDrink[]
+  nextDrinks: {[key: string]: DrinkVolume}
+  nextOtherDrinks: OtherDrink[]
+  nextFrequency: number
+  nextAlcohol: number
   will: string
   group: 'A' | 'B'
 }
@@ -55,6 +59,10 @@ const initStates: ReportState = {
   frequency: 0,
   drinks: initDrinkValues,
   otherDrinks: [],
+  nextDrinks: initDrinkValues,
+  nextOtherDrinks: [],
+  nextFrequency: 0,
+  nextAlcohol: 0,
   will: '',
   group: 'A'
 }
@@ -70,12 +78,19 @@ export const setNewRank = (rank: number) => typedAction('report/new/rank', rank)
 export const setNewScore = (score: number) => typedAction('report/new/score', score)
 export const setNewDisease = (disease: number[]) => typedAction('report/new/disease', disease)
 export const setFrequency = (frequency: number) => typedAction('report/frequency', frequency)
+export const setNextFrequency = (frequency: number) => typedAction('report/nextfrequency', frequency)
 export const setDrink = (payload: {value: number, type: 'standard' | 'custom', key: string, isFirst: boolean}) => typedAction('report/drink', payload)
 export const setOtherDrink = (payload: {index: number, drink: OtherDrink}) => typedAction('report/otherdrink', payload)
+export const setNextDrink = (payload: {value: number, type: 'standard' | 'custom', key: string, isFirst: boolean}) => typedAction('report/nextdrink', payload)
+export const setNextOtherDrink = (payload: {index: number, drink: OtherDrink}) => typedAction('report/nextotherdrink', payload)
 export const initDrinks = (payload: any) => typedAction('report/initdrink', payload)
 export const initOtherDrinks = (payload: any) => typedAction('report/initotherdrink', payload)
+export const initNextDrinks = (payload: any) => typedAction('report/initnextdrink', payload)
+export const initNextOtherDrinks = (payload: any) => typedAction('report/initnextotherdrink', payload)
 export const setWill = (will: string) => typedAction('report/will', will)
 export const setGroup = (group: 'A' | 'B') => typedAction('report/group', group)
+
+export const reset = () => typedAction('report/reset')
 
 type ReportAction = ReturnType<
   typeof setDaily |
@@ -87,17 +102,28 @@ type ReportAction = ReturnType<
   typeof setNewScore |
   typeof setNewDisease |
   typeof setFrequency |
+  typeof setNextFrequency |
   typeof setDrink |
   typeof setOtherDrink |
+  typeof setNextDrink |
+  typeof setNextOtherDrink |
   typeof initDrinks |
   typeof initOtherDrinks |
+  typeof initNextDrinks |
+  typeof initNextOtherDrinks |
   typeof setWill |
-  typeof setGroup
+  typeof setGroup |
+  typeof reset
 >
 
 function updateNewDecision(
-  state: ReportState
+  state: ReportState,
+  type: 'first' | 'second'
 ) {
+  const drinks = type === 'first' ? state.drinks : state.nextDrinks
+  const otherDrinks = type === 'first' ? state.otherDrinks : state.nextOtherDrinks
+  const frequency = type === 'first' ? state.frequency : state.nextFrequency
+
   function calcTotalAlcohol(item: StandardDrinkInfo) {
     const volume1 = item.volume1 * drinks[item.id].volume
     let volume2 = 0
@@ -105,10 +131,6 @@ function updateNewDecision(
       volume2 = item.volume2 * drinks[item.id].volume2
     return (volume1 + volume2)
   }
-
-  const drinks = state.drinks
-  const otherDrinks = state.otherDrinks
-  const frequency = state.frequency
 
   let alcohol = 0
   for (let i = 0; i < DRINK_INFO.length; ++i) {
@@ -149,16 +171,25 @@ function updateNewDecision(
   }
   const newRank = Math.ceil(drinkIndex * RANKS[state.gender][ageLevel].sum / 100)
 
+  const drinkDailyLevel = Math.floor(newDaily / 10)
+
+  function roundDisease(org: number) {
+    return Math.round(org * 10) / 10
+  }
+
   const disease = [
-    DISEASE_STAT[0][drinkLevel],
-    DISEASE_STAT[1][drinkLevel],
-    DISEASE_STAT[2][drinkLevel],
-    DISEASE_STAT[3][drinkLevel],
-    DISEASE_STAT[4][drinkLevel],
-    DISEASE_STAT[5][drinkLevel],
+    roundDisease(DISEASE_STAT[0][drinkDailyLevel]),
+    roundDisease(DISEASE_STAT[1][drinkDailyLevel]),
+    roundDisease(DISEASE_STAT[2][drinkDailyLevel]),
+    roundDisease(DISEASE_STAT[3][drinkDailyLevel]),
+    roundDisease(DISEASE_STAT[4][drinkDailyLevel]),
+    roundDisease(DISEASE_STAT[5][drinkDailyLevel]),
   ]
 
-  return { ...state, newDaily: newDaily, newRank: newRank, newAlcohol: alcohol, newDisease: disease}
+  if (type === 'first')
+    return { ...state, newDaily: newDaily, newRank: newRank, newAlcohol: alcohol, newDisease: disease}
+  else
+    return { ...state, newDaily: newDaily, newRank: newRank, nextAlcohol: alcohol, newDisease: disease}
 }
 
 function updateDrink(state: ReportState, payload: any) {
@@ -168,16 +199,36 @@ function updateDrink(state: ReportState, payload: any) {
   else 
     drinks[payload.key].volume2 = payload.value
   
-  return updateNewDecision({ ...state, drinks: drinks })
+  return updateNewDecision({ ...state, drinks: drinks }, 'first')
 }
 
 function updateOtherDrink(state: ReportState, payload: any) {
   const otherdrinks = state.otherDrinks
   if (payload.index < 0) {
-    return updateNewDecision({ ...state, otherDrinks: [...state.otherDrinks, payload.drink] })
+    return updateNewDecision({ ...state, otherDrinks: [...state.otherDrinks, payload.drink] }, 'first')
   } else {
     otherdrinks[payload.index] = payload.drink
-    return updateNewDecision({ ...state, otherDrinks: otherdrinks })
+    return updateNewDecision({ ...state, otherDrinks: otherdrinks }, 'first')
+  }
+}
+
+function updateNextDrink(state: ReportState, payload: any) {
+  const drinks = state.nextDrinks
+  if (payload.isFirst)
+    drinks[payload.key].volume = payload.value
+  else 
+    drinks[payload.key].volume2 = payload.value
+  
+  return updateNewDecision({ ...state, drinks: drinks }, 'second')
+}
+
+function updateNextOtherDrink(state: ReportState, payload: any) {
+  const otherdrinks = state.nextOtherDrinks
+  if (payload.index < 0) {
+    return updateNewDecision({ ...state, otherDrinks: [...state.otherDrinks, payload.drink] }, 'second')
+  } else {
+    otherdrinks[payload.index] = payload.drink
+    return updateNewDecision({ ...state, otherDrinks: otherdrinks }, 'second')
   }
 }
 
@@ -203,19 +254,31 @@ export function reportReducer(
     case 'report/new/disease':
       return { ...state, newDisease: action.payload }
     case 'report/frequency':
-      return { ...state, frequency: action.payload }
+      return updateNewDecision({ ...state, frequency: action.payload }, 'first')
+    case 'report/nextfrequency':
+      return updateNewDecision({ ...state, nextFrequency: action.payload }, 'second')
     case 'report/drink':
       return updateDrink(state, action.payload)
     case 'report/otherdrink':
       return updateOtherDrink(state, action.payload)
+    case 'report/nextdrink':
+      return updateNextDrink(state, action.payload)
+    case 'report/nextotherdrink':
+      return updateNextOtherDrink(state, action.payload)
     case 'report/initdrink':
       return { ...state, drinks: action.payload }
     case 'report/initotherdrink':
       return { ...state, otherDrinks: action.payload }
+    case 'report/initnextdrink':
+      return { ...state, nextDrinks: action.payload }
+    case 'report/initnextotherdrink':
+      return { ...state, nextOtherDrinks: action.payload }
     case 'report/will':
       return { ...state, will: action.payload }
     case 'report/group':
       return { ...state, group: action.payload }
+    case 'report/reset':
+      return initStates
     default:
       return state;
   }

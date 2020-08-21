@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import CycleSpinner from 'components/CycleSpinner'
-import Spinner from 'components/Spinner'
 import DropDown from 'components/DropDown'
 
 import * as Colors from 'const/colors'
@@ -51,7 +50,7 @@ export default function Frequency({
         suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} 
         onValueChange={updateFreq} 
         max={cycle === '月' ? 3 : 7}
-        min={1}/>
+        min={0}/>
     </div>
   )
 }

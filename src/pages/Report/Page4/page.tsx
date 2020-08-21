@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import Rank from 'components/Chart/rank'
@@ -52,12 +54,13 @@ export default function({
   const history = useHistory()
   const [tutorial, setTutorial] = useState(group === 'A' ? 0 : 2)
 
+  const store = useStore()
   useEffect(() => {
-    if (initDrinks && initOtherDrinks) {
-      initDrinks(drinks)
-      initOtherDrinks(otherDrinks)
-    }
-  }, [drinks, otherDrinks, initDrinks, initOtherDrinks])
+    const state: RootState = store.getState()
+    initDrinks(drinks)
+    initOtherDrinks(otherDrinks)
+    setFrequency(state.question.question2)
+  }, [])
 
   function onNext() {
     if (group === 'A')

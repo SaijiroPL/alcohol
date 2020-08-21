@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Spinner from 'components/Spinner'
 import DropDown from 'components/DropDown'
 import { StandardDrinkInfo, DrinkVolume } from 'types/drinks'
 import './styles.css';

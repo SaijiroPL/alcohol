@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { DrinkVolume, OtherDrink } from 'types/drinks'
 import { DRINK_INFO } from 'const/drinks'
 
@@ -26,6 +28,7 @@ type QuestionState = {
   question10: number
   question11: number
   question12: number[]
+  startDate: string
 }
 
 let initDrinks: {[key: string]: DrinkVolume} = {}
@@ -35,12 +38,13 @@ DRINK_INFO.map((item) => {
     volume: 0,
     volume2: 0
   }
+  return true
 })
 
 const initStates: QuestionState = {
   age: 20,
   question1: 0,
-  question2: 0,
+  question2: 2,
   alcohol: 0,
   drinks: initDrinks,
   otherDrinks: [],
@@ -52,7 +56,8 @@ const initStates: QuestionState = {
   question9: 0,
   question10: 0,
   question11: 0,
-  question12: []
+  question12: [],
+  startDate: moment().format('YYYY-MM-DD HH:mm:ss')
 }
 
 export const setAge = (age: number) => typedAction('question/age', age)
@@ -71,6 +76,8 @@ export const setAnswer10 = (answer: number) => typedAction('question/answer10', 
 export const setAnswer11 = (answer: number) => typedAction('question/answer11', answer)
 export const setAnswer12 = (answer: number[]) => typedAction('question/answer12', answer)
 
+export const reset = () => typedAction('question/reset')
+
 type QuestionAction = ReturnType<typeof setAge | 
   typeof setAnswer1 | 
   typeof setAnswer2 |
@@ -85,7 +92,8 @@ type QuestionAction = ReturnType<typeof setAge |
   typeof setAnswer9 |
   typeof setAnswer10 |
   typeof setAnswer11 |
-  typeof setAnswer12>
+  typeof setAnswer12 |
+  typeof reset>
 
 function updateDrink(state: QuestionState, payload: any) {
   const drinks = state.drinks
@@ -141,6 +149,8 @@ export function questionReducer(
       return { ...state, question11: action.payload }
     case 'question/answer12':
       return { ...state, question12: action.payload }
+    case 'question/reset':
+      return { ...initStates, startDate: moment().format('YYYY-MM-DD HH:mm:ss')}
     default:
       return state;
   }

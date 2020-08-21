@@ -22,33 +22,33 @@ interface props extends DrinkProps {
   frequency: number
   rank: number
   newRank: number
-  daily: number
-  newDaily: number
+  alcohol: number,
+  newAlcohol: number,
   disease: number[]
   newDisease: number[]
   setFrequency: (frequency: number) => void
   setNewRank: (rank: number) => void
+  initDrinks: (drinks: any) => void
+  initOtherDrinks: (drinks: any) => void
 }
 
 export default function({
   frequency,
-  daily,
-  newDaily,
-  rank,
-  drinks,
-  otherDrinks,
-  newRank,
-  disease,
-  newDisease,
-  setDrink,
-  setOtherDrink,
-  setFrequency
+  alcohol, newAlcohol,
+  rank, newRank,
+  drinks, otherDrinks,
+  disease, newDisease,
+  setFrequency,
+  setDrink, setOtherDrink,
+  initDrinks, initOtherDrinks
 }: props) {
   const history = useHistory()
   const [isReset, showReset] = useState(false)
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    initDrinks(drinks)
+    initOtherDrinks(otherDrinks)
+    setFrequency(frequency)
   }, [])
 
   function onNext() {
@@ -58,7 +58,9 @@ export default function({
     history.push("/goal/4");
   }
   function reducePercent(index: number) {
-    return Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
+    const percent = Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
+    if (disease[index] === 1) return 0
+    return percent
   }
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
@@ -87,16 +89,16 @@ export default function({
               fontSize: '16px', 
               fontWeight: 'bold', 
               borderBottom: '2px solid black' }}>
-                {newDaily >= 0 && newDaily <= 20 && '節度ある飲酒量!'}
-                {newDaily >= 21 && newDaily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-                {newDaily >= 41 && newDaily <= 60 && '死亡リスクの上昇する飲酒量'}
-                {newDaily >= 61 && '非常に危険な飲酒量'}
+                {newAlcohol >= 0 && newAlcohol <= 20 && '節度ある飲酒量!'}
+                {newAlcohol >= 21 && newAlcohol <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+                {newAlcohol >= 41 && newAlcohol <= 60 && '死亡リスクの上昇する飲酒量'}
+                {newAlcohol >= 61 && '非常に危険な飲酒量'}
             </span>
           </div>
         </div>
       </div>
       <div style={{ marginTop: '120px' }}>
-        <Chart rank={rank} rank2={newRank} volume={daily} volume2={newDaily}  />
+        <Chart rank={rank} rank2={newRank} volume={alcohol} volume2={newAlcohol}  />
       </div>
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '40px' }}>
         減酒により、これだけのリスク改善が期待できます

@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import Page from './page'
 
 const mapStateToProps = (state: RootState) => ({
-  frequency: state.report.frequency,
-  drinks: state.report.drinks,
-  otherDrinks: state.report.otherDrinks,
+  frequency: state.question.question2,
+  drinks: state.question.drinks,
+  otherDrinks: state.question.otherDrinks,
   rank: state.report.rank,
   newRank: state.report.newRank,
   daily: state.report.daily,

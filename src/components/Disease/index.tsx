@@ -51,7 +51,7 @@ export default function({
         color: Colors.RED,
         fontSize: '30px', 
         position: 'absolute', top: titlePos === 'top' ? '35px' : '10px',
-        marginLeft: '15px'
+        width: '100%'
       }}>
         <span style={{ fontSize: '60px' }}>
           {typeof(content) === 'number' && unit !== '%' ? content.toFixed(1): content}

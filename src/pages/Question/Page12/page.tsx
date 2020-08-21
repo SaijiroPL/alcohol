@@ -23,7 +23,7 @@ export default function({
 
   function onNext() {
     history.push("/goal/1");
-    Math.random() < 0.5 ? setGroup('A') : setGroup('B')
+    // Math.random() < 0.5 ? setGroup('A') : setGroup('B')
     setAnswer(selected)
   }
   function onBack() {

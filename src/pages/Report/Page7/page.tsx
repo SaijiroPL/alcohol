@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Button } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+import { useStore } from 'react-redux'
+import { RootState } from 'store'
+import moment from 'moment'
+import htmlToImage from 'html-to-image'
+import download from 'downloadjs'
 
 import Rank from 'components/Chart/rank'
 import Chart from 'components/Chart'
@@ -11,8 +17,6 @@ import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
 import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks';
 import { DRINK_INFO } from 'const/drinks';
-import { useStore } from 'react-redux';
-import { RootState } from 'store';
 
 import { dataRef } from 'firebase/instance'
 
@@ -34,8 +38,12 @@ interface props {
   newOtherDrinks: OtherDrink[]
   disease: number[]
   newDisease: number[]
-  will: string,
+  will: string
   group: 'A' | 'B'
+  frequency: number
+  nextFrequency: number
+  resetQuestion: () => void
+  resetReport: () => void
 }
 
 export default function({
@@ -48,19 +56,41 @@ export default function({
   drinks, otherDrinks,
   newDrinks, newOtherDrinks,
   disease, newDisease,
-  will, group
+  will, group,
+  frequency, nextFrequency,
+  resetQuestion, resetReport
 }: props) {
   const [cycle, setCycle] = useState('')
+  const [nextCycle, setNextCycle] = useState('')
   const refRoot = useRef<HTMLDivElement>(null)
+  const history = useHistory()
 
   const store = useStore()
   function saveToFirebase() {
+    const pageContainer = document.getElementsByClassName('report-page-container')[0] as HTMLElement
+    htmlToImage.toPng(pageContainer)
+    .then(function (dataUrl) {
+      var img = new Image();
+      img.src = dataUrl;
+      download(dataUrl, `ALMIGHTPNF-${moment().format('YYYY-MM-DD HH:mm:ss')}.png`)
+      finish()
+    })
+    .catch(function (error) {
+      console.error('oops, something went wrong!', error)
+      finish()
+    })
+  }
+
+  function finish() {
     const state: RootState = store.getState()
     dataRef.push().set({
       question: state.question,
       report: state.report,
-      date: new Date().toString()
-    });
+      date: moment().format('YYYY-MM-DD HH:mm:ss')
+    })
+    resetQuestion()
+    resetReport()
+    history.push("/");
   }
 
   useEffect(() => {
@@ -70,6 +100,14 @@ export default function({
       setCycle(`1月に${question[0]}日`)
     } else {
       setCycle(`1週に${question[0] - 3}日`)
+    }
+
+    if (nextFrequency === 0) {
+      setNextCycle('')
+    } else if (nextFrequency > 0 && nextFrequency <= 3) {
+      setNextCycle(`1月に${nextFrequency}日`)
+    } else {
+      setNextCycle(`1週に${nextFrequency - 3}日`)
     }
   }, [])
 
@@ -114,7 +152,9 @@ export default function({
   }
 
   function reducePercent(index: number) {
-    return Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
+    const percent = Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
+    if (disease[index] === 1) return 0
+    return percent
   }
   return (
     <div className='report-page-container' style={{ padding: '10px' }} ref={refRoot}>
@@ -262,7 +302,7 @@ export default function({
             </div>
             <Chart rank2={newRank} volume2={newAlcohol} />
             <div className='ac-drinks-container'>
-              <SelectedDrink icon={Icons.calendar} type='飲酒頻度' alcohol={cycle} alcoholColor='red' />
+              <SelectedDrink icon={Icons.calendar} type='飲酒頻度' alcohol={nextCycle} alcoholColor='red' />
               {DRINK_INFO.map((item) => (
                 (newDrinks[item.id].volume > 0 || newDrinks[item.id].volume2 > 0) && renderStandardDrink(item)))}
               {newOtherDrinks.map((item) => renderOtherDrink(item))}
@@ -362,7 +402,7 @@ export default function({
         </div>
       </div>
       <SingleButton title='レポートを保存して終了する' color={Colors.RED} nonSticky={true} onClick={saveToFirebase} />
-      <SingleButton title='保存しないで終了する' color={Colors.WHITE} nonSticky={true} textColor={Colors.PALEGREEN} />
+      <SingleButton title='保存しないで終了する' color={Colors.WHITE} nonSticky={true} textColor={Colors.PALEGREEN} onClick={finish} />
     </div>
   )
 }
