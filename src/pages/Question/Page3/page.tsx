@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 import QuestionTitle from 'components/QuestionTitle'
 import Drink from 'components/Drink'
@@ -24,6 +25,10 @@ export default function({
 }: DrinkProps) {
   const history = useHistory()
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     history.push("/question/4");
   }
@@ -34,6 +39,10 @@ export default function({
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
     if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
   }
+  function onRemoveExtra() {
+    if (setOtherDrink) setOtherDrink({index: -2})
+  }
+
   return (
     <div className='ac-question-container'>
       <QuestionTitle sequence={3} />
@@ -45,13 +54,26 @@ export default function({
           if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
         }} />
       ))}
-      {otherDrinks && otherDrinks.map((item, index) => (
-        <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
+      {otherDrinks.map((item, index) => (
+        <CustomDrink key={`cd-${index}`} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
           if (setOtherDrink) setOtherDrink({
             index: index, 
             drink: {alcohol: percent, volume: volume}})
         }} />
       ))}
+      <div className='ac-drink-extrabtn-wrapper'>
+        <Button className='ac-drink-extrabtn' onClick={onRemoveExtra} style={{
+            backgroundColor: '#F0BABA', 
+            color: 'white', 
+            borderTopLeftRadius: 20,
+            borderBottomLeftRadius: 20,
+            borderTopRightRadius: 20,
+            borderBottomRightRadius: 20,
+          }}>
+            <RemoveCircleOutlineIcon />
+            <span style={{ marginLeft: '10px' }}>その他のお酒を削除</span>
+          </Button>
+      </div>
       <div className='ac-drink-extrabtn-wrapper'>
         <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
             backgroundColor: '#AAAAAA', 

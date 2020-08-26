@@ -13,6 +13,7 @@ interface props {
   }
   index: number
   selected: boolean
+  expanded: boolean
   onItemClick: (index: number) => void
 }
 
@@ -20,12 +21,9 @@ export default function({
   content,
   index,
   selected,
+  expanded,
   onItemClick
 }: props) {
-  const [descShow, updateDescShow] = useState<boolean>(false)
-  function onItemShow() {
-    updateDescShow(prev => !prev)
-  }
   return (
     <div className='ac-accordian-row'>
       <div className='ac-accordian-header'>
@@ -41,22 +39,8 @@ export default function({
           onClick={() => onItemClick(index)}>
             {content.title}
         </Button>
-        <Button
-          style={{
-            backgroundColor: Colors.GREEN,
-            borderRadius: '15px',
-            color: 'white',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            float: 'right',
-            width: '65px'
-          }}
-          onClick={() => onItemShow()}>
-          説明
-          <img src={descShow ? arrowUp : arrowDown} alt='describe' className='ac-accordian-arrow'/>
-        </Button>
       </div>
-      <div className='ac-accordian-description' style={{ display: descShow ? 'block' : 'none' }}>
+      <div className='ac-accordian-description' style={{ display: expanded ? 'block' : 'none' }}>
         <span>{content.description}</span>
       </div>
     </div>

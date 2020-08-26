@@ -62,7 +62,7 @@ export default function({
         </Button>)
       ))}
     </div>
-    <div className='ac-multichoice-container ac-multichoice-column'>
+    <div className='ac-multichoice-container ac-multichoice-column' style={{height: '30%'}}>
       {options.map((option, index) => (
         (index >= Math.ceil(options.length / 2) &&
         <Button 

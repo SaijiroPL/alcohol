@@ -10,11 +10,13 @@ interface props {
   }[]
   selected: number[]
   updateItem: (index: number) => void
+  expanded: boolean
 }
 
 export default function({
   info,
   selected,
+  expanded,
   updateItem
 }: props) {
   // const [selected, updateSelected] = useState<number[]>([])
@@ -38,7 +40,8 @@ export default function({
           content={item} 
           index={index} 
           selected={selected.includes(index)} 
-          onItemClick={onItemClick} />
+          onItemClick={onItemClick}
+          expanded={expanded} />
       ))}
     </div>
   )

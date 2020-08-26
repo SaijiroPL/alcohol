@@ -31,6 +31,10 @@ export default function({
 }: props) {
   const history = useHistory()
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function calcTotalAlcohol(item: StandardDrinkInfo) {
     const volume1 = item.volume1 * drinks[item.id].volume
     let volume2 = 0
@@ -108,16 +112,9 @@ export default function({
         </div>
       </div>
       <div className='ac-drink-extrabtn-wrapper'>
-        <Button className='ac-drink-extrabtn' style={{
-            backgroundColor: '#AAAAAA', 
-            color: 'white', 
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-          }}>
-            <span style={{ marginLeft: '10px', fontSize: '14px' }}>純アルコール約60gのめやす</span>
-          </Button>
+        <span style={{ marginLeft: '10px', fontSize: '14px', color: '#707070', letterSpacing: '1.5px', borderBottom: '1px solid #707070' }}>
+          純アルコール約<span style={{ fontSize: '18px', fontWeight: 'bold', marginLeft: '5px' }}>60</span>gのめやす
+        </span>
       </div>
       <div className='ac-page4-description'>
         ビール、チューハイ(5%) 1.5L / <br/>

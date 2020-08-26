@@ -5,6 +5,12 @@
 .ac-question-container {
   max-width: 540px;
   margin: auto;
+
+  -webkit-animation: fadepage 1s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadepage 1s; /* Firefox < 16 */
+  -ms-animation: fadepage 1s; /* Internet Explorer */
+  -o-animation: fadepage 1s; /* Opera < 12.1 */
+  animation: fadepage 1s;
 }
 
 .report-page-container {
@@ -44,4 +50,33 @@
   color: #993333;
   padding: 6px 0 0 0;
   font-size: 20px;
+}
+
+@keyframes fadepage {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadepage {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadepage {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadepage {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadepage {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

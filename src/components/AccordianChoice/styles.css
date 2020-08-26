@@ -28,4 +28,12 @@
 
 .ac-accordian-description {
   margin-top: 10px;
+  margin-left: 15px;
+  color: #707070;
+
+  -webkit-animation: fadepage 1s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadepage 1s; /* Firefox < 16 */
+  -ms-animation: fadepage 1s; /* Internet Explorer */
+  -o-animation: fadepage 1s; /* Opera < 12.1 */
+  animation: fadepage 1s;
 }

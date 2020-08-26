@@ -106,8 +106,10 @@ function updateDrink(state: QuestionState, payload: any) {
 
 function updateOtherDrink(state: QuestionState, payload: any) {
   const otherdrinks = state.otherDrinks
-  if (payload.index < 0) {
-    return { ...state, otherDrinks: [...state.otherDrinks, payload.drink] }
+  if (payload.index === -1) {
+    return { ...state, otherDrinks: [...otherdrinks, payload.drink] }
+  } else if (payload.index === -2) {
+    return { ...state, otherDrinks: otherdrinks.splice(0, otherdrinks.length - 1) }
   } else {
     otherdrinks[payload.index] = payload.drink
     return { ...state, otherDrinks: otherdrinks }

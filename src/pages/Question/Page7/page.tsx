@@ -14,6 +14,11 @@ export default function({
   setAnswer
 }: QuestionProps) {
   const history = useHistory();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     history.push("/question/8");
   }

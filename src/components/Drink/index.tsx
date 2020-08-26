@@ -38,7 +38,9 @@ export default function Drink({
         </div>
         {info.volume2 && value.volume2 !== undefined && (
           <div style={{ display: 'flex' }}>
-            <div className='ac-drink-volume'>{info.volume2}ml</div>
+            <div className='ac-drink-volume'>
+              <span className='ac-drink-volume-span'>{info.volume2}ml</span>
+            </div>
             <DropDown value={value.volume2} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
               if (updateVolume) updateVolume(info.id, value, false)
             }} />

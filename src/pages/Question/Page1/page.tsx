@@ -28,6 +28,11 @@ export default function({
   setGender
 }: props) {
   const history = useHistory();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     if (answer >= 0)
       history.push("/question/2");

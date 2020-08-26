@@ -7,7 +7,7 @@ export interface QuestionProps {
 
 export interface DrinkProps {
   drinks: {[key: string]: DrinkVolume}
-  otherDrinks?: OtherDrink[]
-  setDrink?: (payload: any) => void
-  setOtherDrink?: (payload: any) => void
+  otherDrinks: OtherDrink[]
+  setDrink: (payload: any) => void
+  setOtherDrink: (payload: any) => void
 }
