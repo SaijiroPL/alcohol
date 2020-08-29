@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useHistory } from "react-router-dom";
 
 import SingleButton from 'components/SingleButton'
 
 import { PAGE_INFOES } from 'const/selections'
-import { faceIcon, tick } from 'const/icons'
+import { face, tick } from 'const/icons'
 import * as Colors from 'const/colors'
 import './styles.css';
 
@@ -44,6 +44,17 @@ export default function({
     setScore(scoreSum)
   }, [])
 
+  const scoreLevel = useMemo(() => {
+    if (score >= 8 && score < 15) {
+      return 1
+    } else if (score >= 15 && score < 20) {
+      return 2
+    } else if (score >= 20) {
+      return 3
+    }
+    return 0
+  }, [score])
+
   function onNext() {
     history.push("/goal/2");
   }
@@ -54,7 +65,7 @@ export default function({
         <span>あなたの得点は</span>
       </div>
       <div className='face-icon-container'>
-        <img src={faceIcon} alt='face' className='face-icon' />
+        <img src={face[scoreLevel]} alt='face' className='face-icon'/>
       </div>
       <div className='report1-rank-container'>
         <span className='font-hira' style={{ fontSize: '80px' }} >{score}</span>
@@ -62,9 +73,9 @@ export default function({
       </div>
       <div className='container-center-text' style={{ fontSize: '24px' }}>
         <span className='report1-static-label'>
-          {score >= 8 && score < 15 && ('問題のある飲酒群')}
-          {score >= 15 && score < 20 && ('危険な飲酒群')}
-          {score >= 20 && ('アルコール依存症疑い群')}
+          {scoreLevel === 1 && ('問題のある飲酒群')}
+          {scoreLevel === 2 && score < 20 && ('危険な飲酒群')}
+          {scoreLevel === 3 && ('アルコール依存症疑い群')}
         </span>
       </div>
       <div className='container-center-text' style={{ marginTop: '15px', fontSize: '14px' }}>

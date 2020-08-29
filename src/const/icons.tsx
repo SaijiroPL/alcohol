@@ -46,7 +46,7 @@ import faceNormal from 'svgs/level/face-normal.png'
 import faceLike from 'svgs/level/face-like.png'
 
 const man = [manYellow, manGreen, manRed, manBlack]
-const face = [faceCry, faceSad, faceNormal, faceLike]
+const face = [faceLike, faceNormal, faceSad, faceCry]
 
 export {
   arrowRight,
