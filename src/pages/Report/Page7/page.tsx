@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { useStore } from 'react-redux'
@@ -64,6 +64,17 @@ export default function({
   const [nextCycle, setNextCycle] = useState('')
   const refRoot = useRef<HTMLDivElement>(null)
   const history = useHistory()
+
+  const scoreLevel = useMemo(() => {
+    if (score >= 8 && score < 15) {
+      return 1
+    } else if (score >= 15 && score < 20) {
+      return 2
+    } else if (score >= 20) {
+      return 3
+    }
+    return 0
+  }, [score])
 
   const store = useStore()
   function saveToFirebase() {
@@ -184,16 +195,16 @@ export default function({
               飲酒度チェック
           </Button>
           <div style={{ color: '#993333', marginTop: '24px', display: 'flex' }}>
-            <img src={Icons.faceIcon} alt='face' style={{ width: '50px',height: '50px', marginRight: '7px' }} />
+            <img src={Icons.face[scoreLevel]} alt='face' style={{ width: '50px',height: '50px', marginRight: '7px' }} />
             <span className='font-hira' style={{ fontSize: '45px' }} >{score}</span>
             <span style={{ fontSize: '20px', fontWeight: 'bold', alignSelf: 'flex-end', marginBottom: '5px' }}>点</span>
           </div>
         </div>
         <div style={{ flex: '6', marginLeft: '10px' }}>
           <p style={{ fontSize: '16px', color: '#993333' }}>
-            {score >= 8 && score < 15 && ('問題のある飲酒群')}
-            {score >= 15 && score < 20 && ('危険な飲酒群')}
-            {score >= 20 && ('アルコール依存症疑い群')}
+            {scoreLevel === 1 && ('問題のある飲酒群')}
+            {scoreLevel === 2 && score < 20 && ('危険な飲酒群')}
+            {scoreLevel === 3 && ('アルコール依存症疑い群')}
           </p>
           <p style={{ fontSize: '14px' }}>アルコールが原因ですでに <br/>大きな危害を体験しています</p>
           <p style={{ fontSize: '16px', color: '#993333' }}>特に問題となる要素</p>
