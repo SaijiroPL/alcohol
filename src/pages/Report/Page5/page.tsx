@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -44,12 +44,16 @@ export default function({
 }: props) {
   const history = useHistory()
   const [isReset, showReset] = useState(false)
+  const resetRef = useRef(null)
 
   useEffect(() => {
     initDrinks(drinks)
     initOtherDrinks(otherDrinks)
     setFrequency(frequency)
   }, [])
+
+  const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop)
+  const executeScroll = () => scrollToRef(resetRef)
 
   function onNext() {
     history.push("/goal/6");
@@ -157,48 +161,52 @@ export default function({
           </div>
         </div>
       </div>
-      <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='目標を見直す' onNext={onNext} onBack={() => showReset(true)} />
-      {isReset && (
-        <>
-          <div className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>
-            目標飲酒量を設定しましょう
-          </div>
-          <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
-            <Frequency 
-              icon={Icons.calendar} 
-              title='飲酒頻度' 
-              value1={frequency > 3 ? '週' : '月'} 
-              value2={frequency > 3 ? frequency - 3 : frequency}
-              updateValue={setFrequency} />
-            {DRINK_INFO.map((item, index) => (
-              <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
-                if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
-              }} />
-            ))}
-            {otherDrinks !== undefined && otherDrinks.map((item, index) => (
-              <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
-                if (setOtherDrink) setOtherDrink({
-                  index: index, 
-                  drink: {alcohol: percent, volume: volume}})
-              }} />
-            ))}
-          </div>
-          <div className='ac-drink-extrabtn-wrapper'>
-            <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
-                backgroundColor: '#AAAAAA', 
-                color: 'white', 
-                borderTopLeftRadius: 20,
-                borderBottomLeftRadius: 20,
-                borderTopRightRadius: 20,
-                borderBottomRightRadius: 20,
-              }}>
-                <AddCircleOutlineIcon />
-                <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
-              </Button>
-          </div>
-          <SingleButton title='O     K' color={Colors.RED} nonSticky={true} onClick={() => showReset(false)} />
-        </>
-      )}
+      <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='目標を見直す' onNext={onNext} 
+      onBack={() => {
+        showReset(true)
+        setTimeout(() => {
+          executeScroll()
+        }, 500)
+      }} />
+      <div style={{ display: isReset ? 'block' : 'none' }}>
+        <div ref={resetRef} className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>
+          目標飲酒量を設定しましょう
+        </div>
+        <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+          <Frequency 
+            icon={Icons.calendar} 
+            title='飲酒頻度' 
+            value1={frequency > 3 ? '週' : '月'} 
+            value2={frequency > 3 ? frequency - 3 : frequency}
+            updateValue={setFrequency} />
+          {DRINK_INFO.map((item, index) => (
+            <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+              if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
+            }} />
+          ))}
+          {otherDrinks !== undefined && otherDrinks.map((item, index) => (
+            <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
+              if (setOtherDrink) setOtherDrink({
+                index: index, 
+                drink: {alcohol: percent, volume: volume}})
+            }} />
+          ))}
+        </div>
+        <div className='ac-drink-extrabtn-wrapper'>
+          <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
+              backgroundColor: '#AAAAAA', 
+              color: 'white', 
+              borderTopLeftRadius: 20,
+              borderBottomLeftRadius: 20,
+              borderTopRightRadius: 20,
+              borderBottomRightRadius: 20,
+            }}>
+              <AddCircleOutlineIcon />
+              <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
+            </Button>
+        </div>
+        <SingleButton title='O     K' color={Colors.RED} nonSticky={true} onClick={() => showReset(false)} />
+      </div>
     </div>
   )
 }

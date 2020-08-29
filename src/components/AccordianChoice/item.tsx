@@ -13,7 +13,6 @@ interface props {
   }
   index: number
   selected: boolean
-  expanded: boolean
   onItemClick: (index: number) => void
 }
 
@@ -21,7 +20,6 @@ export default function({
   content,
   index,
   selected,
-  expanded,
   onItemClick
 }: props) {
   return (
@@ -31,6 +29,7 @@ export default function({
           style={{
             backgroundColor: selected ? Colors.PALEGREEN : Colors.WHITE,
             color: selected ? Colors.WHITE : Colors.GRAY,
+            boxShadow: selected ? '' : '2px 2px 3px #9BCFD1',
             borderRadius: '15px',
             fontSize: '22px',
             paddingLeft: '15px',
@@ -40,7 +39,7 @@ export default function({
             {content.title}
         </Button>
       </div>
-      <div className='ac-accordian-description' style={{ display: expanded ? 'block' : 'none' }}>
+      <div className='ac-accordian-description'>
         <span>{content.description}</span>
       </div>
     </div>

@@ -145,6 +145,8 @@ function updateNewDecision(
     })
   }
 
+  alcohol = Math.round(alcohol * 100) / 100
+
   let dailyAmt = 0;
   if (frequency === 0) {
     dailyAmt = 0
@@ -169,7 +171,7 @@ function updateNewDecision(
   } else {
     drinkIndex = RANKS[state.gender][ageLevel].level10
   }
-  const newRank = Math.ceil(drinkIndex * RANKS[state.gender][ageLevel].sum / 100)
+  const newRank = Math.ceil(drinkIndex / RANKS[state.gender][ageLevel].sum * 100)
 
   const drinkDailyLevel = Math.floor(newDaily / 10)
 

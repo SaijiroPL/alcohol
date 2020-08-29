@@ -42,26 +42,12 @@ export default function({
       <div className='ac-question-content'>
         <div className='ac-question-text'>{PAGE_INFOES[11].title}</div>
       </div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Button style={{
-            backgroundColor: '#AAAAAA', 
-            color: 'white', 
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-            width: '200px'
-          }} onClick={() => updateDescShow(prev => !prev)}>
-            病気の説明を表示する
-            <img src={descShow ? arrowUp : arrowDown} alt='describe' className='ac-accordian-arrow'/>
-        </Button>        
-      </div>
       <AccordianChoice info={DISEASE_INFO} selected={selected} updateItem={(index) => {
         if (!selected.includes(index))
           updateSelected(prev => [...prev, index])
         else 
           updateSelected(prev => [...(prev.filter(value => value !== index))])
-      }} expanded={descShow} />
+      }} />
       <MultiButton nonSticky={true} onNext={onNext} onBack={onBack} />
     </div>
   )

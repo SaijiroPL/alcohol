@@ -54,6 +54,7 @@ export default function({
     otherDrinks.forEach((item) => {
       sum += item.alcohol * item.volume * 0.8 / 100
     })
+    sum = Math.round(sum * 100) / 100
     setAlcohol(sum)
     return sum
   }, [])

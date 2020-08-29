@@ -31,11 +31,22 @@ import arrowDownWhite from 'svgs/arrow-down-white.svg';
 import arrowUpWhite from  'svgs/arrow-up-white.svg';
 
 import chart from 'svgs/chart.svg';
-import man from 'svgs/man.svg';
-import manYellow from 'svgs/man-yellow.svg';
 
 import logo from 'svgs/logo.svg'
 import tick from 'svgs/tick.svg'
+
+import manRed from 'svgs/level/man-red.png'
+import manYellow from 'svgs/level/man-yellow.png'
+import manGreen from 'svgs/level/man-green.png'
+import manBlack from 'svgs/level/man-black.png'
+
+import faceCry from 'svgs/level/face-cry.png'
+import faceSad from 'svgs/level/face-sad.png'
+import faceNormal from 'svgs/level/face-normal.png'
+import faceLike from 'svgs/level/face-like.png'
+
+const man = [manYellow, manGreen, manRed, manBlack]
+const face = [faceCry, faceSad, faceNormal, faceLike]
 
 export {
   arrowRight,
@@ -67,8 +78,7 @@ export {
   faceIcon,
   mic,
   chart,
-  man,
-  manYellow,
   logo,
-  tick
+  tick,
+  man, face
 }

@@ -61,19 +61,21 @@ export default function({
             drink: {alcohol: percent, volume: volume}})
         }} />
       ))}
-      <div className='ac-drink-extrabtn-wrapper'>
-        <Button className='ac-drink-extrabtn' onClick={onRemoveExtra} style={{
-            backgroundColor: '#F0BABA', 
-            color: 'white', 
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
-            borderTopRightRadius: 20,
-            borderBottomRightRadius: 20,
-          }}>
-            <RemoveCircleOutlineIcon />
-            <span style={{ marginLeft: '10px' }}>その他のお酒を削除</span>
-          </Button>
-      </div>
+      {otherDrinks.length > 0 && (
+        <div className='ac-drink-extrabtn-wrapper fade-in'>
+          <Button className='ac-drink-extrabtn' onClick={onRemoveExtra} style={{
+              backgroundColor: '#F0BABA', 
+              color: 'white', 
+              borderTopLeftRadius: 20,
+              borderBottomLeftRadius: 20,
+              borderTopRightRadius: 20,
+              borderBottomRightRadius: 20,
+            }}>
+              <RemoveCircleOutlineIcon />
+              <span style={{ marginLeft: '10px' }}>その他のお酒を削除</span>
+            </Button>
+        </div>
+      )}
       <div className='ac-drink-extrabtn-wrapper'>
         <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
             backgroundColor: '#AAAAAA', 
