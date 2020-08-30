@@ -44,6 +44,10 @@ export default function({
     setScore(scoreSum)
   }, [])
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const scoreLevel = useMemo(() => {
     if (score >= 8 && score < 15) {
       return 1

@@ -16,6 +16,11 @@ export default function({
   setWill
 }: props) {
   const history = useHistory()
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     history.push("/goal/7");
   }

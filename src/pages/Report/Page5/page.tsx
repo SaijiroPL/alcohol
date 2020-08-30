@@ -52,6 +52,10 @@ export default function({
     setFrequency(frequency)
   }, [])
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop)
   const executeScroll = () => scrollToRef(resetRef)
 

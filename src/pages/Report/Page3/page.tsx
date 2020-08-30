@@ -24,6 +24,7 @@ export default function({
   setDisease
 }: props) {
   const history = useHistory();
+  
   useEffect(() => {
     const drinkLevel = Math.floor(daily / 10)
     setDisease([
@@ -35,6 +36,11 @@ export default function({
       roundDisease(DISEASE_STAT[5][drinkLevel]),
     ])
   }, [])
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     history.push("/goal/4");
   }

@@ -65,6 +65,10 @@ export default function({
   const refRoot = useRef<HTMLDivElement>(null)
   const history = useHistory()
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const scoreLevel = useMemo(() => {
     if (score >= 8 && score < 15) {
       return 1

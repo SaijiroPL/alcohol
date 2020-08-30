@@ -78,6 +78,10 @@ export default function({
     setRank(Math.ceil(drinkIndex * 100 / RANKS[gender][ageLevel].sum))
   }, [])
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   function onNext() {
     if (group === 'A')
       history.push("/goal/3");
