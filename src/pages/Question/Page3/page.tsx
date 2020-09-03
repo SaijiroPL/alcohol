@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
+import queryString from 'query-string'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
@@ -14,26 +15,51 @@ import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import { PAGE_INFOES } from 'const/selections'
 import * as Icons from 'const/icons'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 
 import './styles.css';
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
 
 export default function({
   drinks,
   otherDrinks,
   setDrink,
-  setOtherDrink
+  setOtherDrink,
+  loadState
 }: DrinkProps) {
   const history = useHistory()
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadState(snapshot.val().question)
+      })
+    }
   }, [])
 
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
+
   function onNext() {
-    history.push("/question/4");
+    const key = saveStore()
+    history.push(`/question/4?key=${key}`);
   }
   function onBack() {
-    history.push("/question/2");
+    const key = queryString.parse(window.location.search).key?.toString()
+    history.push(`/question/2?key=${key}`);
   }
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};

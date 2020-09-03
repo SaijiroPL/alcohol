@@ -1,6 +1,9 @@
 import React from 'react'
 import { useHistory } from "react-router-dom"
- 
+import { useStore } from 'react-redux'
+import { RootState } from 'store'
+
+import { createStoreToFirebase } from 'firebase/instance'
 import QuestionTitle from 'components/QuestionTitle'
 import MultiChoice from 'components/MultiChoice'
 import DropDown from 'components/DropDown'
@@ -34,8 +37,19 @@ export default function({
   }, [])
 
   function onNext() {
-    if (answer >= 0)
-      history.push("/question/2");
+    if (answer >= 0) {
+      const key = saveStore()
+      history.push(`/question/2?key=${key}`);
+    }
+  }
+
+  const store = useStore()
+  function saveStore() {
+    const state: RootState = store.getState()
+    return createStoreToFirebase({
+      question: state.question,
+      report: state.report
+    })
   }
   return (
     <div className='ac-question-container'>

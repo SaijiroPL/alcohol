@@ -2,12 +2,16 @@
   text-align: center;
 }
 
+.ac-question-number-container {
+  border-bottom: 1px solid #376B6D;
+  display: inline-block;
+}
+
 .ac-question-number {
   padding-top: 16px;
   margin-bottom: 10px;
   margin: auto;
   width: 125px;
-  border-bottom: 1px solid #376B6D;
   font-family: fira-sans, sans-serif;
   font-size: 70px;
 }
@@ -15,4 +19,9 @@
 .ac-question-count {
   font-family: kan48typos-std, sans-serif;
   margin-top: 10px;
+}
+
+.ac-question-plus-text {
+  font-family: kan48typos-std, sans-serif;
+  font-size: 12px;
 }

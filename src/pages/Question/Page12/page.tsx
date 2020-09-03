@@ -9,36 +9,65 @@ import { DISEASE_INFO } from 'const/disease'
 import { PAGE_INFOES } from 'const/selections'
 import { arrowUp, arrowDown } from 'const/icons'
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+import { QuestionProps } from 'types/pages';
+
 interface props {
   answer: number[]
   setAnswer: (answer: number[]) => void
   setGroup: (group: 'A' | 'B') => void
+  loadState: (payload: any) => void
 }
 
 export default function({
   answer,
   setAnswer,
-  setGroup
+  setGroup,
+  loadState
 }: props) {
   const history = useHistory();
   const [selected, updateSelected] = useState<number[]>(answer)
-  const [descShow, updateDescShow] = useState<boolean>(false)
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadState(snapshot.val().question)
+      })
+    }
   }, [])
 
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
+
   function onNext() {
-    history.push("/goal/1");
     // Math.random() < 0.5 ? setGroup('A') : setGroup('B')
     setAnswer(selected)
+    const key = saveStore()
+    history.push(`/goal/1?key=${key}`);
   }
   function onBack() {
-    history.push("/question/11");
+    const key = queryString.parse(window.location.search).key?.toString()
+    history.push(`/question/11?key=${key}`);
   }
+
   return (
     <div className='ac-question-container'>
-      <QuestionTitle sequence={12} />
+      <QuestionTitle sequence={12} plusText='最後の質問' />
       <div className='ac-question-content'>
         <div className='ac-question-text'>{PAGE_INFOES[11].title}</div>
       </div>
@@ -48,7 +77,7 @@ export default function({
         else 
           updateSelected(prev => [...(prev.filter(value => value !== index))])
       }} />
-      <MultiButton nonSticky={true} onNext={onNext} onBack={onBack} />
+      <MultiButton nonSticky={true} onNext={onNext} onBack={onBack} okayText='完　了' />
     </div>
   )
 }

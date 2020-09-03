@@ -19,24 +19,19 @@ export default function({
   elementStyle,
   setAnswer
 }: props) {
-  const [selected, updateSelected] = useState<undefined | number>(answer)
-  function onItemClick(index: number) {
-    updateSelected(index)
-    if (setAnswer) setAnswer(index)
-  }
   return columns === 1 ? (
     <div className='ac-multichoice-container'>
       {options.map((option, index) => (
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
-            color: index !== selected ? '#707070' : 'white',
+            backgroundColor: index !== answer ? Colors.WHITE : Colors.PALEGREEN,
+            color: index !== answer ? '#707070' : 'white',
             borderRadius: 15,
-            fontWeight: index !== selected ? 'normal' : 'bold'
+            fontWeight: index !== answer ? 'normal' : 'bold'
           }} 
           className='ac-select-button' 
-          onClick={() => onItemClick(index)}
+          onClick={() => {if (setAnswer) setAnswer(index)}}
           key={index}>
           {option}
         </Button>
@@ -50,13 +45,13 @@ export default function({
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
-            color: index !== selected ? '#707070' : 'white',
-            fontWeight: index !== selected ? 'normal' : 'bold',
+            backgroundColor: index !== answer ? Colors.WHITE : Colors.PALEGREEN,
+            color: index !== answer ? '#707070' : 'white',
+            fontWeight: index !== answer ? 'normal' : 'bold',
             borderRadius: 15
           }} 
           className='ac-select-button' 
-          onClick={() => onItemClick(index)}
+          onClick={() => {if (setAnswer) setAnswer(index)}}
           key={index}>
           {option}
         </Button>)
@@ -68,13 +63,13 @@ export default function({
         <Button 
           style={{
             ...elementStyle, 
-            backgroundColor: index !== selected ? Colors.WHITE : Colors.PALEGREEN,
-            color: index !== selected ? '#707070' : 'white',
-            fontWeight: index !== selected ? 'normal' : 'bold',
+            backgroundColor: index !== answer ? Colors.WHITE : Colors.PALEGREEN,
+            color: index !== answer ? '#707070' : 'white',
+            fontWeight: index !== answer ? 'normal' : 'bold',
             borderRadius: 15
           }} 
           className='ac-select-button' 
-          onClick={() => onItemClick(index)}
+          onClick={() => {if (setAnswer) setAnswer(index)}}
           key={index}>
           {option}
         </Button>)

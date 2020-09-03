@@ -1,5 +1,5 @@
 import { RootState } from 'store'
-import { setAnswer8 } from 'store/question'
+import { setAnswer8, load } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -9,7 +9,8 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = { 
-  setAnswer: setAnswer8
+  setAnswer: setAnswer8,
+  loadState: load
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

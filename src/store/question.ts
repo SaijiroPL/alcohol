@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { DrinkVolume, OtherDrink } from 'types/drinks'
 import { DRINK_INFO } from 'const/drinks'
+import { storeRef } from 'firebase/instance'
 
 export function typedAction<T extends string>(type: T): { type: T }
 export function typedAction<T extends string, P extends any>(
@@ -77,6 +78,7 @@ export const setAnswer11 = (answer: number) => typedAction('question/answer11', 
 export const setAnswer12 = (answer: number[]) => typedAction('question/answer12', answer)
 
 export const reset = () => typedAction('question/reset')
+export const load = (payload: any) => typedAction('question/load', payload)
 
 type QuestionAction = ReturnType<typeof setAge | 
   typeof setAnswer1 | 
@@ -93,7 +95,8 @@ type QuestionAction = ReturnType<typeof setAge |
   typeof setAnswer10 |
   typeof setAnswer11 |
   typeof setAnswer12 |
-  typeof reset>
+  typeof reset |
+  typeof load>
 
 function updateDrink(state: QuestionState, payload: any) {
   const drinks = state.drinks
@@ -153,6 +156,15 @@ export function questionReducer(
       return { ...state, question12: action.payload }
     case 'question/reset':
       return { ...initStates, startDate: moment().format('YYYY-MM-DD HH:mm:ss')}
+    case 'question/load':
+      let loadState = action.payload
+      if (!action.payload.otherDrinks) {
+        loadState = { ...loadState, otherDrinks: [] }
+      } 
+      if (!action.payload.question12) {
+        loadState = { ...loadState, question12: [] }
+      }
+      return loadState
     default:
       return state;
   }

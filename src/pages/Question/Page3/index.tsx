@@ -1,5 +1,5 @@
 import { RootState } from 'store'
-import { setDrink, setOtherDrink } from 'store/question'
+import { setDrink, setOtherDrink, load } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -11,7 +11,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = { 
   setDrink,
-  setOtherDrink
+  setOtherDrink,
+  loadState: load
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

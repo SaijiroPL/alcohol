@@ -14,6 +14,11 @@ import { DRINK_INFO } from 'const/drinks'
 import { PAGE_INFOES } from 'const/selections'
 import * as Icons from 'const/icons'
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 import './styles.css';
 
 interface props extends QuestionProps {
@@ -27,13 +32,42 @@ export default function({
   drinks,
   otherDrinks,
   setAlcohol,
-  setAnswer
+  setAnswer,
+  loadState
 }: props) {
   const history = useHistory()
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadState(snapshot.val().question)
+      })
+    }
   }, [])
+
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
+
+  function onNext() {
+    const key = saveStore()
+    history.push(`/question/5?key=${key}`);
+  }
+  function onBack() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    history.push(`/question/3?key=${key}`);
+  }
 
   function calcTotalAlcohol(item: StandardDrinkInfo) {
     const volume1 = item.volume1 * drinks[item.id].volume
@@ -58,13 +92,6 @@ export default function({
     setAlcohol(sum)
     return sum
   }, [])
-
-  function onNext() {
-    history.push("/question/5");
-  }
-  function onBack() {
-    history.push("/question/3");
-  }
 
   function renderStandardDrink(item: StandardDrinkInfo) {
     const tVolume = calcTotalAlcohol(item)
