@@ -162,9 +162,7 @@ export default function() {
         ]
         arr.push(item)
       }
-      console.log(arr)
       updateCsv(arr)
-      console.log('aaa')
     }
   })
   return (

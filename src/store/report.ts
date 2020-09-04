@@ -94,6 +94,8 @@ export const reset = () => typedAction('report/reset')
 export const load = (payload: any) => typedAction('report/load', payload)
 
 type ReportAction = ReturnType<
+  typeof setAge |
+  typeof setGender |
   typeof setDaily |
   typeof setRank |
   typeof setScore |
@@ -173,7 +175,7 @@ function updateNewDecision(
   } else {
     drinkIndex = RANKS[state.gender][ageLevel].level10
   }
-  const newRank = Math.ceil(drinkIndex / RANKS[state.gender][ageLevel].sum * 100)
+  const newRank = Math.ceil(drinkIndex * 100 / RANKS[state.gender][ageLevel].sum)
 
   const drinkDailyLevel = Math.floor(newDaily / 10)
 
@@ -241,6 +243,10 @@ export function reportReducer(
   action: ReportAction
 ): ReportState {
   switch (action.type) {
+    case 'report/age':
+      return { ...state, age: action.payload }
+    case 'report/gender':
+      return { ...state, gender: action.payload }
     case 'report/score':
       return { ...state, score: action.payload }
     case 'report/rank':

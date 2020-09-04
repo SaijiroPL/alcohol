@@ -91,7 +91,7 @@ export default function({
     sum = Math.round(sum * 100) / 100
     setAlcohol(sum)
     return sum
-  }, [])
+  }, [drinks, otherDrinks, setAlcohol])
 
   function renderStandardDrink(item: StandardDrinkInfo) {
     const tVolume = calcTotalAlcohol(item)

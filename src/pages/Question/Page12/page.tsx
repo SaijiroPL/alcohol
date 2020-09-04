@@ -16,16 +16,24 @@ import { RootState } from 'store';
 import { QuestionProps } from 'types/pages';
 
 interface props {
+  age: number
+  gender: number
   answer: number[]
+  setAge: (answer: number) => void
+  setGender: (answer: number) => void
   setAnswer: (answer: number[]) => void
   setGroup: (group: 'A' | 'B') => void
   loadState: (payload: any) => void
 }
 
 export default function({
+  age,
   answer,
+  gender,
+  setAge,
   setAnswer,
   setGroup,
+  setGender,
   loadState
 }: props) {
   const history = useHistory();
@@ -57,6 +65,8 @@ export default function({
   function onNext() {
     // Math.random() < 0.5 ? setGroup('A') : setGroup('B')
     setAnswer(selected)
+    setAge(age)
+    setGender(gender)
     const key = saveStore()
     history.push(`/goal/1?key=${key}`);
   }

@@ -63,11 +63,6 @@ export default function({
   const [loading, loaded] = useState(true)
 
   const store = useStore()
-  useEffect(() => {
-    initDrinks(drinks)
-    initOtherDrinks(otherDrinks)
-    setFrequency(frequency)
-  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -81,6 +76,12 @@ export default function({
       })
     }
   }, [])
+
+  useEffect(() => {
+    initDrinks(drinks)
+    initOtherDrinks(otherDrinks)
+    setFrequency(frequency)
+  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
 
   function saveStore() {
     const key = queryString.parse(window.location.search).key?.toString()
@@ -160,7 +161,7 @@ export default function({
           value2={frequency > 3 ? frequency - 3 : frequency}
           updateValue={setFrequency} />
         {DRINK_INFO.map((item, index) => (
-          <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+          <Drink key={index} info={item} value={drinks[item.id]} type='indirect' updateVolume={(key, value, isFirst) => {
             if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
           }} />
         ))}

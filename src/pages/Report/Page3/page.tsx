@@ -37,18 +37,6 @@ export default function({
   const [loading, loaded] = useState(true)
   
   useEffect(() => {
-    const drinkLevel = Math.floor(daily / 10)
-    setDisease([
-      roundDisease(DISEASE_STAT[0][drinkLevel]),
-      roundDisease(DISEASE_STAT[1][drinkLevel]),
-      roundDisease(DISEASE_STAT[2][drinkLevel]),
-      roundDisease(DISEASE_STAT[3][drinkLevel]),
-      roundDisease(DISEASE_STAT[4][drinkLevel]),
-      roundDisease(DISEASE_STAT[5][drinkLevel]),
-    ])
-  }, [daily, setDisease])
-
-  React.useEffect(() => {
     window.scrollTo(0, 0)
     const key = queryString.parse(window.location.search).key?.toString()
     if (key) {
@@ -60,6 +48,18 @@ export default function({
       })
     }
   }, [])
+
+  useEffect(() => {
+    const drinkLevel = Math.floor(daily / 10)
+    setDisease([
+      roundDisease(DISEASE_STAT[0][drinkLevel]),
+      roundDisease(DISEASE_STAT[1][drinkLevel]),
+      roundDisease(DISEASE_STAT[2][drinkLevel]),
+      roundDisease(DISEASE_STAT[3][drinkLevel]),
+      roundDisease(DISEASE_STAT[4][drinkLevel]),
+      roundDisease(DISEASE_STAT[5][drinkLevel]),
+    ])
+  }, [daily, setDisease])
 
   const store = useStore()
   function saveStore() {

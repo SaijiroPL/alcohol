@@ -46,7 +46,7 @@ export default function({
         {rank !== undefined && volume !== undefined && (
           <>
             <div style={{
-              width: '2px', height: '37px',
+              width: '2px', height: (42 - rank * 0.13) + 'px',
               backgroundColor: 'white',
               position: 'absolute', right: rank * 3 + 'px', bottom: '0'
             }} />
@@ -85,7 +85,7 @@ export default function({
         )}
         {rank2 !== undefined && (
           <div style={{
-            width: '2px', height: (40 - rank2 * 0.13) + 'px',
+            width: '2px', height: (42 - rank2 * 0.13) + 'px',
             backgroundColor: 'white',
             position: 'absolute', right: rank2 * 3 + 'px', 
             bottom: '0'
@@ -98,7 +98,7 @@ export default function({
             bottom: (40 - rank2 * 0.13) + 'px', 
             width: iconSize[rankGroup2].width, 
             height: iconSize[rankGroup2].height,
-            display: Math.abs(manLeft - manLeft2) < 45 && rankGroup === rankGroup2 ? 'none' : 'block'
+            display: rankGroup === rankGroup2 ? 'none' : 'block'
           }} />
         )}
       </div>

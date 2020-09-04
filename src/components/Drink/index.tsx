@@ -7,12 +7,14 @@ import './styles.css';
 interface props {
   info: StandardDrinkInfo
   value: DrinkVolume
+  type: 'direct' | 'indirect'
   updateVolume?: (key: string, value: number, isFirst: boolean) => void
 }
 
 export default function Drink({ 
   info,
   value,
+  type,
   updateVolume
 }: props) {
   return (
@@ -32,7 +34,7 @@ export default function Drink({
               {info.volumeStr !== undefined ? info.volumeStr : info.volume1 + 'ml'}
             </span>
           </div>
-          <DropDown value={value.volume} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
+          <DropDown value={value.volume} type={type} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
             if (updateVolume) updateVolume(info.id, value, true)
           }} />
         </div>
@@ -41,7 +43,7 @@ export default function Drink({
             <div className='ac-drink-volume'>
               <span className='ac-drink-volume-span'>{info.volume2}ml</span>
             </div>
-            <DropDown value={value.volume2} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
+            <DropDown value={value.volume2} type={type} suffix={info.unit} min={0} max={20} step={0.5} onValueChange={(value) => {
               if (updateVolume) updateVolume(info.id, value, false)
             }} />
           </div>

@@ -76,7 +76,7 @@ export default function({
         <div className='ac-question-text'>{PAGE_INFOES[2].title}</div>
       </div>
       {DRINK_INFO.map((item, index) => (
-        <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+        <Drink key={index} info={item} value={drinks[item.id]} type='direct' updateVolume={(key, value, isFirst) => {
           if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
         }} />
       ))}

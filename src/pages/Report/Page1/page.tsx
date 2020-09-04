@@ -69,7 +69,6 @@ export default function({
       question3, question4, question5,
       question6, question7, question8, question9
     ]
-    console.log(question)
     for (let i = 0; i < question.length; ++i) {
       if (i !== 1) {
         scoreSum += PAGE_INFOES[i + 1].scores[question[i]]

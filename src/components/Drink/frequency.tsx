@@ -30,7 +30,12 @@ export default function Frequency({
     } else {
       updateValue(freq + 3)
     }
-  }, [cycle, freq])
+  }, [cycle, freq, updateValue])
+
+  useEffect(() => {
+    updateCycle(value1)
+    updateFreq(value2)
+  }, [value1, value2])
 
   return (
     <div className='ac-drink-container'>
@@ -45,7 +50,7 @@ export default function Frequency({
         suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} 
         onValueChange={updateCycle} />
       <DropDown 
-        value={freq} 
+        value={value2} 
         suffix='日' 
         suffixStyle={{ fontSize: '18px', fontWeight: 'bold', color: Colors.RED }} 
         onValueChange={updateFreq} 

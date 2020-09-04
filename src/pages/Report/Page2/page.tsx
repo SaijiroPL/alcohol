@@ -97,7 +97,6 @@ export default function({
     } else {
       drinkIndex = RANKS[gender][ageLevel].level10
     }
-    console.log(ageLevel, drinkLevel, drinkIndex)
     setRank(Math.ceil(drinkIndex * 100 / RANKS[gender][ageLevel].sum))
   }, [question2, age, alcohol, gender, setDaily, setRank])
 

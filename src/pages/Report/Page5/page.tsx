@@ -219,7 +219,7 @@ export default function({
             value2={frequency > 3 ? frequency - 3 : frequency}
             updateValue={setFrequency} />
           {DRINK_INFO.map((item, index) => (
-            <Drink key={index} info={item} value={drinks[item.id]} updateVolume={(key, value, isFirst) => {
+            <Drink key={index} info={item} value={drinks[item.id]} type='indirect' updateVolume={(key, value, isFirst) => {
               if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})
             }} />
           ))}

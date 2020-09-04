@@ -21,10 +21,6 @@ export default function({
 }: QuestionProps) {
   const history = useHistory()
 
-  useEffect(() => {
-    console.log(answer)
-  }, [answer])
-
   React.useEffect(() => {
     window.scrollTo(0, 0)
     const key = queryString.parse(window.location.search).key?.toString()
