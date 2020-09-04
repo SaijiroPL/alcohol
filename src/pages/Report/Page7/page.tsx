@@ -6,6 +6,7 @@ import { RootState } from 'store'
 import moment from 'moment'
 import htmlToImage from 'html-to-image'
 import download from 'downloadjs'
+import ClipLoader from "react-spinners/ClipLoader";
 
 import Rank from 'components/Chart/rank'
 import Chart from 'components/Chart'
@@ -21,7 +22,7 @@ import { DRINK_INFO } from 'const/drinks';
 import { dataRef } from 'firebase/instance'
 
 import queryString from 'query-string'
-import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { loadStateFromFirebase } from 'firebase/instance'
 
 interface props {
   question: number[]
@@ -189,6 +190,11 @@ export default function({
   }
   return (
     <div className='report-page-container' style={{ padding: '10px' }} ref={refRoot}>
+      <ClipLoader
+        size={15}
+        color={"#993333"}
+        loading={loading}
+      />
       <div className='font-kans container-center-text' style={{
         color: '#993333',
         fontSize: '20px',

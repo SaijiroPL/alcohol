@@ -223,7 +223,7 @@ export default function({
         {otherDrinks.map((item) => renderOtherDrink(item))}
       </div>
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '24px', marginBottom: '40px' }}>
-        まだまだお酒の量が多いようです <br/>
+        {daily > 20 && 'まだまだお酒の量が多いようです'} <br/>
         今の量を飲み続けるとどうなるでしょうか？
       </div>
       <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} onClick={onNext} />

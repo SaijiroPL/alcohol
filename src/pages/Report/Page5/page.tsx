@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ClipLoader from "react-spinners/ClipLoader";
 
 import Rank from 'components/Chart/rank'
 import Chart from 'components/Chart'
@@ -105,6 +106,11 @@ export default function({
   }
   return (
     <div className='report-page-container'>
+      <ClipLoader
+        size={15}
+        color={"#993333"}
+        loading={loading}
+      />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
         <div style={{ height: '72px', marginTop: '15px' }}>
           <Rank rank={rank} style={{

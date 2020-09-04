@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
+import ClipLoader from "react-spinners/ClipLoader";
 
 import SingleButton from 'components/SingleButton'
 import { mic, tick } from 'const/icons'
@@ -58,6 +59,11 @@ export default function({
 
   return (
     <div className='report-page-container'>
+      <ClipLoader
+        size={15}
+        color={"#993333"}
+        loading={loading}
+      />
       <div style={{ paddingTop: '40px' }}>
         <img src={mic} alt='face' className='face-icon' />
       </div>
