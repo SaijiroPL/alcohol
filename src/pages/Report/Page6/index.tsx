@@ -1,5 +1,6 @@
 import { RootState } from 'store'
-import { setWill } from 'store/report'
+import { setWill, load as loadR } from 'store/report'
+import { load as loadQ } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -9,7 +10,8 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = { 
-  setWill
+  setWill,
+  loadQ, loadR
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

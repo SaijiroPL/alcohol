@@ -1,5 +1,14 @@
 import { RootState } from 'store'
-import { setFrequency, setNewRank, setDrink, setOtherDrink, initDrinks, initOtherDrinks } from 'store/report'
+import { 
+  setFrequency, 
+  setNewRank, 
+  setDrink, 
+  setOtherDrink, 
+  initDrinks, 
+  initOtherDrinks, 
+  load as loadR
+} from 'store/report'
+import { load as loadQ } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -23,7 +32,8 @@ const mapDispatchToProps = {
   setFrequency,
   setNewRank,
   initDrinks,
-  initOtherDrinks
+  initOtherDrinks,
+  loadQ, loadR
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

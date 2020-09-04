@@ -1,5 +1,7 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useHistory } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/core";
 
 import SingleButton from 'components/SingleButton'
 
@@ -8,21 +10,66 @@ import { face, tick } from 'const/icons'
 import * as Colors from 'const/colors'
 import './styles.css';
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 interface props {
-  question: number[]
+  question0: number,
+  question1: number,
+  question2: number,
+  question3: number,
+  question4: number,
+  question5: number,
+  question6: number,
+  question7: number,
+  question8: number,
+  question9: number,
   score: number
   setScore: (score: number) => void
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
-  question,
+  question0, question1, question2,
+  question3, question4, question5,
+  question6, question7, question8, question9,
   score,
-  setScore
+  setScore,
+  loadQ, loadR
 }: props) {
   const history = useHistory();
+  const [loading, loaded] = useState(true)
+
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+  `;
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     let scoreSum = 0;
+    const question = [
+      question0, question1, question2,
+      question3, question4, question5,
+      question6, question7, question8, question9
+    ]
+    console.log(question)
     for (let i = 0; i < question.length; ++i) {
       if (i !== 1) {
         scoreSum += PAGE_INFOES[i + 1].scores[question[i]]
@@ -42,11 +89,21 @@ export default function({
       }
     }
     setScore(scoreSum)
-  }, [])
+  }, [question0, question1, question2,
+    question3, question4, question5,
+    question6, question7, question8, question9, setScore])
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
 
   const scoreLevel = useMemo(() => {
     if (score >= 8 && score < 15) {
@@ -60,10 +117,16 @@ export default function({
   }, [score])
 
   function onNext() {
-    history.push("/goal/2");
+    const key = saveStore()
+    history.push(`/goal/2?key=${key}`);
   }
   return (
     <div className='report-page-container'>
+      <ClipLoader
+        size={15}
+        color={"#993333"}
+        loading={loading}
+      />
       <div className='report-title'>
         <span>おつかれさまでした!</span> <br/>
         <span>あなたの得点は</span>
@@ -72,7 +135,7 @@ export default function({
         <img src={face[scoreLevel]} alt='face' className='face-icon'/>
       </div>
       <div className='report1-rank-container'>
-        <span className='font-hira' style={{ fontSize: '80px' }} >{score}</span>
+        <span className='font-fira' style={{ fontSize: '80px' }} >{score}</span>
         <span style={{ fontSize: '30px', fontWeight: 'bold' }}>点</span>
       </div>
       <div className='container-center-text' style={{ fontSize: '24px' }}>
@@ -102,16 +165,16 @@ export default function({
         justifyContent: 'center', 
         width: '180px',
         lineHeight: '1.5rem', 
-        letterSpacing: '0.3rem'}}>
-          {(question[0] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />1日あたりの飲酒量<br/></span>)}
-          {(question[1] / 10 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒頻度<br/></span>)}
-          {(question[2] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒のコントロール<br/></span>)}
-          {(question[3] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />仕事や生活への影響<br/></span>)}
-          {(question[4] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />朝の迎え酒<br/></span>)}
-          {(question[5] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />罪悪感<br/></span>)}
-          {(question[6] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />記憶の欠損<br/></span>)}
-          {(question[7] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />自身や周囲の怪我<br/></span>)}
-          {(question[8] > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />周囲の心配<br/></span>)}
+        letterSpacing: '0.2rem'}}>
+          {(question0 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />1日あたりの飲酒量<br/></span>)}
+          {(question1 / 10 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒頻度<br/></span>)}
+          {(question2 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒のコントロール<br/></span>)}
+          {(question3 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />仕事や生活への影響<br/></span>)}
+          {(question4 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />朝の迎え酒<br/></span>)}
+          {(question5 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />罪悪感<br/></span>)}
+          {(question6 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />記憶の欠損<br/></span>)}
+          {(question7 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />自身や周囲の怪我<br/></span>)}
+          {(question8 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />周囲の心配<br/></span>)}
       </div>
       <SingleButton title='あなたの飲酒量は？' color={Colors.RED} onClick={onNext} nonSticky={true} />
     </div>

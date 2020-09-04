@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import SingleButton from 'components/SingleButton'
 import SelectedDrink from 'components/SelectedDrink'
@@ -15,6 +16,11 @@ import { RANKS } from 'const/ranks'
 
 import './styles.css';
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 interface props {
   alcohol: number
   question2: number
@@ -25,9 +31,11 @@ interface props {
   gender: number
   drinks: {[key: string]: DrinkVolume}
   otherDrinks: OtherDrink[]
+  group: 'A' | 'B'
   setRank: (score: number) => void
   setDaily: (daily: number) => void
-  group: 'A' | 'B'
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
@@ -41,11 +49,26 @@ export default function({
   otherDrinks,
   group,
   setRank,
-  setDaily
+  setDaily,
+  loadQ, loadR
 }: props) {
   const history = useHistory();
 
   const [cycle, setCycle] = useState('')
+  const [loading, loaded] = useState(true)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     let dailyAmt = 0;
@@ -76,17 +99,26 @@ export default function({
     }
     console.log(ageLevel, drinkLevel, drinkIndex)
     setRank(Math.ceil(drinkIndex * 100 / RANKS[gender][ageLevel].sum))
-  }, [])
+  }, [question2, age, alcohol, gender, setDaily, setRank])
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
 
   function onNext() {
+    const key = saveStore()
     if (group === 'A')
-      history.push("/goal/3");
+      history.push(`/goal/3?key=${key}`);
     else
-      history.push("/goal/4");
+      history.push(`/goal/4?key=${key}`);
   }
 
   function calcTotalAlcohol(item: StandardDrinkInfo) {
@@ -127,6 +159,11 @@ export default function({
 
   return (
     <div className='report-page-container'>
+      <ClipLoader
+        size={15}
+        color={"#993333"}
+        loading={loading}
+      />
       <div className='report-title'>
         <span>あなたの飲む日の飲酒量{alcohol}gは</span>
       </div>

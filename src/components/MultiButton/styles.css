@@ -16,8 +16,12 @@
   height: 40px;
 }
 
+.ac-multibtn .MuiButton-label {
+  font-family: SourceHans;
+}
+
 .ac-singlebtn .MuiButton-label {
-  font-family: source-han-sans-japanese, sans-serif;
+  font-family: SourceHans;
   font-style: normal;
   font-size: 18px;
 }

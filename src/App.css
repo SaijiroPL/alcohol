@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'SourceHans';
+  src: local('SourceHans'), url(./fonts/SourceHanSerifJP-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: local('FiraSans'), url(./fonts/FiraSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Segoe';
+  src: local('Segoe'), url(./fonts/Segoe-UI.ttf) format('truetype');
+}
+
 .ac-container {
   min-height: 100vh;
 }
@@ -5,6 +20,7 @@
 .ac-question-container {
   max-width: 540px;
   margin: auto;
+  font-family: SourceHans;
 
   -webkit-animation: fadepage 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadepage 1s; /* Firefox < 16 */
@@ -19,7 +35,7 @@
   min-height: 100vh;
   max-width: 540px;
   margin: auto;
-  font-family: source-han-sans-japanese, sans-serif;
+  font-family: SourceHans, sans-serif;
   font-style: normal;
   justify-content: center;
   position: relative;
@@ -39,13 +55,21 @@
   animation: fadepage 1s;
 }
 
-.font-hira {
-  font-family: fira-sans, sans-serif;
+.font-fira {
+  font-family: FiraSans;
   font-style: normal;
 }
 
 .font-kans {
   font-family: kan48typos-std, sans-serif;
+}
+
+.font-segou {
+  font-family: Segoe;
+}
+
+.font-sans {
+  font-family: SourceHans;
 }
 
 .container-center-text {
@@ -92,4 +116,12 @@
 @-o-keyframes fadepage {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+.ac-question-text {
+  font-family: SourceHans;
+  font-style: normal;
+  font-size: 20px;
+  width: 285px;
+  margin: auto;
 }

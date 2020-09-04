@@ -47,7 +47,7 @@ export default function({
             {title}
         </div>
       )} 
-      <div className='font-hira' style={{
+      <div className='font-fira' style={{
         color: Colors.RED,
         fontSize: '30px', 
         position: 'absolute', top: titlePos === 'top' ? '35px' : '10px',

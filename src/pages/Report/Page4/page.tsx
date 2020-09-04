@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
-import { useStore } from 'react-redux';
-import { RootState } from 'store';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import Rank from 'components/Chart/rank'
@@ -18,6 +16,11 @@ import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
 import { OtherDrink } from 'types/drinks'
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 interface props extends DrinkProps {
   frequency: number,
   rank: number,
@@ -32,6 +35,8 @@ interface props extends DrinkProps {
   setNewRank: (rank: number) => void
   initDrinks: (drinks: any) => void
   initOtherDrinks: (drinks: any) => void
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
@@ -49,28 +54,50 @@ export default function({
   setOtherDrink,
   setFrequency,
   initDrinks,
-  initOtherDrinks
+  initOtherDrinks,
+  loadQ, loadR
 }: props) {
   const history = useHistory()
   const [tutorial, setTutorial] = useState(group === 'A' ? 0 : 2)
+  const [loading, loaded] = useState(true)
 
   const store = useStore()
   useEffect(() => {
-    const state: RootState = store.getState()
     initDrinks(drinks)
     initOtherDrinks(otherDrinks)
-    setFrequency(state.question.question2)
+    setFrequency(frequency)
+  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
   }, [])
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
 
   function onNext() {
+    const key = saveStore()
     if (group === 'A')
-      history.push("/goal/5");
+      history.push(`/goal/5?key=${key}`);
     else
-      history.push("/goal/6");
+      history.push(`/goal/6?key=${key}`);
   }
 
   function onAddExtra() {
@@ -86,7 +113,7 @@ export default function({
             <div style={{ height: '72px', marginTop: '15px' }}>
               <Rank rank={rank} style={{
                 radius: 36,
-                fontSizeUp: '36px',
+                fontSizeUp: '32px',
                 fontSizeDown: '12px'
               }}/>
             </div>

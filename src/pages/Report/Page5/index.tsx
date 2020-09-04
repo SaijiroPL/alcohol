@@ -5,8 +5,10 @@ import {
   setNextOtherDrink,
   setNextFrequency,
   initNextDrinks,
-  initNextOtherDrinks
+  initNextOtherDrinks,
+  load as loadR
 } from 'store/report'
+import { load as loadQ } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -29,7 +31,8 @@ const mapDispatchToProps = {
   setFrequency: setNextFrequency,
   setNewRank,
   initDrinks: initNextDrinks,
-  initOtherDrinks: initNextOtherDrinks
+  initOtherDrinks: initNextOtherDrinks,
+  loadQ, loadR
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

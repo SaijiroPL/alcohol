@@ -91,6 +91,7 @@ export const setWill = (will: string) => typedAction('report/will', will)
 export const setGroup = (group: 'A' | 'B') => typedAction('report/group', group)
 
 export const reset = () => typedAction('report/reset')
+export const load = (payload: any) => typedAction('report/load', payload)
 
 type ReportAction = ReturnType<
   typeof setDaily |
@@ -113,7 +114,8 @@ type ReportAction = ReturnType<
   typeof initNextOtherDrinks |
   typeof setWill |
   typeof setGroup |
-  typeof reset
+  typeof reset |
+  typeof load
 >
 
 function updateNewDecision(
@@ -281,6 +283,15 @@ export function reportReducer(
       return { ...state, group: action.payload }
     case 'report/reset':
       return initStates
+    case 'report/load':
+      let loadState = action.payload
+      if (!action.payload.otherDrinks) {
+        loadState = { ...loadState, otherDrinks: [] }
+      } 
+      if (!action.payload.nextOtherDrinks) {
+        loadState = { ...loadState, nextOtherDrinks: [] }
+      }
+      return loadState
     default:
       return state;
   }

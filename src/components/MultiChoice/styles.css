@@ -16,14 +16,14 @@
 }
 
 .ac-select-button .MuiButton-label {
-  font-family: source-han-sans-japanese, sans-serif;
+  font-family: SourceHans;
   font-style: normal;
   font-size: 24px;
   margin: 0 15px 0 15px
 }
 
 .ac-multichoice-column .ac-select-button .MuiButton-label {
-  font-family: source-han-sans-japanese, sans-serif;
+  font-family: SourceHans;
   font-style: normal;
   font-size: 16px;
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from "react-router-dom"
 import { useStore } from 'react-redux'
 import { RootState } from 'store'
+import cn from 'classnames'
 
 import { createStoreToFirebase } from 'firebase/instance'
 import QuestionTitle from 'components/QuestionTitle'
@@ -55,7 +56,7 @@ export default function({
     <div className='ac-question-container'>
       <QuestionTitle sequence={1} />
       <div className='ac-question-content'>
-        <div className='ac-question-text'>{PAGE_INFOES[0].title}</div>
+        <div className={cn('ac-question-text')}>{PAGE_INFOES[0].title}</div>
       </div>
       <MultiChoice 
         answer={answer}

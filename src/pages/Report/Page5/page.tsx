@@ -18,6 +18,11 @@ import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
 import { OtherDrink } from 'types/drinks';
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 interface props extends DrinkProps {
   frequency: number
   rank: number
@@ -30,6 +35,8 @@ interface props extends DrinkProps {
   setNewRank: (rank: number) => void
   initDrinks: (drinks: any) => void
   initOtherDrinks: (drinks: any) => void
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
@@ -40,31 +47,53 @@ export default function({
   disease, newDisease,
   setFrequency,
   setDrink, setOtherDrink,
-  initDrinks, initOtherDrinks
+  initDrinks, initOtherDrinks,
+  loadQ, loadR
 }: props) {
   const history = useHistory()
   const [isReset, showReset] = useState(false)
+  const [loading, loaded] = useState(true)
   const resetRef = useRef(null)
 
   useEffect(() => {
     initDrinks(drinks)
     initOtherDrinks(otherDrinks)
     setFrequency(frequency)
-  }, [])
+  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
   }, [])
 
   const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop)
   const executeScroll = () => scrollToRef(resetRef)
 
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
+  }
+
   function onNext() {
-    history.push("/goal/6");
+    const key = saveStore()
+    history.push(`/goal/6?key=${key}`);
   }
-  function onBack() {
-    history.push("/goal/4");
-  }
+
   function reducePercent(index: number) {
     const percent = Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
     if (disease[index] === 1) return 0

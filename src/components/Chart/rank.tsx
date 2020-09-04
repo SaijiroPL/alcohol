@@ -41,13 +41,13 @@ export default function({
         textAlign: 'center'
       }}>
         <span 
-          className='font-hira' 
+          className='font-fira' 
           style={{ 
             fontSize: style.fontSizeUp, 
             borderBottom: '2px solid ' + textColors[Math.floor(rank / 25)],
             fontWeight: 'bold',
             display: 'inline-block',
-            marginTop: style.radius / 5 + 'px'
+            marginTop: style.radius / 10 + 'px'
           }}>
           {rank}
         </span>

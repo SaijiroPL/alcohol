@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 
@@ -6,24 +6,56 @@ import SingleButton from 'components/SingleButton'
 import { mic, tick } from 'const/icons'
 import * as Colors from 'const/colors'
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+import { useStore } from 'react-redux';
+import { RootState } from 'store';
+
 interface props {
   will: string
   setWill: (will: string) => void
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
   will,
-  setWill
+  setWill,
+  loadQ, loadR
 }: props) {
   const history = useHistory()
+  const [loading, loaded] = useState(true)
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
   }, [])
 
-  function onNext() {
-    history.push("/goal/7");
+  const store = useStore()
+  function saveStore() {
+    const key = queryString.parse(window.location.search).key?.toString()
+    const state: RootState = store.getState()
+    if (key) 
+      saveStateToFirebase({
+        question: state.question,
+        report: state.report,
+      }, key)
+    return key
   }
+
+  function onNext() {
+    const key = saveStore()
+    history.push(`/goal/7?key=${key}`);
+  }
+
   return (
     <div className='report-page-container'>
       <div style={{ paddingTop: '40px' }}>

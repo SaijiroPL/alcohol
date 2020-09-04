@@ -1,5 +1,6 @@
 import { RootState } from 'store'
-import { setRank, setDaily } from 'store/report'
+import { setRank, setDaily, load as loadR } from 'store/report'
+import { load as loadQ } from 'store/question'
 import { connect } from 'react-redux'
 
 import Page from './page'
@@ -19,7 +20,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = { 
   setRank,
-  setDaily
+  setDaily,
+  loadQ, loadR
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

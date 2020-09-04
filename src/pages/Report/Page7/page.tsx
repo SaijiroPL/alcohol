@@ -20,6 +20,9 @@ import { DRINK_INFO } from 'const/drinks';
 
 import { dataRef } from 'firebase/instance'
 
+import queryString from 'query-string'
+import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
+
 interface props {
   question: number[]
   score: number
@@ -44,6 +47,8 @@ interface props {
   nextFrequency: number
   resetQuestion: () => void
   resetReport: () => void
+  loadQ: (payload: any) => void
+  loadR: (payload: any) => void
 }
 
 export default function({
@@ -58,15 +63,26 @@ export default function({
   disease, newDisease,
   will, group,
   frequency, nextFrequency,
-  resetQuestion, resetReport
+  resetQuestion, resetReport,
+  loadQ, loadR
 }: props) {
   const [cycle, setCycle] = useState('')
   const [nextCycle, setNextCycle] = useState('')
+  const [loading, loaded] = useState(true)
   const refRoot = useRef<HTMLDivElement>(null)
   const history = useHistory()
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
+    const key = queryString.parse(window.location.search).key?.toString()
+    if (key) {
+      const ref = loadStateFromFirebase(key)
+      ref.on('value', (snapshot) => {
+        loadQ(snapshot.val().question)
+        loadR(snapshot.val().report)
+        loaded(false)
+      })
+    }
   }, [])
 
   const scoreLevel = useMemo(() => {
@@ -124,7 +140,7 @@ export default function({
     } else {
       setNextCycle(`1週に${nextFrequency - 3}日`)
     }
-  }, [])
+  }, [question, nextFrequency])
 
   function formatDate() {
     const now = new Date()
@@ -200,7 +216,7 @@ export default function({
           </Button>
           <div style={{ color: '#993333', marginTop: '24px', display: 'flex' }}>
             <img src={Icons.face[scoreLevel]} alt='face' style={{ width: '50px',height: '50px', marginRight: '7px' }} />
-            <span className='font-hira' style={{ fontSize: '45px' }} >{score}</span>
+            <span className='font-fira' style={{ fontSize: '45px' }} >{score}</span>
             <span style={{ fontSize: '20px', fontWeight: 'bold', alignSelf: 'flex-end', marginBottom: '5px' }}>点</span>
           </div>
         </div>

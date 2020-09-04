@@ -27,7 +27,7 @@ export default function({
   }
   return (
     <div className='dropdown-container'>
-      <Select defaultValue={value} autoWidth onChange={(event) => {
+      <Select value={value} autoWidth onChange={(event) => {
         if (onValueChange) onValueChange(event.target.value as number)
       }}>
         {items}

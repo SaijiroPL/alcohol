@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames'
 
 import './styles.css';
 
@@ -13,10 +14,10 @@ export default function({
   return (
     <div className='ac-question-title'>
       <div className='ac-question-number-container'>
-        <span className='ac-question-number'>{sequence}</span> <br/>
+        <span className={cn('ac-question-number', 'font-fira')}>{sequence}</span> <br/>
         <span className='ac-question-plus-text'>{plusText}</span>
       </div>
-      <div className='ac-question-count'>全12問</div>
+      <div className={cn('ac-question-count', 'font-kans')}>全12問</div>
     </div>
   )
 }

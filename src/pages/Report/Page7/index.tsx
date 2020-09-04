@@ -1,8 +1,8 @@
 import { RootState } from 'store'
 import { connect } from 'react-redux'
 
-import { reset as resetQuestion} from 'store/question'
-import { reset as resetReport} from 'store/report'
+import { reset as resetQuestion, load as loadQ} from 'store/question'
+import { reset as resetReport, load as loadR} from 'store/report'
 
 import Page from './page'
 
@@ -43,7 +43,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = { 
   resetQuestion,
-  resetReport 
+  resetReport,
+  loadQ, loadR
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page)

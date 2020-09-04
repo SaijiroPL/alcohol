@@ -8,20 +8,12 @@
   margin-top: 5px;
 }
 
-.ac-question-text {
-  font-family: source-han-sans-japanese, sans-serif;
-  font-style: normal;
-  font-size: 20px;
-  width: 285px;
-  margin: auto;
-}
-
 .ac-drink-extrabtn {
   width: 285px;
 }
 
 .ac-drink-extrabtn .MuiButton-label {
-  font-family: source-han-sans-japanese, sans-serif;
+  font-family: SourceHans;
   font-style: normal;
   font-size: 18px;
 }
