@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "alcohol-temp"
+    "release": "alpnf-e94e9",
+    "default": "alpnf-e94e9"
   }
 }

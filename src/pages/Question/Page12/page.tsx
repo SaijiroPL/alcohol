@@ -63,7 +63,7 @@ export default function({
   }
 
   function onNext() {
-    // Math.random() < 0.5 ? setGroup('A') : setGroup('B')
+    Math.random() < 0.5 ? setGroup('A') : setGroup('B')
     setAnswer(selected)
     setAge(age)
     setGender(gender)
