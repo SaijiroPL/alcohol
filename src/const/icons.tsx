@@ -45,8 +45,33 @@ import faceSad from 'svgs/level/face-sad.png'
 import faceNormal from 'svgs/level/face-normal.png'
 import faceLike from 'svgs/level/face-like.png'
 
+import disease1 from 'svgs/diseases/1.png'
+import disease2 from 'svgs/diseases/2.png'
+import disease3 from 'svgs/diseases/3.png'
+import disease4 from 'svgs/diseases/4.png'
+import disease5 from 'svgs/diseases/5.png'
+import disease6 from 'svgs/diseases/6.png'
+import disease7 from 'svgs/diseases/7.png'
+import disease8 from 'svgs/diseases/8.png'
+import disease9 from 'svgs/diseases/9.png'
+import disease10 from 'svgs/diseases/10.png'
+import disease11 from 'svgs/diseases/11.png'
+import disease12 from 'svgs/diseases/12.png'
+import disease13 from 'svgs/diseases/13.png'
+import disease14 from 'svgs/diseases/14.png'
+import disease15 from 'svgs/diseases/15.png'
+import disease16 from 'svgs/diseases/16.png'
+import disease17 from 'svgs/diseases/17.png'
+
 const man = [manYellow, manGreen, manRed, manBlack]
 const face = [faceLike, faceNormal, faceSad, faceCry]
+const diseases = [
+  disease1, disease2, disease3, disease4,
+  disease5, disease6, disease7, disease8,
+  disease9, disease10, disease11, disease12,
+  disease13, disease14, disease15, disease16,
+  disease17
+]
 
 export {
   arrowRight,
@@ -80,5 +105,5 @@ export {
   chart,
   logo,
   tick,
-  man, face
+  man, face, diseases
 }

@@ -13,6 +13,7 @@ import * as Colors from 'const/colors'
 import * as Icons from 'const/icons'
 import { DRINK_INFO } from 'const/drinks'
 import { RANKS } from 'const/ranks'
+import { calcRank } from 'engine'
 
 import './styles.css';
 
@@ -82,22 +83,7 @@ export default function({
       setCycle(`1週に${question2 - 3}日`)
     }
     setDaily(Math.ceil(dailyAmt))
-
-    const ageLevel = Math.floor((age - 20) / 5)
-    const drinkLevel = Math.floor(alcohol / 10)
-    let drinkIndex = 0
-    if (drinkLevel <= 2) {
-      drinkIndex = RANKS[gender][ageLevel].level12
-    } else if (drinkLevel <= 4) {
-      drinkIndex = RANKS[gender][ageLevel].level34
-    } else if (drinkLevel <= 6) {
-      drinkIndex = RANKS[gender][ageLevel].level56
-    } else if (drinkLevel <= 9) {
-      drinkIndex = RANKS[gender][ageLevel].level79
-    } else {
-      drinkIndex = RANKS[gender][ageLevel].level10
-    }
-    setRank(Math.ceil(drinkIndex * 100 / RANKS[gender][ageLevel].sum))
+    setRank(calcRank(age, alcohol, gender))
   }, [question2, age, alcohol, gender, setDaily, setRank])
 
   const store = useStore()
@@ -186,7 +172,7 @@ export default function({
           </div>
         </>
       )}
-      <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
+      {/* <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
         <span style={{ fontWeight: 'bold' }}>1日平均の純アルコール摂取量</span>
       </div>
       <div className='container-center-text' style={{
@@ -198,7 +184,7 @@ export default function({
         {question2 >= 0 && question2 <= 3 && (`${question2}/30日`)}
         {question2 >= 4 && (`${question2 - 3}/7日`)}
           ×  {alcohol}g  =  <span style={{ fontSize: '28px' }}>{daily}g</span>
-      </div>
+      </div> */}
       {group === 'A' && (
         <>
           <div className='container-center-text' style={{

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications'
 
 import './App.css';
 import Splash from 'pages/Splash';
@@ -27,31 +28,33 @@ import CSV from 'pages/Report/Csv';
 
 function App() {
   return (
-    <div className='ac-container'>
-      <Switch>
-        <Route path="/" exact component={Splash} />
-        <Route path="/question/1" component={Page1} />
-        <Route path="/question/2" component={Page2} />
-        <Route path="/question/3" component={Page3} />
-        <Route path="/question/4" component={Page4} />
-        <Route path="/question/5" component={Page5} />
-        <Route path="/question/6" component={Page6} />
-        <Route path="/question/7" component={Page7} />
-        <Route path="/question/8" component={Page8} />
-        <Route path="/question/9" component={Page9} />
-        <Route path="/question/10" component={Page10} />
-        <Route path="/question/11" component={Page11} />
-        <Route path="/question/12" component={Page12} />
-        <Route path="/goal/1" component={RPage1} />
-        <Route path="/goal/2" component={RPage2} />
-        <Route path="/goal/3" component={RPage3} />
-        <Route path="/goal/4" component={RPage4} />
-        <Route path="/goal/5" component={RPage5} />
-        <Route path="/goal/6" component={RPage6} />
-        <Route path="/goal/7" component={RPage7} />
-        <Route path="/goal/csv" component={CSV} />
-      </Switch>
-    </div>
+    <ToastProvider>
+      <div className='ac-container'>
+        <Switch>
+          <Route path="/" exact component={Splash} />
+          <Route path="/question/1" component={Page1} />
+          <Route path="/question/2" component={Page2} />
+          <Route path="/question/3" component={Page3} />
+          <Route path="/question/4" component={Page4} />
+          <Route path="/question/5" component={Page5} />
+          <Route path="/question/6" component={Page6} />
+          <Route path="/question/7" component={Page7} />
+          <Route path="/question/8" component={Page8} />
+          <Route path="/question/9" component={Page9} />
+          <Route path="/question/10" component={Page10} />
+          <Route path="/question/11" component={Page11} />
+          <Route path="/question/12" component={Page12} />
+          <Route path="/goal/1" component={RPage1} />
+          <Route path="/goal/2" component={RPage2} />
+          <Route path="/goal/3" component={RPage3} />
+          <Route path="/goal/4" component={RPage4} />
+          <Route path="/goal/5" component={RPage5} />
+          <Route path="/goal/6" component={RPage6} />
+          <Route path="/goal/7" component={RPage7} />
+          <Route path="/goal/csv" component={CSV} />
+        </Switch>
+      </div>
+    </ToastProvider>
   );
 }
 

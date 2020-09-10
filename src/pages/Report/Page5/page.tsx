@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useHistory } from "react-router-dom";
-import { Button } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import ClipLoader from "react-spinners/ClipLoader";
+import { useHistory } from "react-router-dom"
+import { Button } from '@material-ui/core'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import ClipLoader from "react-spinners/ClipLoader"
+import { useToasts } from 'react-toast-notifications'
 
 import Rank from 'components/Chart/rank'
 import Chart from 'components/Chart'
@@ -17,21 +18,24 @@ import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
-import { OtherDrink } from 'types/drinks';
+import { OtherDrink, DiseaseStat } from 'types/drinks';
 
 import queryString from 'query-string'
 import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 import { useStore } from 'react-redux';
 import { RootState } from 'store';
+import { DISEASE_UI } from 'const/disease';
 
 interface props extends DrinkProps {
   frequency: number
   rank: number
   newRank: number
-  alcohol: number,
-  newAlcohol: number,
+  alcohol: number
+  newAlcohol: number
   disease: number[]
   newDisease: number[]
+  diseaseStat: DiseaseStat[]
+  newDiseaseStat: DiseaseStat[]
   setFrequency: (frequency: number) => void
   setNewRank: (rank: number) => void
   initDrinks: (drinks: any) => void
@@ -46,12 +50,14 @@ export default function({
   rank, newRank,
   drinks, otherDrinks,
   disease, newDisease,
+  diseaseStat, newDiseaseStat,
   setFrequency,
   setDrink, setOtherDrink,
   initDrinks, initOtherDrinks,
   loadQ, loadR
 }: props) {
   const history = useHistory()
+  const { addToast } = useToasts()
   const [isReset, showReset] = useState(false)
   const [loading, loaded] = useState(true)
   const resetRef = useRef(null)
@@ -91,18 +97,69 @@ export default function({
   }
 
   function onNext() {
-    const key = saveStore()
-    history.push(`/goal/6?key=${key}`);
+    if (newAlcohol > alcohol) {
+      addToast('目標飲酒量が現在の飲酒量を超過しました。', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    } else {
+      const key = saveStore()
+      history.push(`/goal/6?key=${key}`);
+    }
   }
 
   function reducePercent(index: number) {
-    const percent = Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
-    if (disease[index] === 1) return 0
+    const percent = Math.round((diseaseStat[index].stat - newDiseaseStat[index].stat) / (diseaseStat[index].stat - 1) * 100)
+    if (diseaseStat[index].stat === 1) return 0
+    // if (diseaseStat[index].stat === 10000 || newDiseaseStat[index].stat === 10000) return 'ND'
     return percent
   }
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
     if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
+  }
+  function roundDisease(org: number) {
+    if (org === 10000) return 'ND'
+    return Math.round(org * 10) / 10
+  }
+  function renderStats() {
+    let rows = []
+    for (let i = 0; i < diseaseStat.length / 2; i++) {
+      rows.push(
+        (<div key={i} style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+          <div>
+            <Disease 
+              key={i * 2}
+              icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
+              content={-reducePercent(i * 2)} 
+              unit='%' 
+              title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`}
+              titlePos='bottom' />
+            <div style={{ textAlign: 'center' }}>
+              {roundDisease(diseaseStat[i * 2].stat)}倍 
+              <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
+              {roundDisease(newDiseaseStat[i * 2].stat)}倍 
+            </div>
+          </div>
+          {(i * 2 + 1 < diseaseStat.length) && 
+            <div>
+              <Disease 
+                key={i * 2 + 1}
+                icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
+                content={-reducePercent(i * 2 + 1)} 
+                unit='%' 
+                title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`}
+                titlePos='bottom' />
+              <div style={{ textAlign: 'center' }}>
+                {roundDisease(diseaseStat[i * 2 + 1].stat)}倍 
+                <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
+                {roundDisease(newDiseaseStat[i * 2 + 1].stat)}倍 
+              </div>
+            </div>}
+        </div>)
+      )
+    }
+    return rows
   }
   return (
     <div className='report-page-container'>
@@ -143,63 +200,10 @@ export default function({
       <div style={{ marginTop: '120px' }}>
         <Chart rank={rank} rank2={newRank} volume={alcohol} volume2={newAlcohol}  />
       </div>
-      <div className='container-center-text' style={{ fontSize: '14px', marginTop: '40px' }}>
+      <div className='container-center-text' style={{ fontSize: '14px', marginTop: '40px', marginBottom: '20px' }}>
         減酒により、これだけのリスク改善が期待できます
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <div>
-          <Disease icon={Icons.life} content={-reducePercent(0)} unit='%' title='死亡リスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[0]}倍 
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[0]}倍 
-          </div>
-        </div>
-        <div>
-          <Disease icon={Icons.ambulance} content={-reducePercent(1)} unit='%' title='アルコール関連疾患リスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[1]}倍 
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[1]}倍 
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <div>
-          <Disease icon={Icons.liver} content={-reducePercent(2)} unit='%' title='肝臓がんリスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[2]}倍
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[2]}倍
-          </div>
-        </div>
-        <div>
-          <Disease icon={Icons.esophagus} content={-reducePercent(3)} unit='%' title='食道がんリスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[3]}倍
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[3]}倍 
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px' }}>
-        <div>
-          <Disease icon={Icons.pancreatitis} content={-reducePercent(4)} unit='%' title='膵炎リスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[4]}倍
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[4]}倍 
-          </div>
-        </div>
-        <div>
-          <Disease icon={Icons.brain} content={-reducePercent(5)} unit='%' title='脳卒中リスク' titlePos='bottom' />
-          <div style={{ textAlign: 'center' }}>
-            {disease[5]}倍
-            <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-            {newDisease[5]}倍 
-          </div>
-        </div>
-      </div>
+      {renderStats()}
       <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='目標を見直す' onNext={onNext} 
       onBack={() => {
         showReset(true)

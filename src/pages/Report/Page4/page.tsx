@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useToasts } from 'react-toast-notifications'
 
 import Rank from 'components/Chart/rank'
 import Chart from 'components/Chart'
@@ -28,22 +29,18 @@ interface props extends DrinkProps {
   newRank: number,
   alcohol: number,
   newAlcohol: number,
-  daily: number,
-  newDaily: number,
   group: 'A' | 'B',
-  setFrequency: (frequency: number) => void
+  setNextFrequency: (frequency: number) => void
   setNewDaily: (daily: number) => void
   setNewRank: (rank: number) => void
-  initDrinks: (drinks: any) => void
-  initOtherDrinks: (drinks: any) => void
+  initNextDrinks: (drinks: any) => void
+  initNextOtherDrinks: (drinks: any) => void
   loadQ: (payload: any) => void
   loadR: (payload: any) => void
 }
 
 export default function({
   frequency,
-  daily,
-  newDaily,
   alcohol,
   newAlcohol,
   rank,
@@ -53,9 +50,9 @@ export default function({
   group,
   setDrink,
   setOtherDrink,
-  setFrequency,
-  initDrinks,
-  initOtherDrinks,
+  setNextFrequency,
+  initNextDrinks,
+  initNextOtherDrinks,
   loadQ, loadR
 }: props) {
   const history = useHistory()
@@ -63,6 +60,7 @@ export default function({
   const [loading, loaded] = useState(true)
 
   const store = useStore()
+  const { addToast } = useToasts()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -77,12 +75,6 @@ export default function({
     }
   }, [])
 
-  useEffect(() => {
-    initDrinks(drinks)
-    initOtherDrinks(otherDrinks)
-    setFrequency(frequency)
-  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
-
   function saveStore() {
     const key = queryString.parse(window.location.search).key?.toString()
     const state: RootState = store.getState()
@@ -95,11 +87,19 @@ export default function({
   }
 
   function onNext() {
-    const key = saveStore()
-    if (group === 'A')
-      history.push(`/goal/5?key=${key}`);
-    else
-      history.push(`/goal/6?key=${key}`);
+    if (newAlcohol > alcohol) {
+      addToast('目標飲酒量が現在の飲酒量を超過しました。', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    } else {
+
+      const key = saveStore()
+      if (group === 'A')
+        history.push(`/goal/5?key=${key}`);
+      else
+        history.push(`/goal/6?key=${key}`);
+    }
   }
 
   function onAddExtra() {
@@ -146,7 +146,7 @@ export default function({
             </div>
           </div>
           <div style={{ marginTop: '120px' }}>
-            <Chart rank={rank} rank2={newRank} volume={alcohol} volume2={newAlcohol} />
+            <Chart rank={rank} volume={alcohol}/>
           </div>          
         </>
       )}
@@ -159,7 +159,7 @@ export default function({
           title='飲酒頻度' 
           value1={frequency > 3 ? '週' : '月'} 
           value2={frequency > 3 ? frequency - 3 : frequency}
-          updateValue={setFrequency} />
+          updateValue={setNextFrequency} />
         {DRINK_INFO.map((item, index) => (
           <Drink key={index} info={item} value={drinks[item.id]} type='indirect' updateVolume={(key, value, isFirst) => {
             if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})

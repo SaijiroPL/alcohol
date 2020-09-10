@@ -20,9 +20,11 @@ const mapStateToProps = (state: RootState) => ({
   rank: state.report.rank,
   newRank: state.report.newRank,
   alcohol: state.question.alcohol,
-  newAlcohol: state.report.newAlcohol,
+  newAlcohol: state.report.nextAlcohol,
   disease: state.report.disease,
-  newDisease: state.report.newDisease
+  newDisease: state.report.newDisease,
+  diseaseStat: state.report.diseaseStat,
+  newDiseaseStat: state.report.newDiseaseStat,
 })
 
 const mapDispatchToProps = { 

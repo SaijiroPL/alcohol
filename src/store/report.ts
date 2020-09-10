@@ -1,7 +1,9 @@
-import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks'
+import { DrinkVolume, OtherDrink, StandardDrinkInfo, DiseaseStat } from 'types/drinks'
 import { DRINK_INFO } from 'const/drinks'
 import { RANKS } from 'const/ranks'
 import { DISEASE_STAT } from 'const/disease'
+import { calcRank, nextDisease } from 'engine'
+import { stat } from 'fs'
 
 export function typedAction<T extends string>(type: T): { type: T }
 export function typedAction<T extends string, P extends any>(
@@ -19,10 +21,12 @@ type ReportState = {
   rank: number
   score: number
   disease: number[]
+  diseaseStat: DiseaseStat[]
   newDaily: number
   newRank: number
   newScore: number
   newDisease: number[]
+  newDiseaseStat: DiseaseStat[]
   newAlcohol: number
   frequency: number
   drinks: {[key: string]: DrinkVolume}
@@ -51,10 +55,12 @@ const initStates: ReportState = {
   rank: 0,
   score: 0,
   disease: [1, 1, 1, 1, 1, 1],
+  diseaseStat: [],
   newDaily: 0,
   newRank: 0,
   newScore: 0,
   newDisease: [1, 1, 1, 1, 1, 1],
+  newDiseaseStat: [],
   newAlcohol: 0,
   frequency: 0,
   drinks: initDrinkValues,
@@ -73,6 +79,7 @@ export const setDaily = (daily: number) => typedAction('report/daily', daily)
 export const setRank = (rank: number) => typedAction('report/rank', rank)
 export const setScore = (score: number) => typedAction('report/score', score)
 export const setDisease = (disease: number[]) => typedAction('report/disease', disease)
+export const setDiseaseStat = (stats: DiseaseStat[]) => typedAction('report/diseaseStat', stats)
 export const setNewDaily = (daily: number) => typedAction('report/new/daily', daily)
 export const setNewRank = (rank: number) => typedAction('report/new/rank', rank)
 export const setNewScore = (score: number) => typedAction('report/new/score', score)
@@ -100,6 +107,7 @@ type ReportAction = ReturnType<
   typeof setRank |
   typeof setScore |
   typeof setDisease |
+  typeof setDiseaseStat |
   typeof setNewDaily |
   typeof setNewRank |
   typeof setNewScore |
@@ -127,6 +135,8 @@ function updateNewDecision(
   const drinks = type === 'first' ? state.drinks : state.nextDrinks
   const otherDrinks = type === 'first' ? state.otherDrinks : state.nextOtherDrinks
   const frequency = type === 'first' ? state.frequency : state.nextFrequency
+
+  console.log(drinks)
 
   function calcTotalAlcohol(item: StandardDrinkInfo) {
     const volume1 = item.volume1 * drinks[item.id].volume
@@ -160,42 +170,15 @@ function updateNewDecision(
     dailyAmt = alcohol * (frequency - 3) / 7
   }
   const newDaily = Math.ceil(dailyAmt)
+  
+  const newRank = calcRank(state.age, alcohol, state.gender)
 
-  const ageLevel = Math.floor((state.age - 20) / 5)
-  const drinkLevel = Math.floor(alcohol / 10)
-  let drinkIndex = 0
-  if (drinkLevel <= 2) {
-    drinkIndex = RANKS[state.gender][ageLevel].level12
-  } else if (drinkLevel <= 4) {
-    drinkIndex = RANKS[state.gender][ageLevel].level34
-  } else if (drinkLevel <= 6) {
-    drinkIndex = RANKS[state.gender][ageLevel].level56
-  } else if (drinkLevel <= 9) {
-    drinkIndex = RANKS[state.gender][ageLevel].level79
-  } else {
-    drinkIndex = RANKS[state.gender][ageLevel].level10
-  }
-  const newRank = Math.ceil(drinkIndex * 100 / RANKS[state.gender][ageLevel].sum)
-
-  const drinkDailyLevel = Math.floor(newDaily / 10)
-
-  function roundDisease(org: number) {
-    return Math.round(org * 10) / 10
-  }
-
-  const disease = [
-    roundDisease(DISEASE_STAT[0][drinkDailyLevel]),
-    roundDisease(DISEASE_STAT[1][drinkDailyLevel]),
-    roundDisease(DISEASE_STAT[2][drinkDailyLevel]),
-    roundDisease(DISEASE_STAT[3][drinkDailyLevel]),
-    roundDisease(DISEASE_STAT[4][drinkDailyLevel]),
-    roundDisease(DISEASE_STAT[5][drinkDailyLevel]),
-  ]
+  const disease = nextDisease(alcohol, state.gender, state.diseaseStat)
 
   if (type === 'first')
-    return { ...state, newDaily: newDaily, newRank: newRank, newAlcohol: alcohol, newDisease: disease}
+    return { ...state, newDaily: newDaily, newRank: newRank === 0 ? 1 : newRank, newAlcohol: alcohol, newDiseaseStat: disease}
   else
-    return { ...state, newDaily: newDaily, newRank: newRank, nextAlcohol: alcohol, newDisease: disease}
+    return { ...state, newDaily: newDaily, newRank: newRank === 0 ? 1 : newRank, nextAlcohol: alcohol, newDiseaseStat: disease}
 }
 
 function updateDrink(state: ReportState, payload: any) {
@@ -255,6 +238,8 @@ export function reportReducer(
       return { ...state, daily: action.payload }
     case 'report/disease':
       return { ...state, disease: action.payload }
+    case 'report/diseaseStat':
+      return { ...state, diseaseStat: action.payload }
     case 'report/new/score':
       return { ...state, newScore: action.payload }
     case 'report/new/rank':

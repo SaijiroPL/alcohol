@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { useHistory } from "react-router-dom";
-import { Button } from '@material-ui/core';
 
 import QuestionTitle from 'components/QuestionTitle'
 import AccordianChoice from 'components/AccordianChoice'
 import MultiButton from 'components/MultiButton'
 import { DISEASE_INFO } from 'const/disease'
 import { PAGE_INFOES } from 'const/selections'
-import { arrowUp, arrowDown } from 'const/icons'
 
 import queryString from 'query-string'
 import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 import { useStore } from 'react-redux';
 import { RootState } from 'store';
-import { QuestionProps } from 'types/pages';
 
 interface props {
   age: number
@@ -49,6 +46,10 @@ export default function({
       })
     }
   }, [])
+
+  React.useEffect(() => {
+    updateSelected(answer)
+  }, [answer])
 
   const store = useStore()
   function saveStore() {

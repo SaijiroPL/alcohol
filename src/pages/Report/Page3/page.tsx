@@ -8,28 +8,43 @@ import Rank from 'components/Chart/rank'
 
 import * as Colors from 'const/colors'
 import { life, ambulance, liver, esophagus, pancreatitis, brain } from 'const/icons'
-import { DISEASE_STAT } from 'const/disease'
+import { DISEASE_STAT, DISEASE_UI } from 'const/disease'
 import './styles.css';
 
 import queryString from 'query-string'
 import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 import { useStore } from 'react-redux';
 import { RootState } from 'store';
+import { calcDisease } from 'engine';
+import { DiseaseStat, DrinkVolume, OtherDrink } from 'types/drinks';
 
 interface props {
-  daily: number
+  alcohol: number
+  gender: number
+  frequency: number
   rank: number
-  disease: number[]
-  setDisease: (disease: number[]) => void
+  selectedDisease: number[]
+  diseaseStat: DiseaseStat[]
+  drinks: {[key: string]: DrinkVolume}
+  otherDrinks: OtherDrink[]
+  initDrinks: (drinks: any) => void
+  initOtherDrinks: (drinks: any) => void
+  setFrequency: (frequency: number) => void
+  setDiseaseStat: (disease: DiseaseStat[]) => void
   loadQ: (payload: any) => void
   loadR: (payload: any) => void
 }
 
 export default function({
-  daily,
+  alcohol,
+  frequency,
+  gender,
   rank,
-  disease,
-  setDisease,
+  selectedDisease,
+  diseaseStat,
+  drinks, otherDrinks,
+  initDrinks, initOtherDrinks, setFrequency,
+  setDiseaseStat,
   loadQ, loadR
 }: props) {
   const history = useHistory();
@@ -50,16 +65,8 @@ export default function({
   }, [])
 
   useEffect(() => {
-    const drinkLevel = Math.floor(daily / 10)
-    setDisease([
-      roundDisease(DISEASE_STAT[0][drinkLevel]),
-      roundDisease(DISEASE_STAT[1][drinkLevel]),
-      roundDisease(DISEASE_STAT[2][drinkLevel]),
-      roundDisease(DISEASE_STAT[3][drinkLevel]),
-      roundDisease(DISEASE_STAT[4][drinkLevel]),
-      roundDisease(DISEASE_STAT[5][drinkLevel]),
-    ])
-  }, [daily, setDisease])
+    setDiseaseStat(calcDisease(alcohol, gender, selectedDisease))
+  }, [alcohol, gender, selectedDisease, setDiseaseStat])
 
   const store = useStore()
   function saveStore() {
@@ -74,12 +81,37 @@ export default function({
   }
 
   function onNext() {
+    setFrequency(frequency)
+    initDrinks(drinks)
+    initOtherDrinks(otherDrinks)
     const key = saveStore()
     history.push(`/goal/4?key=${key}`);
   }
   function roundDisease(org: number) {
     return Math.round(org * 10) / 10
   }
+  function renderStats() {
+    let rows = []
+    for (let i = 0; i < diseaseStat.length / 2; i++) {
+      rows.push(
+        (<div key={i} style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Disease 
+            icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
+            content={roundDisease(diseaseStat[i * 2].stat)} 
+            unit='倍' 
+            title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`} />
+          {(i * 2 + 1 < diseaseStat.length) && 
+            <Disease 
+              icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
+              content={roundDisease(diseaseStat[i * 2 + 1].stat)} 
+              unit='倍' 
+              title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`} />}
+        </div>)
+      )
+    }
+    return rows
+  }
+
   return (
     <div className='report-page-container'>
       <ClipLoader
@@ -100,18 +132,7 @@ export default function({
       <div className='container-center-text' style={{ fontSize: '12px' }}>
         お酒を飲まない人との比較
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Disease icon={life} content={roundDisease(disease[0])} unit='倍' title='死亡リスク' />
-        <Disease icon={ambulance} content={roundDisease(disease[1])} unit='倍' title='アルコール関連疾患リスク' />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Disease icon={liver} content={disease[2]} unit='倍' title='肝臓がんリスク' imgStyle={{ marginTop: '10px' }} />
-        <Disease icon={esophagus} content={roundDisease(disease[3])} unit='倍' title='食道がんリスク' />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Disease icon={pancreatitis} content={roundDisease(disease[4])} unit='倍' title='膵炎リスク' />
-        <Disease icon={brain} content={roundDisease(disease[5])} unit='倍' title='脳卒中リスク' />
-      </div>
+      {renderStats()}
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '30px', marginBottom: '20px' }}>
         お酒は人生に関わる病気のリスクを高めます<br/>お酒を減らし、将来の健康を手に入れましょう
       </div>

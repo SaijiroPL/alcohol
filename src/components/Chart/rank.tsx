@@ -30,13 +30,14 @@ export default function({
   rank,
   style
 }: props) {
+  const rankLevel = React.useMemo(() => Math.min(Math.floor(rank / 25), 3), [rank])
   return (
     <div style={{
       display: 'inline-flex'
     }}>
       <div style={{
         width: style.radius * 2 + 'px', height: style.radius * 2 + 'px',
-        backgroundColor: backColors[Math.floor(rank / 25)], color: textColors[Math.floor(rank / 25)],
+        backgroundColor: backColors[rankLevel], color: textColors[rankLevel],
         borderRadius: '50%',
         textAlign: 'center'
       }}>
@@ -44,7 +45,7 @@ export default function({
           className='font-fira' 
           style={{ 
             fontSize: style.fontSizeUp, 
-            borderBottom: '2px solid ' + textColors[Math.floor(rank / 25)],
+            borderBottom: '2px solid ' + textColors[rankLevel],
             fontWeight: 'bold',
             display: 'inline-block',
             marginTop: style.radius / 10 + 'px'
@@ -63,7 +64,7 @@ export default function({
       </div>
       <div style={{
         fontSize: '28px',
-        color: backColors[Math.floor(rank / 25)],
+        color: backColors[rankLevel],
         fontWeight: 'bold',
         display: 'flex',
         marginLeft: '-' + (style.radius / 12) + 'px'

@@ -26,7 +26,7 @@ export default function({
       width: '145px', 
       height: '125px', 
       position: 'relative',
-      marginBottom: titlePos === 'bottom' ? '15px' : 0 }}>
+      marginBottom: titlePos === 'bottom' ? '34px' : 0 }}>
       {titlePos === 'top' && (
         <div style={{ 
           fontSize: '16px',
@@ -35,14 +35,21 @@ export default function({
             {title}
         </div>
       )}
-      <img src={icon} style={imgStyle} alt='symbol' />
+      <img src={icon} style={{
+        ...imgStyle,
+        opacity: '0.3',
+        position: 'absolute',
+        width: '145px',
+        height: '145px',
+        top: '0', left: '0'
+      }} alt='symbol' />
       {titlePos === 'bottom' && (
         <div style={{ 
           fontSize: '16px',
           color: Colors.RED,
           lineHeight: '18px',
           position: 'absolute',
-          top: '100px',
+          top: '125px',
           width: '100%' }}>
             {title}
         </div>
@@ -50,11 +57,11 @@ export default function({
       <div className='font-fira' style={{
         color: Colors.RED,
         fontSize: '30px', 
-        position: 'absolute', top: titlePos === 'top' ? '35px' : '10px',
+        position: 'absolute', top: titlePos === 'top' ? '35px' : '30px',
         width: '100%'
       }}>
         <span style={{ fontSize: '60px' }}>
-          {typeof(content) === 'number' && unit !== '%' ? content.toFixed(1): content}
+          {typeof(content) === 'number' && unit !== '%' ? (content >= 10000 ? 'ND' : content.toFixed(1)): content}
         </span>{unit}
       </div>
     </div>

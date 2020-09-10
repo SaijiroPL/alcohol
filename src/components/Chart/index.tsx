@@ -48,7 +48,7 @@ export default function({
             <div style={{
               width: '2px', height: (42 - rank * 0.13) + 'px',
               backgroundColor: 'white',
-              position: 'absolute', right: rank * 3 + 'px', bottom: '0'
+              position: 'absolute', right: (rank - 1) * 3 + 'px', bottom: '0'
             }} />
             <img src={man[rankGroup]} alt='man' style={{
               position: 'absolute', 
@@ -87,7 +87,7 @@ export default function({
           <div style={{
             width: '2px', height: (42 - rank2 * 0.13) + 'px',
             backgroundColor: 'white',
-            position: 'absolute', right: rank2 * 3 + 'px', 
+            position: 'absolute', right: (rank2 - 1) * 3 + 'px', 
             bottom: '0'
           }} />
         )}

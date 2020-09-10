@@ -20,3 +20,8 @@ export interface DrinkVolume {
   volume: number
   volume2: number
 }
+
+export interface DiseaseStat { 
+  index: number, 
+  stat: number
+} 

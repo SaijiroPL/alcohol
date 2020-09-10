@@ -1,11 +1,11 @@
 import { RootState } from 'store'
 import { 
-  setFrequency, 
   setNewRank, 
   setDrink, 
   setOtherDrink, 
-  initDrinks, 
-  initOtherDrinks, 
+  setNextFrequency,
+  initNextDrinks, 
+  initNextOtherDrinks, 
   load as loadR
 } from 'store/report'
 import { load as loadQ } from 'store/question'
@@ -14,13 +14,11 @@ import { connect } from 'react-redux'
 import Page from './page'
 
 const mapStateToProps = (state: RootState) => ({
-  frequency: state.question.question2,
-  drinks: state.question.drinks,
-  otherDrinks: state.question.otherDrinks,
+  frequency: state.report.frequency,
+  drinks: state.report.drinks,
+  otherDrinks: state.report.otherDrinks,
   rank: state.report.rank,
   newRank: state.report.newRank,
-  daily: state.report.daily,
-  newDaily: state.report.newDaily,
   alcohol: state.question.alcohol,
   newAlcohol: state.report.newAlcohol,
   group: state.report.group
@@ -29,10 +27,10 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = { 
   setDrink,
   setOtherDrink,
-  setFrequency,
+  setNextFrequency,
   setNewRank,
-  initDrinks,
-  initOtherDrinks,
+  initNextDrinks,
+  initNextOtherDrinks,
   loadQ, loadR
 }
 
