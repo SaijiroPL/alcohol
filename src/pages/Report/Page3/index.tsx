@@ -1,8 +1,5 @@
 import { RootState } from 'store'
 import { 
-  initDrinks, 
-  initOtherDrinks, 
-  setFrequency,
   setDiseaseStat, 
   load as loadR } from 'store/report'
 import { load as loadQ } from 'store/question'
@@ -16,13 +13,9 @@ const mapStateToProps = (state: RootState) => ({
   rank: state.report.rank,
   diseaseStat: state.report.diseaseStat,
   selectedDisease: state.question.question12,
-  frequency: state.question.question2,
-  drinks: state.question.drinks,
-  otherDrinks: state.question.otherDrinks,
 })
 
 const mapDispatchToProps = { 
-  initDrinks, initOtherDrinks, setFrequency,
   setDiseaseStat, loadQ, loadR
 }
 

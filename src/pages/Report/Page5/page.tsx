@@ -32,8 +32,6 @@ interface props extends DrinkProps {
   newRank: number
   alcohol: number
   newAlcohol: number
-  disease: number[]
-  newDisease: number[]
   diseaseStat: DiseaseStat[]
   newDiseaseStat: DiseaseStat[]
   setFrequency: (frequency: number) => void
@@ -49,7 +47,6 @@ export default function({
   alcohol, newAlcohol,
   rank, newRank,
   drinks, otherDrinks,
-  disease, newDisease,
   diseaseStat, newDiseaseStat,
   setFrequency,
   setDrink, setOtherDrink,
@@ -183,7 +180,7 @@ export default function({
             fontSizeUp: '50px',
             fontSizeDown: '16px'
           }}/>
-          <div style={{ marginTop: '10px' }}>
+          <div style={{ marginTop: '10px', width: '150px' }}>
             <span style={{ 
               color: 'black', 
               fontSize: '16px', 

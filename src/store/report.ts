@@ -136,8 +136,6 @@ function updateNewDecision(
   const otherDrinks = type === 'first' ? state.otherDrinks : state.nextOtherDrinks
   const frequency = type === 'first' ? state.frequency : state.nextFrequency
 
-  console.log(drinks)
-
   function calcTotalAlcohol(item: StandardDrinkInfo) {
     const volume1 = item.volume1 * drinks[item.id].volume
     let volume2 = 0
@@ -281,6 +279,12 @@ export function reportReducer(
       } 
       if (!action.payload.nextOtherDrinks) {
         loadState = { ...loadState, nextOtherDrinks: [] }
+      }
+      if (!action.payload.diseaseStat) {
+        loadState = { ...loadState, diseaseStat: [] }
+      }
+      if (!action.payload.newDiseaseStat) {
+        loadState = { ...loadState, newDiseaseStat: [] }
       }
       return loadState
     default:

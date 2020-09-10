@@ -16,7 +16,7 @@ import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
-import { OtherDrink } from 'types/drinks'
+import { OtherDrink, DrinkVolume } from 'types/drinks'
 
 import queryString from 'query-string'
 import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
@@ -24,35 +24,30 @@ import { useStore } from 'react-redux';
 import { RootState } from 'store';
 
 interface props extends DrinkProps {
-  frequency: number,
-  rank: number,
-  newRank: number,
-  alcohol: number,
-  newAlcohol: number,
-  group: 'A' | 'B',
-  setNextFrequency: (frequency: number) => void
-  setNewDaily: (daily: number) => void
-  setNewRank: (rank: number) => void
-  initNextDrinks: (drinks: any) => void
-  initNextOtherDrinks: (drinks: any) => void
+  frequency: number
+  rank: number
+  newRank: number
+  alcohol: number
+  newAlcohol: number
+  group: 'A' | 'B'
+  orgFrequency: number
+  orgDrinks: {[key: string]: DrinkVolume}
+  orgOtherDrinks: OtherDrink[]
+  setFrequency: (frequency: number) => void
+  initDrinks: (drinks: any) => void
+  initOtherDrinks: (drinks: any) => void
   loadQ: (payload: any) => void
   loadR: (payload: any) => void
 }
 
 export default function({
-  frequency,
-  alcohol,
-  newAlcohol,
-  rank,
-  drinks,
-  otherDrinks,
-  newRank,
+  alcohol, newAlcohol,
+  rank, newRank,
+  frequency, drinks, otherDrinks,
+  orgFrequency, orgDrinks, orgOtherDrinks,
   group,
-  setDrink,
-  setOtherDrink,
-  setNextFrequency,
-  initNextDrinks,
-  initNextOtherDrinks,
+  setDrink, setOtherDrink,
+  initDrinks, initOtherDrinks, setFrequency,
   loadQ, loadR
 }: props) {
   const history = useHistory()
@@ -74,6 +69,12 @@ export default function({
       })
     }
   }, [])
+
+  useEffect(() => {
+    setFrequency(orgFrequency)
+    initDrinks(orgDrinks)
+    initOtherDrinks(orgOtherDrinks)
+  }, [orgFrequency, orgDrinks, orgOtherDrinks,initDrinks, initOtherDrinks, setFrequency])
 
   function saveStore() {
     const key = queryString.parse(window.location.search).key?.toString()
@@ -159,7 +160,7 @@ export default function({
           title='飲酒頻度' 
           value1={frequency > 3 ? '週' : '月'} 
           value2={frequency > 3 ? frequency - 3 : frequency}
-          updateValue={setNextFrequency} />
+          updateValue={setFrequency} />
         {DRINK_INFO.map((item, index) => (
           <Drink key={index} info={item} value={drinks[item.id]} type='indirect' updateVolume={(key, value, isFirst) => {
             if (setDrink) setDrink({value: value, type: 'standard', key: key, isFirst: isFirst})

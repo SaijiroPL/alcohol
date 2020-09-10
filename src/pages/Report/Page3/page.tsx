@@ -7,8 +7,7 @@ import Disease from 'components/Disease'
 import Rank from 'components/Chart/rank'
 
 import * as Colors from 'const/colors'
-import { life, ambulance, liver, esophagus, pancreatitis, brain } from 'const/icons'
-import { DISEASE_STAT, DISEASE_UI } from 'const/disease'
+import { DISEASE_UI } from 'const/disease'
 import './styles.css';
 
 import queryString from 'query-string'
@@ -16,20 +15,14 @@ import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 import { useStore } from 'react-redux';
 import { RootState } from 'store';
 import { calcDisease } from 'engine';
-import { DiseaseStat, DrinkVolume, OtherDrink } from 'types/drinks';
+import { DiseaseStat } from 'types/drinks';
 
 interface props {
   alcohol: number
   gender: number
-  frequency: number
   rank: number
   selectedDisease: number[]
   diseaseStat: DiseaseStat[]
-  drinks: {[key: string]: DrinkVolume}
-  otherDrinks: OtherDrink[]
-  initDrinks: (drinks: any) => void
-  initOtherDrinks: (drinks: any) => void
-  setFrequency: (frequency: number) => void
   setDiseaseStat: (disease: DiseaseStat[]) => void
   loadQ: (payload: any) => void
   loadR: (payload: any) => void
@@ -37,13 +30,10 @@ interface props {
 
 export default function({
   alcohol,
-  frequency,
   gender,
   rank,
   selectedDisease,
   diseaseStat,
-  drinks, otherDrinks,
-  initDrinks, initOtherDrinks, setFrequency,
   setDiseaseStat,
   loadQ, loadR
 }: props) {
@@ -81,9 +71,6 @@ export default function({
   }
 
   function onNext() {
-    setFrequency(frequency)
-    initDrinks(drinks)
-    initOtherDrinks(otherDrinks)
     const key = saveStore()
     history.push(`/goal/4?key=${key}`);
   }
