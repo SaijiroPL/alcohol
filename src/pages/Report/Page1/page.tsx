@@ -139,10 +139,12 @@ export default function({
           {scoreLevel === 3 && ('アルコール依存症疑い群')}
         </span>
       </div>
-      <div className='container-center-text' style={{ marginTop: '15px', fontSize: '14px' }}>
-        アルコールが原因で <br/>
-        すでに大きな危害を体験しています
-      </div>
+      {score >= 8 && (
+        <div className='container-center-text' style={{ marginTop: '15px', fontSize: '14px' }}>
+          アルコールが原因で <br/>
+          すでに大きな危害を体験しています
+        </div>
+      )}
       <div 
         className='container-center-text' 
         style={{ 
@@ -161,7 +163,7 @@ export default function({
         lineHeight: '1.5rem', 
         letterSpacing: '0.2rem'}}>
           {(question0 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />1日あたりの飲酒量<br/></span>)}
-          {(question1 / 10 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒頻度<br/></span>)}
+          {(question1 / 10 > 2) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒頻度<br/></span>)}
           {(question2 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />飲酒のコントロール<br/></span>)}
           {(question3 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />仕事や生活への影響<br/></span>)}
           {(question4 > 0) && (<span><img src={tick} alt='tick' className='tick-icon' />朝の迎え酒<br/></span>)}
