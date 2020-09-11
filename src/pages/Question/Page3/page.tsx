@@ -29,6 +29,7 @@ export default function({
   loadState
 }: DrinkProps) {
   const history = useHistory()
+  const [update, forceUpdate] = React.useState(0)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -39,6 +40,7 @@ export default function({
         loadState(snapshot.val().question)
       })
     }
+    forceUpdate(prev => prev++)
   }, [])
 
   const store = useStore()

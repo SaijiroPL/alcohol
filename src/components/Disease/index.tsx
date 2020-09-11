@@ -25,7 +25,7 @@ export default function({
       if (unit === '%')
         return content >= 10000 ? 'ND' : content
       else
-        return content.toFixed(1)
+        return content >= 10000 ? 'ND' : content.toFixed(1)
     } else {
       return content
     }
