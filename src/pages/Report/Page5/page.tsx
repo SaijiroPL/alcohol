@@ -26,6 +26,7 @@ import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
 import { useStore } from 'react-redux';
 import { RootState } from 'store';
 import { DISEASE_UI } from 'const/disease';
+import { reducePercent } from 'engine';
 
 interface props extends DrinkProps {
   frequency: number
@@ -119,12 +120,6 @@ export default function({
     if (setOtherDrink) setOtherDrink({index: -2})
   }
 
-  function reducePercent(index: number) {
-    const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
-    const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
-    const percent = Math.round((orgStat - newStat) / (orgStat - 1) * 100)
-    return percent
-  }
   function roundDisease(org: number) {
     if (org === 10000) return 'ND'
     return Math.round(org * 10) / 10
@@ -138,7 +133,7 @@ export default function({
             <Disease 
               key={i * 2}
               icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
-              content={-reducePercent(i * 2)} 
+              content={-reducePercent(i * 2, diseaseStat, newDiseaseStat)} 
               unit='%' 
               title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`}
               titlePos='bottom' />
@@ -153,7 +148,7 @@ export default function({
               <Disease 
                 key={i * 2 + 1}
                 icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
-                content={-reducePercent(i * 2 + 1)} 
+                content={-reducePercent(i * 2 + 1, diseaseStat, newDiseaseStat)} 
                 unit='%' 
                 title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`}
                 titlePos='bottom' />

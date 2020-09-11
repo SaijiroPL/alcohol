@@ -1,6 +1,5 @@
 import { RANKS_ARRAY } from "const/ranks"
 import { DISEASE_RIO } from "const/disease";
-import { version } from "react-dom";
 import { DiseaseStat } from "types/drinks";
 
 export function calcRank(age: number, alcohol: number, gender: number) {
@@ -15,7 +14,7 @@ export function calcRank(age: number, alcohol: number, gender: number) {
     const rankRange = weights[idx] * 100 / totalSum
   
     const detailedRank = startRank - Math.min(alcohol - min, range) / range * rankRange
-    return detailedRank === 0 ? 1 : detailedRank
+    return Math.round(detailedRank) === 0 ? 1 : Math.round(detailedRank)
   }
   const ageLevel = Math.floor((age - 20) / 5)
   const drinkLevel = Math.floor(alcohol / 10)
@@ -31,7 +30,7 @@ export function calcRank(age: number, alcohol: number, gender: number) {
   } else {
     rank = getRankFromRange(4, RANKS_ARRAY[gender][ageLevel], 100, 30, alcohol)
   }
-  return Math.round(rank)
+  return rank
 }
 
 export function calcDisease(alcohol: number, gender: number, selectedDisease: number[]) {
@@ -81,4 +80,13 @@ export function nextDisease(alcohol:number, gender: number, orgStat: DiseaseStat
     }
   }
   return result
+}
+
+export function reducePercent(index: number, diseaseStat: DiseaseStat[], newDiseaseStat: DiseaseStat[]) {
+  const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
+  const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
+  const percent = Math.round((orgStat - newStat) / (orgStat - 1) * 100)
+  if (orgStat === newStat) return 0
+  if (orgStat === 1) return 'ND'
+  return percent
 }
