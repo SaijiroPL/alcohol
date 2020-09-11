@@ -7,7 +7,6 @@ import Page from './page'
 
 const mapStateToProps = (state: RootState) => ({
   alcohol: state.question.alcohol,
-  score: state.report.score,
   rank: state.report.rank,
   daily: state.report.daily,
   gender: state.question.question1,

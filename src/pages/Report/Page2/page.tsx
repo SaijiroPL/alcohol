@@ -12,7 +12,6 @@ import { calendar } from 'const/icons'
 import * as Colors from 'const/colors'
 import * as Icons from 'const/icons'
 import { DRINK_INFO } from 'const/drinks'
-import { RANKS } from 'const/ranks'
 import { calcRank } from 'engine'
 
 import './styles.css';
@@ -25,7 +24,6 @@ import { RootState } from 'store';
 interface props {
   alcohol: number
   question2: number
-  score: number
   rank: number
   daily: number
   age: number
@@ -43,7 +41,6 @@ export default function({
   alcohol,
   question2,
   daily,
-  score,
   rank,
   age, gender,
   drinks,

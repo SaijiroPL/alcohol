@@ -20,12 +20,10 @@ type ReportState = {
   daily: number
   rank: number
   score: number
-  disease: number[]
   diseaseStat: DiseaseStat[]
   newDaily: number
   newRank: number
   newScore: number
-  newDisease: number[]
   newDiseaseStat: DiseaseStat[]
   newAlcohol: number
   frequency: number
@@ -54,12 +52,10 @@ const initStates: ReportState = {
   daily: 0,
   rank: 0,
   score: 0,
-  disease: [1, 1, 1, 1, 1, 1],
   diseaseStat: [],
   newDaily: 0,
   newRank: 0,
   newScore: 0,
-  newDisease: [1, 1, 1, 1, 1, 1],
   newDiseaseStat: [],
   newAlcohol: 0,
   frequency: 0,
@@ -78,12 +74,10 @@ export const setGender = (gender: number) => typedAction('report/gender', gender
 export const setDaily = (daily: number) => typedAction('report/daily', daily)
 export const setRank = (rank: number) => typedAction('report/rank', rank)
 export const setScore = (score: number) => typedAction('report/score', score)
-export const setDisease = (disease: number[]) => typedAction('report/disease', disease)
 export const setDiseaseStat = (stats: DiseaseStat[]) => typedAction('report/diseaseStat', stats)
 export const setNewDaily = (daily: number) => typedAction('report/new/daily', daily)
 export const setNewRank = (rank: number) => typedAction('report/new/rank', rank)
 export const setNewScore = (score: number) => typedAction('report/new/score', score)
-export const setNewDisease = (disease: number[]) => typedAction('report/new/disease', disease)
 export const setFrequency = (frequency: number) => typedAction('report/frequency', frequency)
 export const setNextFrequency = (frequency: number) => typedAction('report/nextfrequency', frequency)
 export const setDrink = (payload: {value: number, type: 'standard' | 'custom', key: string, isFirst: boolean}) => typedAction('report/drink', payload)
@@ -106,12 +100,10 @@ type ReportAction = ReturnType<
   typeof setDaily |
   typeof setRank |
   typeof setScore |
-  typeof setDisease |
   typeof setDiseaseStat |
   typeof setNewDaily |
   typeof setNewRank |
   typeof setNewScore |
-  typeof setNewDisease |
   typeof setFrequency |
   typeof setNextFrequency |
   typeof setDrink |
@@ -219,6 +211,29 @@ function updateNextOtherDrink(state: ReportState, payload: any) {
   }
 }
 
+function duplicateDrinks(drinks: {[key: string]: DrinkVolume}) {
+  let result: {[key: string]: DrinkVolume} = {}
+  DRINK_INFO.map((item) => {
+    result[item.id] = {
+      id: item.id,
+      volume: drinks[item.id].volume,
+      volume2: drinks[item.id].volume2
+    }
+  })
+  return result
+}
+
+function duplicateOtherDrinks(others: OtherDrink[]) {
+  let result: OtherDrink[] = []
+  others.map((item) => {
+    result.push({
+      alcohol: item.alcohol,
+      volume: item.volume
+    })
+  })
+  return result
+}
+
 export function reportReducer(
   state = initStates,
   action: ReportAction
@@ -234,8 +249,6 @@ export function reportReducer(
       return { ...state, rank: action.payload }
     case 'report/daily':
       return { ...state, daily: action.payload }
-    case 'report/disease':
-      return { ...state, disease: action.payload }
     case 'report/diseaseStat':
       return { ...state, diseaseStat: action.payload }
     case 'report/new/score':
@@ -244,8 +257,6 @@ export function reportReducer(
       return { ...state, newRank: action.payload }
     case 'report/new/daily':
       return { ...state, newDaily: action.payload }
-    case 'report/new/disease':
-      return { ...state, newDisease: action.payload }
     case 'report/frequency':
       return updateNewDecision({ ...state, frequency: action.payload }, 'first')
     case 'report/nextfrequency':
@@ -259,13 +270,13 @@ export function reportReducer(
     case 'report/nextotherdrink':
       return updateNextOtherDrink(state, action.payload)
     case 'report/initdrink':
-      return { ...state, drinks: action.payload }
+      return { ...state, drinks: duplicateDrinks(action.payload) }
     case 'report/initotherdrink':
-      return { ...state, otherDrinks: action.payload }
+      return { ...state, otherDrinks: duplicateOtherDrinks(action.payload) }
     case 'report/initnextdrink':
-      return { ...state, nextDrinks: action.payload }
+      return { ...state, nextDrinks: duplicateDrinks(action.payload) }
     case 'report/initnextotherdrink':
-      return { ...state, nextOtherDrinks: action.payload }
+      return { ...state, nextOtherDrinks: duplicateOtherDrinks(action.payload) }
     case 'report/will':
       return { ...state, will: action.payload }
     case 'report/group':

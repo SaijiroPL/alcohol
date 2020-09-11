@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useToasts } from 'react-toast-notifications'
 
 import SingleButton from 'components/SingleButton'
 import { mic, tick } from 'const/icons'
@@ -25,6 +26,7 @@ export default function({
   loadQ, loadR
 }: props) {
   const history = useHistory()
+  const { addToast } = useToasts()
   const [loading, loaded] = useState(true)
 
   useEffect(() => {
@@ -53,8 +55,15 @@ export default function({
   }
 
   function onNext() {
-    const key = saveStore()
-    history.push(`/goal/7?key=${key}`);
+    if (will === '') {
+      addToast('意気込みを入力してください。', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    } else {
+      const key = saveStore()
+      history.push(`/goal/7?key=${key}`);
+    }
   }
 
   return (

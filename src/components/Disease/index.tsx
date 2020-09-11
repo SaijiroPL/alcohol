@@ -20,6 +20,16 @@ export default function({
   title,
   titlePos = 'top'
 }: props) {
+  function renderContent(content: any) {
+    if (typeof(content) === 'number') {
+      if (unit === '%')
+        return content >= 10000 ? 'ND' : content
+      else
+        return content.toFixed(1)
+    } else {
+      return content
+    }
+  }
   return (
     <div style={{ 
       textAlign: 'center', 
@@ -60,9 +70,7 @@ export default function({
         position: 'absolute', top: titlePos === 'top' ? '35px' : '30px',
         width: '100%'
       }}>
-        <span style={{ fontSize: '60px' }}>
-          {typeof(content) === 'number' && unit !== '%' ? (content >= 10000 ? 'ND' : content.toFixed(1)): content}
-        </span>{unit}
+        <span style={{ fontSize: '60px' }}>{renderContent(content)}</span>{unit}
       </div>
     </div>
   )

@@ -18,7 +18,7 @@ import { DrinkProps } from 'types/pages'
 import { DRINK_INFO } from 'const/drinks'
 import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
-import { OtherDrink, DiseaseStat } from 'types/drinks';
+import { OtherDrink, DiseaseStat, DrinkVolume } from 'types/drinks';
 
 import queryString from 'query-string'
 import { loadStateFromFirebase, saveStateToFirebase } from 'firebase/instance'
@@ -34,6 +34,9 @@ interface props extends DrinkProps {
   newAlcohol: number
   diseaseStat: DiseaseStat[]
   newDiseaseStat: DiseaseStat[]
+  orgFrequency: number
+  orgDrinks: {[key: string]: DrinkVolume}
+  orgOtherDrinks: OtherDrink[]
   setFrequency: (frequency: number) => void
   setNewRank: (rank: number) => void
   initDrinks: (drinks: any) => void
@@ -43,10 +46,10 @@ interface props extends DrinkProps {
 }
 
 export default function({
-  frequency,
   alcohol, newAlcohol,
   rank, newRank,
-  drinks, otherDrinks,
+  orgFrequency, orgDrinks, orgOtherDrinks,
+  frequency, drinks, otherDrinks,
   diseaseStat, newDiseaseStat,
   setFrequency,
   setDrink, setOtherDrink,
@@ -60,10 +63,10 @@ export default function({
   const resetRef = useRef(null)
 
   useEffect(() => {
-    initDrinks(drinks)
-    initOtherDrinks(otherDrinks)
-    setFrequency(frequency)
-  }, [drinks, otherDrinks, frequency, initDrinks, initOtherDrinks, setFrequency])
+    setFrequency(orgFrequency)
+    initDrinks(orgDrinks)
+    initOtherDrinks(orgOtherDrinks)
+  }, [orgFrequency, orgDrinks, orgOtherDrinks,initDrinks, initOtherDrinks, setFrequency])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -104,16 +107,15 @@ export default function({
       history.push(`/goal/6?key=${key}`);
     }
   }
-
-  function reducePercent(index: number) {
-    const percent = Math.round((diseaseStat[index].stat - newDiseaseStat[index].stat) / (diseaseStat[index].stat - 1) * 100)
-    if (diseaseStat[index].stat === 1) return 0
-    // if (diseaseStat[index].stat === 10000 || newDiseaseStat[index].stat === 10000) return 'ND'
-    return percent
-  }
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
     if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
+  }
+  function reducePercent(index: number) {
+    const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
+    const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
+    const percent = Math.round((orgStat - newStat) / (orgStat - 1) * 100)
+    return percent
   }
   function roundDisease(org: number) {
     if (org === 10000) return 'ND'

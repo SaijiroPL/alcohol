@@ -43,8 +43,8 @@ interface props extends DrinkProps {
 export default function({
   alcohol, newAlcohol,
   rank, newRank,
-  frequency, drinks, otherDrinks,
   orgFrequency, orgDrinks, orgOtherDrinks,
+  frequency, drinks, otherDrinks,
   group,
   setDrink, setOtherDrink,
   initDrinks, initOtherDrinks, setFrequency,
@@ -74,7 +74,7 @@ export default function({
     setFrequency(orgFrequency)
     initDrinks(orgDrinks)
     initOtherDrinks(orgOtherDrinks)
-  }, [orgFrequency, orgDrinks, orgOtherDrinks,initDrinks, initOtherDrinks, setFrequency])
+  }, [orgFrequency, orgDrinks, orgOtherDrinks, initDrinks, initOtherDrinks, setFrequency])
 
   function saveStore() {
     const key = queryString.parse(window.location.search).key?.toString()
@@ -94,7 +94,6 @@ export default function({
         autoDismiss: true,
       })
     } else {
-
       const key = saveStore()
       if (group === 'A')
         history.push(`/goal/5?key=${key}`);
@@ -132,7 +131,7 @@ export default function({
                 fontSizeUp: '50px',
                 fontSizeDown: '16px'
               }}/>
-              <div style={{ marginTop: '10px' }}>
+              <div style={{ marginTop: '10px', width: '150px' }}>
                 <span style={{ 
                   color: 'black', 
                   fontSize: '16px', 

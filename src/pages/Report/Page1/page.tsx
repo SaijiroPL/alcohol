@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { css } from "@emotion/core";
 
 import SingleButton from 'components/SingleButton'
 
@@ -42,12 +41,6 @@ export default function({
 }: props) {
   const history = useHistory();
   const [loading, loaded] = useState(true)
-
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-  `;
 
   useEffect(() => {
     window.scrollTo(0, 0)

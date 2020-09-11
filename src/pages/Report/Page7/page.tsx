@@ -16,13 +16,14 @@ import SelectedDrink from 'components/SelectedDrink'
 
 import * as Icons from 'const/icons'
 import * as Colors from 'const/colors'
-import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks';
+import { DrinkVolume, OtherDrink, StandardDrinkInfo, DiseaseStat } from 'types/drinks';
 import { DRINK_INFO } from 'const/drinks';
 
 import { dataRef } from 'firebase/instance'
 
 import queryString from 'query-string'
 import { loadStateFromFirebase } from 'firebase/instance'
+import { DISEASE_UI } from 'const/disease';
 
 interface props {
   question: number[]
@@ -40,8 +41,8 @@ interface props {
   otherDrinks: OtherDrink[]
   newDrinks: {[key: string]: DrinkVolume}
   newOtherDrinks: OtherDrink[]
-  disease: number[]
-  newDisease: number[]
+  diseaseStat: DiseaseStat[]
+  newDiseaseStat: DiseaseStat[]
   will: string
   group: 'A' | 'B'
   frequency: number
@@ -61,7 +62,7 @@ export default function({
   age, gender,
   drinks, otherDrinks,
   newDrinks, newOtherDrinks,
-  disease, newDisease,
+  diseaseStat, newDiseaseStat,
   will, group,
   frequency, nextFrequency,
   resetQuestion, resetReport,
@@ -73,6 +74,10 @@ export default function({
   const refRoot = useRef<HTMLDivElement>(null)
   const history = useHistory()
 
+  useEffect(() => {
+    console.log(newDrinks)
+  }, [newDrinks])
+  
   useEffect(() => {
     window.scrollTo(0, 0)
     const key = queryString.parse(window.location.search).key?.toString()
@@ -170,6 +175,28 @@ export default function({
     )
   }
 
+  function renderNextStandardDrink(item: StandardDrinkInfo) {
+    function calcTotalAlcohol(item: StandardDrinkInfo) {
+      const volume1 = item.volume1 * newDrinks[item.id].volume
+      let volume2 = 0
+      if (item.volume2) 
+        volume2 = item.volume2 * newDrinks[item.id].volume2
+      return (volume1 + volume2)
+    }
+    const tVolume = calcTotalAlcohol(item)
+    const alcohol = tVolume * item.percent * 0.8 / 100
+    return (
+      <SelectedDrink 
+        icon={item.icon} 
+        type={item.type} 
+        percent={item.percent} 
+        volume={tVolume} 
+        unit='ml' 
+        alcohol={alcohol} 
+        alcoholColor='red' />
+    )
+  }
+
   function renderOtherDrink(item: OtherDrink) {
     return (
       <SelectedDrink 
@@ -184,9 +211,53 @@ export default function({
   }
 
   function reducePercent(index: number) {
-    const percent = Math.round((disease[index] - newDisease[index]) / (disease[index] - 1) * 100)
-    if (disease[index] === 1) return 0
+    const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
+    const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
+    const percent = Math.round((orgStat - newStat) / (orgStat - 1) * 100)
     return percent
+  }
+  function roundDisease(org: number) {
+    if (org === 10000) return 'ND'
+    return Math.round(org * 10) / 10
+  }
+  function renderStats() {
+    let rows = []
+    for (let i = 0; i < diseaseStat.length / 2; i++) {
+      rows.push(
+        (<div key={i} style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+          <div>
+            <Disease 
+              key={i * 2}
+              icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
+              content={-reducePercent(i * 2)} 
+              unit='%' 
+              title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`}
+              titlePos='bottom' />
+            <div style={{ textAlign: 'center' }}>
+              {roundDisease(diseaseStat[i * 2].stat)}倍 
+              <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
+              {roundDisease(newDiseaseStat[i * 2].stat)}倍 
+            </div>
+          </div>
+          {(i * 2 + 1 < diseaseStat.length) && 
+            <div>
+              <Disease 
+                key={i * 2 + 1}
+                icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
+                content={-reducePercent(i * 2 + 1)} 
+                unit='%' 
+                title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`}
+                titlePos='bottom' />
+              <div style={{ textAlign: 'center' }}>
+                {roundDisease(diseaseStat[i * 2 + 1].stat)}倍 
+                <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
+                {roundDisease(newDiseaseStat[i * 2 + 1].stat)}倍 
+              </div>
+            </div>}
+        </div>)
+      )
+    }
+    return rows
   }
   return (
     <div className='report-page-container' style={{ padding: '10px' }} ref={refRoot}>
@@ -341,7 +412,7 @@ export default function({
             <div className='ac-drinks-container'>
               <SelectedDrink icon={Icons.calendar} type='飲酒頻度' alcohol={nextCycle} alcoholColor='red' />
               {DRINK_INFO.map((item) => (
-                (newDrinks[item.id].volume > 0 || newDrinks[item.id].volume2 > 0) && renderStandardDrink(item)))}
+                (newDrinks[item.id].volume > 0 || newDrinks[item.id].volume2 > 0) && renderNextStandardDrink(item)))}
               {newOtherDrinks.map((item) => renderOtherDrink(item))}
             </div>
           </div>
@@ -359,60 +430,7 @@ export default function({
             <div className='container-center-text' style={{ marginTop: '20px', fontSize: '14px' }}>
               目標の飲酒量を続けることで、これだけの <br/>病気のリスク低下に繋がります
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-              <div>
-                <Disease icon={Icons.life} content={-reducePercent(0)} unit='%' title='死亡リスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[0]}倍 
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[0]}倍
-                </div>
-              </div>
-              <div>
-                <Disease icon={Icons.ambulance} content={-reducePercent(1)} unit='%' title='アルコール関連疾患リスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[1]}倍 
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[1]}倍
-                </div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-              <div>
-                <Disease icon={Icons.liver} content={-reducePercent(2)} unit='%' title='肝臓がんリスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[2]}倍 
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[2]}倍
-                </div>
-              </div>
-              <div>
-                <Disease icon={Icons.esophagus} content={-reducePercent(3)} unit='%' title='食道がんリスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[3]}倍
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[3]}倍
-                </div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px' }}>
-              <div>
-                <Disease icon={Icons.pancreatitis} content={-reducePercent(4)} unit='%' title='膵炎リスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[4]}倍
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[4]}倍
-                </div>
-              </div>
-              <div>
-                <Disease icon={Icons.brain} content={-reducePercent(5)} unit='%' title='脳卒中リスク' titlePos='bottom' />
-                <div style={{ textAlign: 'center' }}>
-                  {disease[5]}倍 
-                  <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
-                  {newDisease[5]}倍
-                </div>
-              </div>
-            </div>
+            {renderStats()}
           </div>          
         </>
       )}
