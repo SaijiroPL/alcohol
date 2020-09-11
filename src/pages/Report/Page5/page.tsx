@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useHistory } from "react-router-dom"
 import { Button } from '@material-ui/core'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ClipLoader from "react-spinners/ClipLoader"
 import { useToasts } from 'react-toast-notifications'
 
@@ -63,12 +64,6 @@ export default function({
   const resetRef = useRef(null)
 
   useEffect(() => {
-    setFrequency(orgFrequency)
-    initDrinks(orgDrinks)
-    initOtherDrinks(orgOtherDrinks)
-  }, [orgFrequency, orgDrinks, orgOtherDrinks,initDrinks, initOtherDrinks, setFrequency])
-
-  useEffect(() => {
     window.scrollTo(0, 0)
     const key = queryString.parse(window.location.search).key?.toString()
     if (key) {
@@ -80,6 +75,13 @@ export default function({
       })
     }
   }, [])
+
+  useEffect(() => {
+    console.log('init')
+    setFrequency(orgFrequency)
+    initDrinks(orgDrinks)
+    initOtherDrinks(orgOtherDrinks)
+  }, [orgFrequency, orgDrinks, orgOtherDrinks, initDrinks, initOtherDrinks, setFrequency])
 
   const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop)
   const executeScroll = () => scrollToRef(resetRef)
@@ -107,10 +109,15 @@ export default function({
       history.push(`/goal/6?key=${key}`);
     }
   }
+
   function onAddExtra() {
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
     if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
   }
+  function onRemoveExtra() {
+    if (setOtherDrink) setOtherDrink({index: -2})
+  }
+
   function reducePercent(index: number) {
     const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
     const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
@@ -204,12 +211,12 @@ export default function({
       </div>
       {renderStats()}
       <MultiButton color='red' nonSticky={true} okayText='O K' cancelText='目標を見直す' onNext={onNext} 
-      onBack={() => {
-        showReset(true)
-        setTimeout(() => {
-          executeScroll()
-        }, 500)
-      }} />
+        onBack={() => {
+          showReset(true)
+          setTimeout(() => {
+            executeScroll()
+          }, 500)
+        }} />
       <div style={{ display: isReset ? 'block' : 'none' }}>
         <div ref={resetRef} className='container-center-text' style={{ fontSize: '18px', marginTop: '40px' }}>
           目標飲酒量を設定しましょう
@@ -227,13 +234,31 @@ export default function({
             }} />
           ))}
           {otherDrinks !== undefined && otherDrinks.map((item, index) => (
-            <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} updateDrink={(percent, volume) => {
-              if (setOtherDrink) setOtherDrink({
-                index: index, 
-                drink: {alcohol: percent, volume: volume}})
-            }} />
+            <CustomDrink key={index} icon={Icons.extra} title='その他のお酒' value1={item.alcohol} value2={item.volume} 
+              updateDrink={(percent, volume) => {
+                if (setOtherDrink) setOtherDrink({
+                  index: index, 
+                  drink: {alcohol: percent, volume: volume}
+                })
+              }} 
+            />
           ))}
         </div>
+        {otherDrinks.length > 0 && (
+          <div className='ac-drink-extrabtn-wrapper fade-in'>
+            <Button className='ac-drink-extrabtn' onClick={onRemoveExtra} style={{
+                backgroundColor: '#F0BABA', 
+                color: 'white', 
+                borderTopLeftRadius: 20,
+                borderBottomLeftRadius: 20,
+                borderTopRightRadius: 20,
+                borderBottomRightRadius: 20,
+              }}>
+                <RemoveCircleOutlineIcon />
+                <span style={{ marginLeft: '10px' }}>その他のお酒を削除</span>
+              </Button>
+          </div>
+        )}
         <div className='ac-drink-extrabtn-wrapper'>
           <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
               backgroundColor: '#AAAAAA', 

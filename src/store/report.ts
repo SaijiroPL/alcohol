@@ -183,8 +183,10 @@ function updateDrink(state: ReportState, payload: any) {
 
 function updateOtherDrink(state: ReportState, payload: any) {
   const otherdrinks = state.otherDrinks
-  if (payload.index < 0) {
-    return updateNewDecision({ ...state, otherDrinks: [...state.otherDrinks, payload.drink] }, 'first')
+  if (payload.index === -1) {
+    return updateNewDecision({ ...state, otherDrinks: [...otherdrinks, payload.drink] }, 'first')
+  } else if (payload.index === -2) {
+    return updateNewDecision({ ...state, otherDrinks: otherdrinks.splice(0, otherdrinks.length - 1) }, 'first')
   } else {
     otherdrinks[payload.index] = payload.drink
     return updateNewDecision({ ...state, otherDrinks: otherdrinks }, 'first')
@@ -198,16 +200,18 @@ function updateNextDrink(state: ReportState, payload: any) {
   else 
     drinks[payload.key].volume2 = payload.value
   
-  return updateNewDecision({ ...state, drinks: drinks }, 'second')
+  return updateNewDecision({ ...state, nextDrinks: drinks }, 'second')
 }
 
 function updateNextOtherDrink(state: ReportState, payload: any) {
   const otherdrinks = state.nextOtherDrinks
-  if (payload.index < 0) {
-    return updateNewDecision({ ...state, otherDrinks: [...state.otherDrinks, payload.drink] }, 'second')
+  if (payload.index === -1) {
+    return updateNewDecision({ ...state, nextOtherDrinks: [...otherdrinks, payload.drink] }, 'second')
+  } else if (payload.index === -2) {
+    return updateNewDecision({ ...state, nextOtherDrinks: otherdrinks.splice(0, otherdrinks.length - 1) }, 'second')
   } else {
     otherdrinks[payload.index] = payload.drink
-    return updateNewDecision({ ...state, otherDrinks: otherdrinks }, 'second')
+    return updateNewDecision({ ...state, nextOtherDrinks: otherdrinks }, 'second')
   }
 }
 

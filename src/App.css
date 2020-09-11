@@ -20,7 +20,7 @@
 .ac-question-container {
   max-width: 540px;
   margin: auto;
-  font-family: SourceHans;
+  font-family: sans-serif;
 
   -webkit-animation: fadepage 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadepage 1s; /* Firefox < 16 */
@@ -35,7 +35,7 @@
   min-height: 100vh;
   max-width: 540px;
   margin: auto;
-  font-family: SourceHans, sans-serif;
+  font-family: sans-serif;
   font-style: normal;
   justify-content: center;
   position: relative;
@@ -119,7 +119,7 @@
 }
 
 .ac-question-text {
-  font-family: SourceHans;
+  font-family: sans-serif;
   font-style: normal;
   font-size: 20px;
   width: 285px;

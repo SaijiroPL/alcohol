@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useToasts } from 'react-toast-notifications'
 
@@ -106,6 +107,9 @@ export default function({
     const newObj: OtherDrink = {alcohol: 9, volume: 500};
     if (setOtherDrink) setOtherDrink({index: -1, drink: newObj})
   }
+  function onRemoveExtra() {
+    if (setOtherDrink) setOtherDrink({index: -2})
+  }
 
   return (
     <div className='report-page-container'>
@@ -173,6 +177,21 @@ export default function({
           }} />
         ))}
       </div>
+      {otherDrinks.length > 0 && (
+        <div className='ac-drink-extrabtn-wrapper fade-in'>
+          <Button className='ac-drink-extrabtn' onClick={onRemoveExtra} style={{
+              backgroundColor: '#F0BABA', 
+              color: 'white', 
+              borderTopLeftRadius: 20,
+              borderBottomLeftRadius: 20,
+              borderTopRightRadius: 20,
+              borderBottomRightRadius: 20,
+            }}>
+              <RemoveCircleOutlineIcon />
+              <span style={{ marginLeft: '10px' }}>その他のお酒を削除</span>
+            </Button>
+        </div>
+      )}
       <div className='ac-drink-extrabtn-wrapper'>
         <Button className='ac-drink-extrabtn' onClick={onAddExtra} style={{
             backgroundColor: '#AAAAAA', 

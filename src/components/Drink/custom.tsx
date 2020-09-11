@@ -23,7 +23,7 @@ export default function Drink({
 
   useEffect(() => {
     if (updateDrink) updateDrink(percent, volume)
-  }, [percent, volume, updateDrink])
+  }, [percent, volume])
 
   return (
     <div className='ac-drink-container'>
