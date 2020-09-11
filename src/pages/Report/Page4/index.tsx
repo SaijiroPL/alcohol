@@ -25,6 +25,7 @@ const mapStateToProps = (state: RootState) => ({
   newRank: state.report.newRank,
   alcohol: state.question.alcohol,
   newAlcohol: state.report.newAlcohol,
+  newDaily: state.report.newDaily,
   group: state.report.group
 })
 

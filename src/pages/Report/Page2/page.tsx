@@ -169,7 +169,7 @@ export default function({
           </div>
         </>
       )}
-      {/* <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
+      <div className='report-title' style={{ fontSize: '16px', letterSpacing: '0.1rem' }}>
         <span style={{ fontWeight: 'bold' }}>1日平均の純アルコール摂取量</span>
       </div>
       <div className='container-center-text' style={{
@@ -181,7 +181,7 @@ export default function({
         {question2 >= 0 && question2 <= 3 && (`${question2}/30日`)}
         {question2 >= 4 && (`${question2 - 3}/7日`)}
           ×  {alcohol}g  =  <span style={{ fontSize: '28px' }}>{daily}g</span>
-      </div> */}
+      </div>
       {group === 'A' && (
         <>
           <div className='container-center-text' style={{

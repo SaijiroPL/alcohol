@@ -33,6 +33,7 @@ interface props extends DrinkProps {
   newRank: number
   alcohol: number
   newAlcohol: number
+  newDaily: number
   diseaseStat: DiseaseStat[]
   newDiseaseStat: DiseaseStat[]
   orgFrequency: number
@@ -47,7 +48,7 @@ interface props extends DrinkProps {
 }
 
 export default function({
-  alcohol, newAlcohol,
+  alcohol, newAlcohol, newDaily,
   rank, newRank,
   orgFrequency, orgDrinks, orgOtherDrinks,
   frequency, drinks, otherDrinks,
@@ -195,10 +196,10 @@ export default function({
               fontSize: '16px', 
               fontWeight: 'bold', 
               borderBottom: '2px solid black' }}>
-                {newAlcohol >= 0 && newAlcohol <= 20 && '節度ある飲酒量!'}
-                {newAlcohol >= 21 && newAlcohol <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-                {newAlcohol >= 41 && newAlcohol <= 60 && '死亡リスクの上昇する飲酒量'}
-                {newAlcohol >= 61 && '非常に危険な飲酒量'}
+                {newDaily >= 0 && newDaily <= 20 && '節度ある飲酒量!'}
+                {newDaily >= 21 && newDaily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+                {newDaily >= 41 && newDaily <= 60 && '死亡リスクの上昇する飲酒量'}
+                {newDaily >= 61 && '非常に危険な飲酒量'}
             </span>
           </div>
         </div>

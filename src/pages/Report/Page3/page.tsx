@@ -19,6 +19,7 @@ import { DiseaseStat } from 'types/drinks';
 
 interface props {
   alcohol: number
+  daily: number
   gender: number
   rank: number
   selectedDisease: number[]
@@ -30,6 +31,7 @@ interface props {
 
 export default function({
   alcohol,
+  daily,
   gender,
   rank,
   selectedDisease,
@@ -55,8 +57,8 @@ export default function({
   }, [])
 
   useEffect(() => {
-    setDiseaseStat(calcDisease(alcohol, gender, selectedDisease))
-  }, [alcohol, gender, selectedDisease, setDiseaseStat])
+    setDiseaseStat(calcDisease(daily, gender, selectedDisease))
+  }, [daily, gender, selectedDisease, setDiseaseStat])
 
   const store = useStore()
   function saveStore() {

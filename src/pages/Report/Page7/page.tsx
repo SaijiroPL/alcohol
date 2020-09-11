@@ -303,7 +303,7 @@ export default function({
             {scoreLevel === 2 && score < 20 && ('危険な飲酒群')}
             {scoreLevel === 3 && ('アルコール依存症疑い群')}
           </p>
-          <p style={{ fontSize: '14px' }}>アルコールが原因ですでに <br/>大きな危害を体験しています</p>
+          {score > 8 && (<p style={{ fontSize: '14px' }}>アルコールが原因ですでに <br/>大きな危害を体験しています</p>)}
           <p style={{ fontSize: '16px', color: '#993333' }}>特に問題となる要素</p>
           <p style={{ fontSize: '14px' }}>
           {(question[0] > 0) && (<span><img src={Icons.tick} alt='tick' className='tick-icon' />1日あたりの飲酒量<br/></span>)}
@@ -399,10 +399,10 @@ export default function({
               marginTop: '15px',
             }}>
               <span style={{ borderBottom: 'solid 2px ' + Colors.BLACK }}>
-                {daily >= 0 && daily <= 20 && '節度ある飲酒量!'}
-                {daily >= 21 && daily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
-                {daily >= 41 && daily <= 60 && '死亡リスクの上昇する飲酒量'}
-                {daily >= 61 && '非常に危険な飲酒量'}
+                {newDaily >= 0 && newDaily <= 20 && '節度ある飲酒量!'}
+                {newDaily >= 21 && newDaily <= 40 && '生活習慣病リスクの上昇する飲酒量'}
+                {newDaily >= 41 && newDaily <= 60 && '死亡リスクの上昇する飲酒量'}
+                {newDaily >= 61 && '非常に危険な飲酒量'}
               </span> <br/>
               <span>
                 を目指します

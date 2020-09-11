@@ -163,7 +163,7 @@ function updateNewDecision(
   
   const newRank = calcRank(state.age, alcohol, state.gender)
 
-  const disease = nextDisease(alcohol, state.gender, state.diseaseStat)
+  const disease = nextDisease(dailyAmt, state.gender, state.diseaseStat)
 
   if (type === 'first')
     return { ...state, newDaily: newDaily, newRank: newRank === 0 ? 1 : newRank, newAlcohol: alcohol, newDiseaseStat: disease}
