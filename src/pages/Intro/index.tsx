@@ -23,6 +23,7 @@ export default function() {
         <div className='intro-upper-text'>調査会社から指定されたコードを入力してください</div>
         <TextField
           InputProps={{ className: 'intro-code-text' }}
+          inputProps={{ maxLength: 6 }}
           onChange={(e: any) => { setCode(e.target.value) }}
         />
       </div>
