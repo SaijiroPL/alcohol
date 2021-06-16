@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useToasts } from 'react-toast-notifications'
 
 import SingleButton from 'components/SingleButton'
 import SelectedDrink from 'components/SelectedDrink'
 import Chart from 'components/Chart'
 import Rank from 'components/Chart/rank'
+import DropDown from 'components/DropDown'
 
 import { DrinkVolume, OtherDrink, StandardDrinkInfo } from 'types/drinks'
 import { calendar } from 'const/icons'
@@ -51,9 +53,11 @@ export default function({
   loadQ, loadR
 }: props) {
   const history = useHistory();
+  const { addToast } = useToasts();
 
-  const [cycle, setCycle] = useState('')
-  const [loading, loaded] = useState(true)
+  const [cycle, setCycle] = useState('');
+  const [loading, loaded] = useState(true);
+  const [inputRank, setInputRank] = useState<number>(1);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -96,6 +100,13 @@ export default function({
   }
 
   function onNext() {
+    if (rank != inputRank) {
+      addToast('画面上部をご確認ください。', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+      return;
+    }
     const key = saveStore()
     if (group === 'A')
       history.push(`/goal/3?key=${key}`);
@@ -204,11 +215,23 @@ export default function({
           (drinks[item.id].volume > 0 || drinks[item.id].volume2 > 0) && renderStandardDrink(item)))}
         {otherDrinks.map((item) => renderOtherDrink(item))}
       </div>
+      <div className='container-center-text goal-confirm-text'>
+        確認クイズ1 <br/>
+        あなたの飲む日の飲酒量は20~24歳の日本人男性で100人中何位？
+      </div>
+      <DropDown value={inputRank} suffix='位' min={1} max={100} onValueChange={(value) => {
+        setInputRank(value);
+      }} />
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '24px', marginBottom: '40px' }}>
         {daily > 20 && 'まだまだお酒の量が多いようです'} <br/>
         今の量を飲み続けるとどうなるでしょうか？
       </div>
-      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} onClick={onNext} />
+      <SingleButton
+        title={group === 'A' ? 'お酒による病気のリスクは？' : '次へ'}
+        color={Colors.RED}
+        nonSticky={true}
+        onClick={onNext}
+      />
     </div>
   )
 }

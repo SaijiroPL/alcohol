@@ -23,5 +23,6 @@ export interface DrinkVolume {
 
 export interface DiseaseStat { 
   index: number, 
-  stat: number
+  stat: number,
+  over: boolean,
 } 

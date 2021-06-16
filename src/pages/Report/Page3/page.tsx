@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useToasts } from 'react-toast-notifications'
 
 import SingleButton from 'components/SingleButton'
 import Disease from 'components/Disease'
 import Rank from 'components/Chart/rank'
+import DropDown from 'components/DropDown'
 
 import * as Colors from 'const/colors'
 import { DISEASE_UI } from 'const/disease'
@@ -16,6 +18,7 @@ import { useStore } from 'react-redux';
 import { RootState } from 'store';
 import { calcDisease } from 'engine';
 import { DiseaseStat } from 'types/drinks';
+import item from 'components/AccordianChoice/item';
 
 interface props {
   alcohol: number
@@ -40,8 +43,11 @@ export default function({
   loadQ, loadR
 }: props) {
   const history = useHistory();
+  const { addToast } = useToasts();
 
   const [loading, loaded] = useState(true)
+  const [maxDisease, setMaxDisease] = useState<number>(0);
+  const [inputTimes, setInputTimes] = useState<number>(1.0);
   
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -60,6 +66,12 @@ export default function({
     setDiseaseStat(calcDisease(daily, gender, selectedDisease))
   }, [daily, gender, selectedDisease, setDiseaseStat])
 
+  useEffect(() => {
+    const maxIdx = diseaseStat.map((item) => item.stat)
+      .reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+    setMaxDisease(maxIdx);
+  }, [diseaseStat]);
+
   const store = useStore()
   function saveStore() {
     const key = queryString.parse(window.location.search).key?.toString()
@@ -73,6 +85,14 @@ export default function({
   }
 
   function onNext() {
+    console.log(diseaseStat[maxDisease].stat, inputTimes);
+    if (inputTimes.toFixed(1) != diseaseStat[maxDisease].stat.toFixed(1)) {
+      addToast('画面上部をご確認ください。', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+      return;
+    }
     const key = saveStore()
     history.push(`/goal/4?key=${key}`);
   }
@@ -87,13 +107,13 @@ export default function({
           <Disease 
             icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
             content={roundDisease(diseaseStat[i * 2].stat)} 
-            unit='倍' 
+            unit={ diseaseStat[i * 2].over ? '倍以上' : '倍' }
             title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`} />
           {(i * 2 + 1 < diseaseStat.length) && 
             <Disease 
               icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
               content={roundDisease(diseaseStat[i * 2 + 1].stat)} 
-              unit='倍' 
+              unit={ diseaseStat[i * 2 + 1].over ? '倍以上' : '倍' }
               title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`} />}
         </div>)
       )
@@ -122,6 +142,13 @@ export default function({
         お酒を飲まない人との比較
       </div>
       {renderStats()}
+      <div className='container-center-text goal-confirm-text'>
+        確認クイズ2 <br/>
+        あなたの飲酒量では、お酒を飲まない場合に比べて、{diseaseStat[maxDisease] && DISEASE_UI[diseaseStat[maxDisease].index].name}のリスクが何倍になりますか？
+      </div>
+      <DropDown value={inputTimes} suffix='倍' min={1} max={30} step={0.1} onValueChange={(value) => {
+        setInputTimes(value);
+      }} />
       <div className='container-center-text' style={{ fontSize: '14px', marginTop: '30px', marginBottom: '20px' }}>
         お酒は人生に関わる病気のリスクを高めます<br/>お酒を減らし、将来の健康を手に入れましょう
       </div>

@@ -15,7 +15,7 @@ export default function Splash() {
 
   function onNext() {
     if (isLoaded)
-      history.push("/question/1");
+      history.push("/research");
   }
   return (
     <div className='ac-page-top-container' onClick={onNext}>

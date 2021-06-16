@@ -4,6 +4,8 @@ import { ToastProvider } from 'react-toast-notifications'
 
 import './App.css';
 import Splash from 'pages/Splash';
+import Research from 'pages/Research'
+import Intro from 'pages/Intro'
 import Page1 from 'pages/Question/Page1';
 import Page2 from 'pages/Question/Page2';
 import Page3 from 'pages/Question/Page3';
@@ -32,6 +34,8 @@ function App() {
       <div className='ac-container'>
         <Switch>
           <Route path="/" exact component={Splash} />
+          <Route path="/research" exact component={Research} />
+          <Route path="/intro" exact component={Intro} />
           <Route path="/question/1" component={Page1} />
           <Route path="/question/2" component={Page2} />
           <Route path="/question/3" component={Page3} />

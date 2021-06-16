@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import * as Colors from 'const/colors'

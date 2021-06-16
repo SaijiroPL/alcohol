@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button } from '@material-ui/core';
-import { arrowUp, arrowDown } from 'const/icons'
 
 import * as Colors from 'const/colors'
 import './styles.css';

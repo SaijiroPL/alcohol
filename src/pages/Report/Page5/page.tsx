@@ -134,10 +134,11 @@ export default function({
               key={i * 2}
               icon={DISEASE_UI[diseaseStat[i * 2].index].icon} 
               content={-reducePercent(i * 2, diseaseStat, newDiseaseStat)} 
+              contentVisible={false}
               unit='%' 
               title={`${DISEASE_UI[diseaseStat[i * 2].index].name}リスク`}
               titlePos='bottom' />
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', fontSize: '24px' }}>
               {roundDisease(diseaseStat[i * 2].stat)}倍 
               <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
               {roundDisease(newDiseaseStat[i * 2].stat)}倍 
@@ -149,10 +150,11 @@ export default function({
                 key={i * 2 + 1}
                 icon={DISEASE_UI[diseaseStat[i * 2 + 1].index].icon} 
                 content={-reducePercent(i * 2 + 1, diseaseStat, newDiseaseStat)} 
+                contentVisible={false}
                 unit='%' 
                 title={`${DISEASE_UI[diseaseStat[i * 2 + 1].index].name}リスク`}
                 titlePos='bottom' />
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: 'center', fontSize: '24px' }}>
                 {roundDisease(diseaseStat[i * 2 + 1].stat)}倍 
                 <img src={Icons.arrowRight} alt='arrow' className='ac-selecteddrink-arrow'/>
                 {roundDisease(newDiseaseStat[i * 2 + 1].stat)}倍 

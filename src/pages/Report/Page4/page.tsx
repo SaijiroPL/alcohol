@@ -206,7 +206,12 @@ export default function({
             <span style={{marginLeft: '10px'}}>その他のお酒を追加</span>
           </Button>
       </div>
-      <SingleButton title='お酒による病気のリスクは？' color={Colors.RED} nonSticky={true} onClick={onNext} />
+      <SingleButton
+        title={group === 'A' ? 'お酒による病気のリスクは？' : '次へ'}
+        color={Colors.RED}
+        nonSticky={true}
+        onClick={onNext}
+      />
       {tutorial === 0 && (
         <div style={{ 
           position: 'absolute', width: '100%', height: '380px', top: 0, 

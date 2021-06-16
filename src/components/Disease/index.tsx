@@ -6,6 +6,7 @@ import './styles.css';
 interface props {
   icon: string
   content: string | number
+  contentVisible?: boolean
   unit: string
   title: string
   titlePos?: 'top' | 'bottom'
@@ -16,6 +17,7 @@ export default function({
   icon,
   imgStyle,
   content,
+  contentVisible = true,
   unit,
   title,
   titlePos = 'top'
@@ -64,14 +66,16 @@ export default function({
             {title}
         </div>
       )} 
-      <div className='font-fira' style={{
-        color: Colors.RED,
-        fontSize: '30px', 
-        position: 'absolute', top: titlePos === 'top' ? '35px' : '30px',
-        width: '100%'
-      }}>
-        <span style={{ fontSize: '60px' }}>{renderContent(content)}</span>{unit}
-      </div>
+      {contentVisible && (
+        <div className='font-fira' style={{
+          color: Colors.RED,
+          fontSize: unit.length > 2 ? '24px' : '30px', 
+          position: 'absolute', top: titlePos === 'top' ? '35px' : '30px',
+          width: '100%'
+        }}>
+          <span style={{ fontSize: '60px' }}>{renderContent(content)}</span>{unit}
+        </div>
+      )}
     </div>
   )
 }

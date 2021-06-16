@@ -1,5 +1,5 @@
 import { RANKS_ARRAY } from "const/ranks"
-import { DISEASE_RIO } from "const/disease";
+import { DISEASE_RIO, DISEASE_RIO_MAX } from "const/disease";
 import { DiseaseStat } from "types/drinks";
 
 export function calcRank(age: number, alcohol: number, gender: number) {
@@ -42,7 +42,7 @@ export function calcDisease(alcohol: number, gender: number, selectedDisease: nu
     index: 1,
     stat: DISEASE_RIO[1][drinkLevel] as number
   }]
-  selectedDisease.map((value) => {
+  selectedDisease.forEach((value) => {
     if (value < 8) {
       const diseaseVal = DISEASE_RIO[value + 2][drinkLevel]
       const stat = typeof(diseaseVal) === 'number' ? diseaseVal : (gender === 0 ? diseaseVal.M : diseaseVal.W)
@@ -59,7 +59,23 @@ export function calcDisease(alcohol: number, gender: number, selectedDisease: nu
       })
     }
   })
-  return result
+  
+  return result.map((item) => {
+    if (item.stat === 10000) {
+      const diseaseVal = DISEASE_RIO_MAX[item.index];
+      const maxVal = typeof(diseaseVal) === 'number' ? diseaseVal : (gender === 0 ? diseaseVal.M : diseaseVal.W)
+      return {
+        index: item.index,
+        stat: maxVal,
+        over: true,
+      }
+    } else {
+      return {
+        ...item,
+        over: false,
+      };
+    }
+  });
 }
 
 export function nextDisease(alcohol:number, gender: number, orgStat: DiseaseStat[]) {
@@ -79,7 +95,22 @@ export function nextDisease(alcohol:number, gender: number, orgStat: DiseaseStat
       })
     }
   }
-  return result
+  return result.map((item) => {
+    if (item.stat === 10000) {
+      const diseaseVal = DISEASE_RIO_MAX[item.index];
+      const maxVal = typeof(diseaseVal) === 'number' ? diseaseVal : (gender === 0 ? diseaseVal.M : diseaseVal.W)
+      return {
+        index: item.index,
+        stat: maxVal,
+        over: true,
+      }
+    } else {
+      return {
+        ...item,
+        over: false,
+      };
+    }
+  });
 }
 
 export function reducePercent(index: number, diseaseStat: DiseaseStat[], newDiseaseStat: DiseaseStat[]) {

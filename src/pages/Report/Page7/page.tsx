@@ -443,7 +443,7 @@ export default function({
           </Button>
           <div style={{ color: '#993333', marginTop: '16px', fontWeight: 'bold', lineHeight: '30px' }}>
             <span style={{ fontSize: '16px' }}>私は、</span> <br/>
-            <span style={{ fontSize: '22px' }}>{will}</span> <br/>
+            <span style={{ fontSize: '16px' }}>{will}ために</span> <br/>
             <span style={{ fontSize: '16px' }}>お酒を減らします！</span> <br/>
           </div>
         </div>
