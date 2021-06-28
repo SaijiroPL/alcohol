@@ -172,7 +172,7 @@ export default function() {
       alignItems: 'center',
       height: '100vh'
     }}>
-      <CSVLink 
+      {csvData.length > 0 && (<CSVLink 
         filename={`alcohol-${new Date().getTime()}.csv`} 
         data={csvData}
         asyncOnClick={true}
@@ -180,7 +180,7 @@ export default function() {
           return csvData.length > 0
         }}>
           Download Csv Data
-      </CSVLink>
+      </CSVLink>)}
     </div>
   )
 }

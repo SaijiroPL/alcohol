@@ -8,6 +8,7 @@ const databaseRef = firebase.database().ref();
 export const dataRef = databaseRef.child("data")
 export const storeRef = databaseRef.child("store")
 export const studyRef = databaseRef.child("study_result")
+export const codeRef = databaseRef.child("code")
 
 export function createStoreToFirebase(store: any) {
   const newRef = storeRef.push()
