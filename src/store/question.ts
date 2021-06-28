@@ -14,6 +14,7 @@ export function typedAction(type: string, payload?: any) {
 }
 
 type QuestionState = {
+  code: string,
   age: number
   question1: number
   question2: number
@@ -43,6 +44,7 @@ DRINK_INFO.map((item) => {
 })
 
 const initStates: QuestionState = {
+  code: '',
   age: 20,
   question1: 0,
   question2: 2,
@@ -61,6 +63,7 @@ const initStates: QuestionState = {
   startDate: moment().format('YYYY-MM-DD HH:mm:ss')
 }
 
+export const setCode = (code: string) => typedAction('question/code', code)
 export const setAge = (age: number) => typedAction('question/age', age)
 export const setAnswer1 = (answer: number) => typedAction('question/answer1', answer)
 export const setAnswer2 = (answer: number) => typedAction('question/answer2', answer)
@@ -80,7 +83,9 @@ export const setAnswer12 = (answer: number[]) => typedAction('question/answer12'
 export const reset = () => typedAction('question/reset')
 export const load = (payload: any) => typedAction('question/load', payload)
 
-type QuestionAction = ReturnType<typeof setAge | 
+type QuestionAction = ReturnType<
+  typeof setCode |
+  typeof setAge | 
   typeof setAnswer1 | 
   typeof setAnswer2 |
   typeof setDrink |
@@ -124,6 +129,8 @@ export function questionReducer(
   action: QuestionAction
 ): QuestionState {
   switch (action.type) {
+    case 'question/code':
+      return { ...state, code: action.payload }
     case 'question/age':
       return { ...state, age: action.payload }
     case 'question/answer1':

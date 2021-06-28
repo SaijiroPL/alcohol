@@ -10,6 +10,7 @@ export default function() {
   const headers = [
     'datetimeStart',
     'datetimeFinish',
+    'code',
     'allocation',
     'sex',
     'age',
@@ -130,6 +131,7 @@ export default function() {
         const item = [
           obj.question.startDate,
           obj.date,
+          obj.question.code,
           obj.report.group,
           obj.report.gender,
           obj.report.age,
