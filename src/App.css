@@ -126,6 +126,11 @@
   margin: auto;
 }
 
+.research-container {
+  max-width: 540px;
+  margin: auto;
+}
+
 .research-title {
   font-size: 24px;
   text-align: center;
@@ -143,6 +148,8 @@
 
 .intro-container {
   color: #707070;
+  max-width: 540px;
+  margin: auto;
 }
 
 .intro-upper {

@@ -37,14 +37,17 @@ export function calcDisease(alcohol: number, gender: number, selectedDisease: nu
   const drinkLevel = Math.floor(alcohol / 10)
   let result = [{
     index: 0,
-    stat: DISEASE_RIO[0][drinkLevel] as number
+    stat: drinkLevel < DISEASE_RIO[0].length ? DISEASE_RIO[0][drinkLevel] as number : DISEASE_RIO_MAX[0] as number
   }, {
     index: 1,
-    stat: DISEASE_RIO[1][drinkLevel] as number
+    stat: drinkLevel < DISEASE_RIO[1].length ? DISEASE_RIO[1][drinkLevel] as number : DISEASE_RIO_MAX[1] as number
   }]
   selectedDisease.forEach((value) => {
     if (value < 8) {
-      const diseaseVal = DISEASE_RIO[value + 2][drinkLevel]
+      let diseaseVal = DISEASE_RIO[value + 2][drinkLevel]
+      if (drinkLevel >= DISEASE_RIO[value + 2].length) { //over max drinklevel
+        diseaseVal = DISEASE_RIO_MAX[value + 2]
+      }
       const stat = typeof(diseaseVal) === 'number' ? diseaseVal : (gender === 0 ? diseaseVal.M : diseaseVal.W)
       result.push({
         index: value + 2,
@@ -54,7 +57,7 @@ export function calcDisease(alcohol: number, gender: number, selectedDisease: nu
       [9, 10, 11, 12, 13, 14, 15].map((v) => {
         result.push({
           index: v,
-          stat: DISEASE_RIO[v][drinkLevel] as number
+          stat: drinkLevel < DISEASE_RIO[v].length ? DISEASE_RIO[v][drinkLevel] as number : DISEASE_RIO_MAX[v] as number
         })
       })
     }
@@ -82,7 +85,10 @@ export function nextDisease(alcohol:number, gender: number, orgStat: DiseaseStat
   const drinkLevel = Math.floor(alcohol / 10)
   let result = []
   for (let i = 0; i < orgStat.length; i++) {
-    const newValue = DISEASE_RIO[orgStat[i].index][drinkLevel]
+    let newValue = DISEASE_RIO[orgStat[i].index][drinkLevel]
+    if (newValue === undefined) {
+      newValue = DISEASE_RIO_MAX[orgStat[i].index];
+    }
     if (typeof(newValue) === 'number'){
       result.push({
         index: orgStat[i].index,
@@ -116,7 +122,7 @@ export function nextDisease(alcohol:number, gender: number, orgStat: DiseaseStat
 export function reducePercent(index: number, diseaseStat: DiseaseStat[], newDiseaseStat: DiseaseStat[]) {
   const orgStat = Math.round(diseaseStat[index].stat * 10) / 10
   const newStat = Math.round(newDiseaseStat[index].stat * 10) / 10
-  const percent = Math.round((orgStat - newStat) / (orgStat - 1) * 100)
+  const percent = Math.round((orgStat - newStat) / orgStat * 100)
   if (orgStat === newStat) return 0
   if (orgStat === 1) return 'ND'
   return percent
